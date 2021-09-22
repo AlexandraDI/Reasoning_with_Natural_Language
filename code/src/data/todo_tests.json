@@ -7,5 +7,17 @@
     ],
     "conclusion": "The street is wet",
     "result": "valid"
+  },
+  {
+    "comment": "It should work; if you remove 'Socrates is a greek' it works",
+    "premises": [
+      "All persons are mortal",
+      "All philosophers are persons",
+      "Socrates is a greek",
+      "All greeks are philosophers",
+      "Alexandra is a greek"
+    ],
+    "conclusion": "Alexandra is mortal",
+    "result": "valid"
   }
 ]
