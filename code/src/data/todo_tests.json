@@ -2,7 +2,7 @@
   {
     "comment": "The program can't parse 'an' --> you would have to use 'a apple'",
     "premises": [
-      "If Join eats an Apple then the street is wet",
+      "If John eats an Apple then the street is wet",
       "John eats an apple"
     ],
     "conclusion": "The street is wet",
