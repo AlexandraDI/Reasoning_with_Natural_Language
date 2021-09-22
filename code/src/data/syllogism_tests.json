@@ -1,0 +1,2050 @@
+[
+  {
+    "premises": [
+      "All chairs are furniture",
+      "All stools are chairs"
+    ],
+    "conclusion": "All stools are furniture",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "All chairs are furniture",
+      "All stools are chairs"
+    ],
+    "conclusion": "No stools are furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All chairs are furniture",
+      "All stools are chairs"
+    ],
+    "conclusion": "Some stools are furniture ",
+    "result": "Conditionally valid"
+  },
+  {
+    "premises": [
+      "All chairs are furniture",
+      "All stools are chairs"
+    ],
+    "conclusion": "Some stools are not furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All women are humans",
+      "All kids are humans"
+    ],
+    "conclusion": "All kids are women",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All women are humans",
+      "All kids are humans"
+    ],
+    "conclusion": "No kids are women",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All women are humans",
+      "All kids are humans"
+    ],
+    "conclusion": "Some kids are women",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All women are humans",
+      "All kids are humans"
+    ],
+    "conclusion": "Some kids are not women",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All cats are animals",
+      "All cats are pets"
+    ],
+    "conclusion": "All pets are animals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All cats are animals",
+      "All cats are pets"
+    ],
+    "conclusion": "No pets are animals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All cats are animals",
+      "All cats are pets"
+    ],
+    "conclusion": "Some pets are animals",
+    "result": "Conditionally valid"
+  },
+  {
+    "premises": [
+      "All cats are animals",
+      "All cats are pets"
+    ],
+    "conclusion": "Some pets are not animals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All pigeons are bird",
+      "All birds are animals"
+    ],
+    "conclusion": "All animals are pigeons",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All pigeons are bird",
+      "All birds are animals"
+    ],
+    "conclusion": "No animals are pigeons",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All pigeons are bird",
+      "All birds are animals"
+    ],
+    "conclusion": "Some animals are pigeons",
+    "result": "Conditionally valid"
+  },
+  {
+    "premises": [
+      "All pigeons are bird",
+      "All birds are animals"
+    ],
+    "conclusion": "Some animals are not pigeons",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All insects have leg",
+      "No birds are insects"
+    ],
+    "conclusion": "All birds have legs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All insects have leg",
+      "No birds are insects"
+    ],
+    "conclusion": "No birds have legs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All insects have leg",
+      "No birds are insects"
+    ],
+    "conclusion": "Some birds have legs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All insects have leg",
+      "No birds are insects"
+    ],
+    "conclusion": "Some birds have no legs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All trees are plants",
+      "No animals are plants"
+    ],
+    "conclusion": "All animals are plants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All trees are plants",
+      "No animals are plants"
+    ],
+    "conclusion": "No animals are plants",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "All trees are plants",
+      "No animals are plants"
+    ],
+    "conclusion": "Some animals are plants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All trees are plants",
+      "No animals are plants"
+    ],
+    "conclusion": "Some animals are not plants",
+    "result": "Conditionally valid"
+  },
+  {
+    "premises": [
+      "All spiders are insects",
+      "No spiders are humans"
+    ],
+    "conclusion": "All humans are insects",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All spiders are insects",
+      "No spiders are humans"
+    ],
+    "conclusion": "No humans are insects",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All spiders are insects",
+      "No spiders are humans"
+    ],
+    "conclusion": "Some humans are insects",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All spiders are insects",
+      "No spiders are humans"
+    ],
+    "conclusion": "Some humans are not insects",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All pens are stationery",
+      "No stationery are dogs"
+    ],
+    "conclusion": "All dogs are pens",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All pens are stationery",
+      "No stationery are dogs"
+    ],
+    "conclusion": "No dogs are pens",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "All pens are stationery",
+      "No stationery are dogs"
+    ],
+    "conclusion": "Some dogs are pens",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All pens are stationery",
+      "No stationery are dogs"
+    ],
+    "conclusion": "Some dogs are not pens",
+    "result": "Conditionally valid"
+  },
+  {
+    "premises": [
+      "All cats are furry",
+      "Some pets are cats"
+    ],
+    "conclusion": "All pets are furry",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All cats are furry",
+      "Some pets are cats"
+    ],
+    "conclusion": "No pets are furry",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All cats are furry",
+      "Some pets are cats"
+    ],
+    "conclusion": "Some pets are furry",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "All cats are furry",
+      "Some pets are cats"
+    ],
+    "conclusion": "Some pets are not furry",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All relics are valuable",
+      "Some rocks are valuable"
+    ],
+    "conclusion": "All rocks are relics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All relics are valuable",
+      "Some rocks are valuable"
+    ],
+    "conclusion": "No rocks are relics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All relics are valuable",
+      "Some rocks are valuable"
+    ],
+    "conclusion": "Some rocks are relics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All relics are valuable",
+      "Some rocks are valuable"
+    ],
+    "conclusion": "Some rocks are not relics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All clocks are watches",
+      "Some clocks are alarms"
+    ],
+    "conclusion": "All alarms are watches",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All clocks are watches",
+      "Some clocks are alarms"
+    ],
+    "conclusion": "No alarms are watches",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All clocks are watches",
+      "Some clocks are alarms"
+    ],
+    "conclusion": "Some alarms are watches",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "All clocks are watches",
+      "Some clocks are alarms"
+    ],
+    "conclusion": "Some alarms are not watches",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All composers are artists",
+      "Some artists are painters"
+    ],
+    "conclusion": "All painters are composers",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All composers are artists",
+      "Some artists are painters"
+    ],
+    "conclusion": "No painters are composers",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All composers are artists",
+      "Some artists are painters"
+    ],
+    "conclusion": "Some painters are composers",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All composers are artists",
+      "Some artists are painters"
+    ],
+    "conclusion": "Some painters are not composers",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All tables are furniture",
+      "Some chairs are not tables"
+    ],
+    "conclusion": "All chairs are furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All tables are furniture",
+      "Some chairs are not tables"
+    ],
+    "conclusion": "No chairs are furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All tables are furniture",
+      "Some chairs are not tables"
+    ],
+    "conclusion": "Some chairs are furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All tables are furniture",
+      "Some chairs are not tables"
+    ],
+    "conclusion": "Some chairs are not furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All markers are black",
+      "Some shoes are not black"
+    ],
+    "conclusion": "All shoes are markers",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All markers are black",
+      "Some shoes are not black"
+    ],
+    "conclusion": "No shoes are markers",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All markers are black",
+      "Some shoes are not black"
+    ],
+    "conclusion": "Some shoes are markers",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All markers are black",
+      "Some shoes are not black"
+    ],
+    "conclusion": "Some shoes are not markers",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "All composers are artists",
+      "Some composers are not teachers"
+    ],
+    "conclusion": "All teachers are artists",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All composers are artists",
+      "Some composers are not teachers"
+    ],
+    "conclusion": "No teachers are artists",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All composers are artists",
+      "Some composers are not teachers"
+    ],
+    "conclusion": "Some teachers are artists",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All composers are artists",
+      "Some composers are not teachers"
+    ],
+    "conclusion": "Some teachers are not artists",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All snakes are reptiles",
+      "Some reptiles are not dangerous animals"
+    ],
+    "conclusion": "All dangerous animals are snakes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All snakes are reptiles",
+      "Some reptiles are not dangerous animals"
+    ],
+    "conclusion": "No dangerous animals are snakes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All snakes are reptiles",
+      "Some reptiles are not dangerous animals"
+    ],
+    "conclusion": "Some dangerous animals are snakes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "All snakes are reptiles",
+      "Some reptiles are not dangerous animals"
+    ],
+    "conclusion": "Some dangerous animals are not snakes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No human are fishes",
+      "All kids are human"
+    ],
+    "conclusion": "All kids are fishes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No human are fishes",
+      "All kids are human"
+    ],
+    "conclusion": "No kids are fishes",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "No human are fishes",
+      "All kids are human"
+    ],
+    "conclusion": "Some kids are fishes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No human are fishes",
+      "All kids are human"
+    ],
+    "conclusion": "Some kids are not fishes",
+    "result": "Conditionally valid"
+  },
+  {
+    "premises": [
+      "No cars are plants",
+      "All trees are plants"
+    ],
+    "conclusion": "All trees are cars",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No cars are plants",
+      "All trees are plants"
+    ],
+    "conclusion": "No trees are cars",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "No cars are plants",
+      "All trees are plants"
+    ],
+    "conclusion": "Some trees are cars",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No cars are plants",
+      "All trees are plants"
+    ],
+    "conclusion": "Some trees are not cars",
+    "result": "Conditionally valid"
+  },
+  {
+    "premises": [
+      "No whales are fishes",
+      "All whales are huge animals"
+    ],
+    "conclusion": "All fishes are huge animals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No whales are fishes",
+      "All whales are huge animals"
+    ],
+    "conclusion": "No fishes are huge animals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No whales are fishes",
+      "All whales are huge animals"
+    ],
+    "conclusion": "Some fishes are huge animals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No whales are fishes",
+      "All whales are huge animals"
+    ],
+    "conclusion": "Some fishes are not huge animals",
+    "result": "Conditionally valid"
+  },
+  {
+    "premises": [
+      "No cats are dogs",
+      " All dogs are mammals"
+    ],
+    "conclusion": "All mammals are cats",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No cats are dogs",
+      " All dogs are mammals"
+    ],
+    "conclusion": "No mammals are cats",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No cats are dogs",
+      " All dogs are mammals"
+    ],
+    "conclusion": "Some mammals are cats",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No cats are dogs",
+      " All dogs are mammals"
+    ],
+    "conclusion": "Some mammals are not cats",
+    "result": "Conditionally valid"
+  },
+  {
+    "premises": [
+      "No monitors are people",
+      " No hats are monitors"
+    ],
+    "conclusion": "All hats are people",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No monitors are people",
+      " No hats are monitors"
+    ],
+    "conclusion": "No hats are people",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No monitors are people",
+      " No hats are monitors"
+    ],
+    "conclusion": "Some hats are people",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No monitors are people",
+      " No hats are monitors"
+    ],
+    "conclusion": "Some hats are not people",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No ants are books",
+      " No insects are books"
+    ],
+    "conclusion": "All insects are ants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No ants are books",
+      " No insects are books"
+    ],
+    "conclusion": "No insects are ants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No ants are books",
+      " No insects are books"
+    ],
+    "conclusion": "Some insects are ants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No ants are books",
+      " No insects are books"
+    ],
+    "conclusion": "Some insects are not ants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No men are sneakers",
+      " No men are shoes"
+    ],
+    "conclusion": "All sneakers are shoes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No men are sneakers",
+      " No men are shoes"
+    ],
+    "conclusion": "No sneakers are shoes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No men are sneakers",
+      " No men are shoes"
+    ],
+    "conclusion": "Some sneakers are shoes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No men are sneakers",
+      " No men are shoes"
+    ],
+    "conclusion": "Some sneakers are not shoes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No rats are bats",
+      " No bats are rodents"
+    ],
+    "conclusion": "All rodents are rats",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No rats are bats",
+      " No bats are rodents"
+    ],
+    "conclusion": "No rodents are rats",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No rats are bats",
+      " No bats are rodents"
+    ],
+    "conclusion": "Some rodents are rats",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No rats are bats",
+      " No bats are rodents"
+    ],
+    "conclusion": "Some rodents are not rats",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No turtles are mammals",
+      " Some reptiles are turtles"
+    ],
+    "conclusion": "All reptiles are mammals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No turtles are mammals",
+      " Some reptiles are turtles"
+    ],
+    "conclusion": "No reptiles are mammals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No turtles are mammals",
+      " Some reptiles are turtles"
+    ],
+    "conclusion": "Some reptiles are mammals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No turtles are mammals",
+      " Some reptiles are turtles"
+    ],
+    "conclusion": "Some reptiles are not mammals",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "No motorcycles are cars",
+      " Some Hondas are cars"
+    ],
+    "conclusion": "All Hondas are motocycles",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No motorcycles are cars",
+      " Some Hondas are cars"
+    ],
+    "conclusion": "No Hondas are motocycles",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No motorcycles are cars",
+      " Some Hondas are cars"
+    ],
+    "conclusion": "Some Hondas are motocycles",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No motorcycles are cars",
+      " Some Hondas are cars"
+    ],
+    "conclusion": "Some Hondas are not motorcycles",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "No rings are bracelets",
+      " Some rings are gold jewelry"
+    ],
+    "conclusion": "All gold jewelry are bracelets",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No rings are bracelets",
+      " Some rings are gold jewelry"
+    ],
+    "conclusion": "No gold jewelry are bracelets",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No rings are bracelets",
+      " Some rings are gold jewelry"
+    ],
+    "conclusion": "Some gold jewelry are bracelets",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No rings are bracelets",
+      " Some rings are gold jewelry"
+    ],
+    "conclusion": "Some gold jewelry are not bracelets",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "No fishes are mammals",
+      " Some mammals are aquatic animals"
+    ],
+    "conclusion": "All aquatic animals are fishes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No fishes are mammals",
+      " Some mammals are aquatic animals"
+    ],
+    "conclusion": "No aquatic animals are fishes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No fishes are mammals",
+      " Some mammals are aquatic animals"
+    ],
+    "conclusion": "Some aquatic animals are fishes",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No fishes are mammals",
+      " Some mammals are aquatic animals"
+    ],
+    "conclusion": "Some aquatic animals are not fishes",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "No fishes are birds",
+      " Some parrots are not fishes"
+    ],
+    "conclusion": "All parrots are birds",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No fishes are birds",
+      " Some parrots are not fishes"
+    ],
+    "conclusion": "No parrots are birds",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No fishes are birds",
+      " Some parrots are not fishes"
+    ],
+    "conclusion": "Some parrots are birds",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No fishes are birds",
+      " Some parrots are not fishes"
+    ],
+    "conclusion": "Some parrots are not birds",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No clouds are black",
+      " Some shoes are not black"
+    ],
+    "conclusion": "All shoes are clouds",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No clouds are black",
+      " Some shoes are not black"
+    ],
+    "conclusion": "No shoes are clouds",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No clouds are black",
+      " Some shoes are not black"
+    ],
+    "conclusion": "Some shoes are clouds",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No clouds are black",
+      " Some shoes are not black"
+    ],
+    "conclusion": "Some shoes are not clouds",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No reptiles are mammals",
+      " Some reptiles are not carnivorous animals"
+    ],
+    "conclusion": "All carnivorous animals are mammals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No reptiles are mammals",
+      " Some reptiles are not carnivorous animals"
+    ],
+    "conclusion": "No carnivorous animals are mammals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No reptiles are mammals",
+      " Some reptiles are not carnivorous animals"
+    ],
+    "conclusion": "Some carnivorous animals are mammals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No reptiles are mammals",
+      " Some reptiles are not carnivorous animals"
+    ],
+    "conclusion": "Some carnivorous animals are not mammals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No plants are pets",
+      " Some pets are not dogs"
+    ],
+    "conclusion": "All dogs are plants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No plants are pets",
+      " Some pets are not dogs"
+    ],
+    "conclusion": "No dogs are plants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No plants are pets",
+      " Some pets are not dogs"
+    ],
+    "conclusion": "Some dogs are plants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "No plants are pets",
+      " Some pets are not dogs"
+    ],
+    "conclusion": "Some dogs are not plants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some impractical people are intellectuals",
+      "All poets are impractical people"
+    ],
+    "conclusion": "All poets are intellectuals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some impractical people are intellectuals",
+      "All poets are impractical people"
+    ],
+    "conclusion": "No poets are intellectuals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some impractical people are intellectuals",
+      "All poets are impractical people"
+    ],
+    "conclusion": "Some poets are intellectuals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some impractical people are intellectuals",
+      "All poets are impractical people"
+    ],
+    "conclusion": "Some poets are not intellectuals",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some toys have batteries",
+      "All electronics have batteries"
+    ],
+    "conclusion": "All electronics are toys",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some toys have batteries",
+      "All electronics have batteries"
+    ],
+    "conclusion": "No electronics are toys",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some toys have batteries",
+      "All electronics have batteries"
+    ],
+    "conclusion": "Some electronics are toys",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some toys have batteries",
+      "All electronics have batteries"
+    ],
+    "conclusion": "Some electronics are not toys",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some evergreens are decorations",
+      "All evergreens are trees"
+    ],
+    "conclusion": "All trees are decorations",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some evergreens are decorations",
+      "All evergreens are trees"
+    ],
+    "conclusion": "No trees are decorations",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some evergreens are decorations",
+      "All evergreens are trees"
+    ],
+    "conclusion": "Some trees are decorations",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "Some evergreens are decorations",
+      "All evergreens are trees"
+    ],
+    "conclusion": "Some trees are not decorations",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cats are white mammals",
+      "All white mammals are animals"
+    ],
+    "conclusion": "All animals are cats",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cats are white mammals",
+      "All white mammals are animals"
+    ],
+    "conclusion": "No animals are cats",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cats are white mammals",
+      "All white mammals are animals"
+    ],
+    "conclusion": "Some animals are cats",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "Some cats are white mammals",
+      "All white mammals are animals"
+    ],
+    "conclusion": "Some animals are not cats",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cars are expensive",
+      "No bikes are cars"
+    ],
+    "conclusion": "All bikes are expensive",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cars are expensive",
+      "No bikes are cars"
+    ],
+    "conclusion": "No bikes are expensive",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cars are expensive",
+      "No bikes are cars"
+    ],
+    "conclusion": "Some bikes are expensive",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cars are expensive",
+      "No bikes are cars"
+    ],
+    "conclusion": "Some bikes are not expensive",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some public transportations are slow",
+      "No planes are slow"
+    ],
+    "conclusion": "All planes are public transportations",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some public transportations are slow",
+      "No planes are slow"
+    ],
+    "conclusion": "No planes are public transportations",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some public transportations are slow",
+      "No planes are slow"
+    ],
+    "conclusion": "Some planes are public transportations",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some public transportations are slow",
+      "No planes are slow"
+    ],
+    "conclusion": "Some planes are not public transportations",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some men are smart",
+      "No men are dogs"
+    ],
+    "conclusion": "All dogs are smart",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some men are smart",
+      "No men are dogs"
+    ],
+    "conclusion": "No dogs are smart",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some men are smart",
+      "No men are dogs"
+    ],
+    "conclusion": "Some dogs are smart",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some men are smart",
+      "No men are dogs"
+    ],
+    "conclusion": "Some dogs are not smart",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some students are lazy people",
+      "No lazy people are dogs"
+    ],
+    "conclusion": "All dogs are students",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some students are lazy people",
+      "No lazy people are dogs"
+    ],
+    "conclusion": "No dogs are students",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some students are lazy people",
+      "No lazy people are dogs"
+    ],
+    "conclusion": "Some dogs are students",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some students are lazy people",
+      "No lazy people are dogs"
+    ],
+    "conclusion": "Some dogs are not students",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some birds have two legs",
+      "Some animals are birds"
+    ],
+    "conclusion": "All animals have two legs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some birds have two legs",
+      "Some animals are birds"
+    ],
+    "conclusion": "No animals have two legs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some birds have two legs",
+      "Some animals are birds"
+    ],
+    "conclusion": "Some animals have two legs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some birds have two legs",
+      "Some animals are birds"
+    ],
+    "conclusion": "Some animals not have two legs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cities are cold",
+      "Some countries are cold"
+    ],
+    "conclusion": "All countries are cities",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cities are cold",
+      "Some countries are cold"
+    ],
+    "conclusion": "No countries are cities",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cities are cold",
+      "Some countries are cold"
+    ],
+    "conclusion": "Some countries are cities",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cities are cold",
+      "Some countries are cold"
+    ],
+    "conclusion": "Some countries are not cities",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some animals have wings",
+      "Some animals are insects"
+    ],
+    "conclusion": "All insects have wings",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some animals have wings",
+      "Some animals are insects"
+    ],
+    "conclusion": "No insects have wings",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some animals have wings",
+      "Some animals are insects"
+    ],
+    "conclusion": "Some insects have wings",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some animals have wings",
+      "Some animals are insects"
+    ],
+    "conclusion": "Some insects not have wings",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some plants are mints",
+      "Some mints are spices"
+    ],
+    "conclusion": "All spices are plants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some plants are mints",
+      "Some mints are spices"
+    ],
+    "conclusion": "No spices are plants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some plants are mints",
+      "Some mints are spices"
+    ],
+    "conclusion": "Some spices are plants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some plants are mints",
+      "Some mints are spices"
+    ],
+    "conclusion": "Some spices are not plants",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some reptiles are aquatics",
+      "Some animals are not reptiles"
+    ],
+    "conclusion": "All animals are aquatics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some reptiles are aquatics",
+      "Some animals are not reptiles"
+    ],
+    "conclusion": "No animals are aquatics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some reptiles are aquatics",
+      "Some animals are not reptiles"
+    ],
+    "conclusion": "Some animals are aquatics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some reptiles are aquatics",
+      "Some animals are not reptiles"
+    ],
+    "conclusion": "Some animals are not aquatics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some pigs are mad",
+      "Some people are not mad"
+    ],
+    "conclusion": "All people are pigs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some pigs are mad",
+      "Some people are not mad"
+    ],
+    "conclusion": "No people are pigs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some pigs are mad",
+      "Some people are not mad"
+    ],
+    "conclusion": "Some people are pigs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some pigs are mad",
+      "Some people are not mad"
+    ],
+    "conclusion": "Some people are not pigs",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some monkeys are tall",
+      "Some monkeys are not vegetarians"
+    ],
+    "conclusion": "All vegetarians are tall",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some monkeys are tall",
+      "Some monkeys are not vegetarians"
+    ],
+    "conclusion": "No vegetarians are tall",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some monkeys are tall",
+      "Some monkeys are not vegetarians"
+    ],
+    "conclusion": "Some vegetarians are tall",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some monkeys are tall",
+      "Some monkeys are not vegetarians"
+    ],
+    "conclusion": "Some vegetarians are not tall",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some people are middle-aged",
+      "Some middle-aged are not scholars"
+    ],
+    "conclusion": "All people are scholars",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some people are middle-aged",
+      "Some middle-aged are not scholars"
+    ],
+    "conclusion": "No people are scholars",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some people are middle-aged",
+      "Some middle-aged are not scholars"
+    ],
+    "conclusion": "Some people are scholars",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some people are middle-aged",
+      "Some middle-aged are not scholars"
+    ],
+    "conclusion": "Some people are not scholars",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cars are not made in Japan",
+      "All Toyotas are cars"
+    ],
+    "conclusion": "All Toyotas are made in Japan",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cars are not made in Japan",
+      "All Toyotas are cars"
+    ],
+    "conclusion": "No Toyotas are made in Japan",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cars are not made in Japan",
+      "All Toyotas are cars"
+    ],
+    "conclusion": "Some Toyotas are made in Japan",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some cars are not made in Japan",
+      "All Toyotas are cars"
+    ],
+    "conclusion": "Some Toyotas are not made in Japan",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some artists are not musicians",
+      "All singers are musicians"
+    ],
+    "conclusion": "All singers are artists",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some artists are not musicians",
+      "All singers are musicians"
+    ],
+    "conclusion": "No singers are artists",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some artists are not musicians",
+      "All singers are musicians"
+    ],
+    "conclusion": "Some singers are artists",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some artists are not musicians",
+      "All singers are musicians"
+    ],
+    "conclusion": "Some singers are not artists",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some snakes are not venomous",
+      "All snakes are reptiles"
+    ],
+    "conclusion": "All reptiles are not venomous",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some snakes are not venomous",
+      "All snakes are reptiles"
+    ],
+    "conclusion": "No reptiles are not venomous",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some snakes are not venomous",
+      "All snakes are reptiles"
+    ],
+    "conclusion": "Some reptiles are not venomous",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "Some snakes are not venomous",
+      "All snakes are reptiles"
+    ],
+    "conclusion": "Some reptiles are venomous",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some drinks are not beer",
+      "All beer are alcohol"
+    ],
+    "conclusion": "All alchohol are drinks",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some drinks are not beer",
+      "All beer are alcohol"
+    ],
+    "conclusion": "No alchohol are drinks",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some drinks are not beer",
+      "All beer are alcohol"
+    ],
+    "conclusion": "Some alchohol are drinks",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some drinks are not beer",
+      "All beer are alcohol"
+    ],
+    "conclusion": "Some alchohol are not drinks",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some dogs are not small",
+      "No cats are dogs"
+    ],
+    "conclusion": "All cats are small",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some dogs are not small",
+      "No cats are dogs"
+    ],
+    "conclusion": "No cats are small",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some dogs are not small",
+      "No cats are dogs"
+    ],
+    "conclusion": "Some cats are small",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some dogs are not small",
+      "No cats are dogs"
+    ],
+    "conclusion": "Some cats are not small",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some fruits are not edible",
+      "No men are edible"
+    ],
+    "conclusion": "All men are fruits",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some fruits are not edible",
+      "No men are edible"
+    ],
+    "conclusion": "No men are fruits",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some fruits are not edible",
+      "No men are edible"
+    ],
+    "conclusion": "Some men are fruits",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some fruits are not edible",
+      "No men are edible"
+    ],
+    "conclusion": "Some men are not fruits",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some males are not polite",
+      "No males are females"
+    ],
+    "conclusion": "All females are polite",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some males are not polite",
+      "No males are females"
+    ],
+    "conclusion": "No females are polite",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some males are not polite",
+      "No males are females"
+    ],
+    "conclusion": "Some females are polite",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some males are not polite",
+      "No males are females"
+    ],
+    "conclusion": "Some females are not polite",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some furniture are not chairs",
+      "No chairs are cars"
+    ],
+    "conclusion": "All cars are furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some furniture are not chairs",
+      "No chairs are cars"
+    ],
+    "conclusion": "No cars are furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some furniture are not chairs",
+      "No chairs are cars"
+    ],
+    "conclusion": "Some cars are furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some furniture are not chairs",
+      "No chairs are cars"
+    ],
+    "conclusion": "Some cars are not furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some glass items are not cups",
+      "Some windows are glass items"
+    ],
+    "conclusion": "All windows are cups",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some glass items are not cups",
+      "Some windows are glass items"
+    ],
+    "conclusion": "No windows are cups",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some glass items are not cups",
+      "Some windows are glass items"
+    ],
+    "conclusion": "Some windows are cups",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some glass items are not cups",
+      "Some windows are glass items"
+    ],
+    "conclusion": "Some windows are not cups",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some carrots are not orange",
+      "Some tomatos are orange"
+    ],
+    "conclusion": "All tomatoes are carrots",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some carrots are not orange",
+      "Some tomatos are orange"
+    ],
+    "conclusion": "No tomatoes are carrots",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some carrots are not orange",
+      "Some tomatos are orange"
+    ],
+    "conclusion": "Some tomatoes are carrots",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some carrots are not orange",
+      "Some tomatos are orange"
+    ],
+    "conclusion": "Some tomatoes are not carrots",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some computers are not Apple products",
+      "Some computers are white products"
+    ],
+    "conclusion": "All white products are Apple products",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some computers are not Apple products",
+      "Some computers are white products"
+    ],
+    "conclusion": "No white products are Apple products",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some computers are not Apple products",
+      "Some computers are white products"
+    ],
+    "conclusion": "Some white products are Apple products",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some computers are not Apple products",
+      "Some computers are white products"
+    ],
+    "conclusion": "Some white products are not Apple products",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some people are not married",
+      "Some married are females"
+    ],
+    "conclusion": "All females are people",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some people are not married",
+      "Some married are females"
+    ],
+    "conclusion": "No females are people",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some people are not married",
+      "Some married are females"
+    ],
+    "conclusion": "Some females are people",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some people are not married",
+      "Some married are females"
+    ],
+    "conclusion": "Some females are not people",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some chocolate are not sweet",
+      "Some candies are not chocolate"
+    ],
+    "conclusion": "All candies are sweet",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some chocolate are not sweet",
+      "Some candies are not chocolate"
+    ],
+    "conclusion": "No candies are sweet",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some chocolate are not sweet",
+      "Some candies are not chocolate"
+    ],
+    "conclusion": "Some candies are sweet",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some chocolate are not sweet",
+      "Some candies are not chocolate"
+    ],
+    "conclusion": "Some candies are not sweet",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some books are not expensive",
+      "Some shoes are not expensive"
+    ],
+    "conclusion": "All shoes are books",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some books are not expensive",
+      "Some shoes are not expensive"
+    ],
+    "conclusion": "No shoes are books",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some books are not expensive",
+      "Some shoes are not expensive"
+    ],
+    "conclusion": "Some shoes are books",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some books are not expensive",
+      "Some shoes are not expensive"
+    ],
+    "conclusion": "Some shoes are not books",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some kids are not boys",
+      "Some kids are not girls"
+    ],
+    "conclusion": "All girls are boys",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some kids are not boys",
+      "Some kids are not girls"
+    ],
+    "conclusion": "No girls are boys",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some kids are not boys",
+      "Some kids are not girls"
+    ],
+    "conclusion": "Some girls are boys",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some kids are not boys",
+      "Some kids are not girls"
+    ],
+    "conclusion": "Some girls are not boys",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some furniture are not chairs",
+      "Some chairs are not stools"
+    ],
+    "conclusion": "All stools are furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some furniture are not chairs",
+      "Some chairs are not stools"
+    ],
+    "conclusion": "No stools are furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some furniture are not chairs",
+      "Some chairs are not stools"
+    ],
+    "conclusion": "Some stools are furniture",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "Some furniture are not chairs",
+      "Some chairs are not stools"
+    ],
+    "conclusion": "Some stools are not furniture",
+    "result": "invalid"
+  }
+]

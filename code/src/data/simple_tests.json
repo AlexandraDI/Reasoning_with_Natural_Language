@@ -1,0 +1,11 @@
+[
+  {
+    "premises": [
+      "John plays football or chess",
+      "When it is raining, John does not play football",
+      "It is raining"
+    ],
+    "conclusion": "John does not play football",
+    "result": "valid"
+  }
+]
