@@ -46,10 +46,18 @@ class WhenRule(Rule):
         if type(clause) is not WhenExpression:
             return new_clauses, None
 
-        # Reverse the when expression
-        copy_of_when_exp = clause.when_expression.reverse_expression()
-        new_clauses[0].append(copy_of_when_exp)
+        left_exp = clause.premise.reverse_expression()
+        right_exp = clause.conclusion.copy()
 
-        # Copy the not when expression
-        new_clauses[1].append(clause.not_when_expression.copy())
-        return new_clauses, WhenRule(clause, copy_of_when_exp, clause.not_when_expression)
+        if clause.negated:
+            left_exp = clause.premise.copy()
+            right_exp = clause.conclusion.reverse_expression()
+            new_clauses[0].append(left_exp)
+            new_clauses[0].append(right_exp)
+        else:
+            # Reverse the when expression
+            new_clauses[0].append(left_exp)
+            # Copy the not when expression
+            new_clauses[1].append(right_exp)
+
+        return new_clauses, WhenRule(clause, left_exp, right_exp)

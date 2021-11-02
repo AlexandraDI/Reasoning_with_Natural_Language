@@ -112,12 +112,12 @@ def create_expression_representation(expression, ret_dict = None):
                 type = -3,
                 tokens = expression.key_words[0]
             ))
-        ret_dict["list"].append(create_expression_representation(expression.when_expression, dict()))
+        ret_dict["list"].append(create_expression_representation(expression.premise, dict()))
         ret_dict["list"].append(dict(
             type = -3,
             tokens = expression.key_words[1 if expression.left_match else 0]
         ))
-        ret_dict["list"].append(create_expression_representation(expression.not_when_expression, dict()))
+        ret_dict["list"].append(create_expression_representation(expression.conclusion, dict()))
         return ret_dict
 
     elif type(expression) == QuantifiedExpression:
