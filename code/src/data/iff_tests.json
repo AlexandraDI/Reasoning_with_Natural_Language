@@ -1,0 +1,82 @@
+[
+  {
+    "premises": [
+      "I study maths iff I study physics",
+      "I study maths"
+    ],
+    "conclusion": "I study physics",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "I study maths iff I study physics",
+      "I study maths"
+    ],
+    "conclusion": "I do not study physics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "I study maths iff I study physics",
+      "I do not study maths"
+    ],
+    "conclusion": "I study physics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "I study maths iff I study physics",
+      "I do not study maths"
+    ],
+    "conclusion": "I do not study physics",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "I do not study maths iff I do not study physics",
+      "I do not study maths"
+    ],
+    "conclusion": "I do not study physics",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "I do not study maths iff I do not study physics",
+      "I study maths"
+    ],
+    "conclusion": "I do not study physics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "I do not study maths iff I do not study physics",
+      "I study maths"
+    ],
+    "conclusion": "I study physics",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "It is not the case that I study maths iff I study physics",
+      "I study maths"
+    ],
+    "conclusion": "I study physics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "It is not the case that if I study maths then I study physics",
+      "I study maths"
+    ],
+    "conclusion": "I do not study physics",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "It is not the case that I study maths iff I study physics",
+      "I study maths"
+    ],
+    "conclusion": "I do not study physics",
+    "result": "valid"
+  }
+]

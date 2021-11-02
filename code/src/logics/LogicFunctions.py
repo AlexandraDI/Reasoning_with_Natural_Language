@@ -1,5 +1,6 @@
 from logics.logic_functions.AndRule import AndRule
 from logics.logic_functions.DeMorganRule import DeMorganRule
+from logics.logic_functions.IffRule import IffRule
 from logics.logic_functions.OrRule import OrRule
 from logics.logic_functions.QuantificationRule import QuantificationRule
 from logics.logic_functions.SyllogismRule import SyllogismRule
@@ -7,6 +8,8 @@ from logics.logic_functions.WhenRule import WhenRule
 
 # Order is important, try to not branch to early
 rule_set = dict(
+    iff_rule = IffRule.apply_rule,
+
     and_rule = AndRule.apply_rule,
     de_Morgan_Law = DeMorganRule.apply_rule,
     or_rule = OrRule.apply_rule,

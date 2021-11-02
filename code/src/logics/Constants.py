@@ -32,6 +32,10 @@ def or_reg(keyword_list, match_type = "once"):
         ret_regex += "+"
     return ret_regex
 
+EXP = "[a-zA-Z0-9 -]+"
+
+def or_join(args):
+    return "|".join(args)
 
 complete_negation = 'it is not the case that'
 complete_negation_tokens = ['it', 'is', 'not', 'the', 'case', 'that']
@@ -49,6 +53,10 @@ or_connection_keywords = ['or', 'nor']
 demoregen_regex = "Neither [a-zA-Z0-9 -]+ (nor|and|or) [a-zA-Z0-9 -]+"
 true_connected_regex = "[a-zA-Z0-9 -]+ (or|and|;) [a-zA-Z0-9 -]+"
 connected_regex = f"{base_regex}({demoregen_regex}|{true_connected_regex})"
+
+# If-and-only-if keywords
+iff_keywords = ['iff']
+iff_regex = f"{EXP} ({or_join(iff_keywords)}) {EXP}"
 
 # When keywords and regex
 when_keywords = ['when', 'if']

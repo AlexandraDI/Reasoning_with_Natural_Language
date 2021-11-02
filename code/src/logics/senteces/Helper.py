@@ -2,6 +2,7 @@ from logics.Constants import *
 from logics.senteces.BaseExpression import BaseExpression
 from logics.senteces.ConnectedExpression import ConnectedExpression
 from logics.senteces.FunctionExpression import FunctionExpression
+from logics.senteces.IffExpression import IffExpression
 from logics.senteces.ParseExceptions import ParseException
 from logics.senteces.QuantifiedExpression import QuantifiedExpression
 from logics.senteces.SyllogismExpression import SyllogismExpression
@@ -11,6 +12,7 @@ import re
 
 # List of expressions and their matched regex that we support
 creating_structures = [
+    (IffExpression, iff_regex),
     (QuantifiedExpression, quantified_regex),
     (FunctionExpression, function_regex),
     (SyllogismExpression, syllogism_regex_complete),
