@@ -9,47 +9,7 @@
   },
   {
     "premises": [
-      "I study maths iff I study physics",
-      "I study maths"
-    ],
-    "conclusion": "I do not study physics",
-    "result": "invalid"
-  },
-  {
-    "premises": [
-      "I study maths iff I study physics",
-      "I do not study maths"
-    ],
-    "conclusion": "I study physics",
-    "result": "invalid"
-  },
-  {
-    "premises": [
-      "I study maths iff I study physics",
-      "I do not study maths"
-    ],
-    "conclusion": "I do not study physics",
-    "result": "valid"
-  },
-  {
-    "premises": [
-      "I do not study maths iff I do not study physics",
-      "I do not study maths"
-    ],
-    "conclusion": "I do not study physics",
-    "result": "valid"
-  },
-  {
-    "premises": [
-      "I do not study maths iff I do not study physics",
-      "I study maths"
-    ],
-    "conclusion": "I do not study physics",
-    "result": "invalid"
-  },
-  {
-    "premises": [
-      "I do not study maths iff I do not study physics",
+      "I study maths if and only if I study physics",
       "I study maths"
     ],
     "conclusion": "I study physics",
@@ -57,7 +17,55 @@
   },
   {
     "premises": [
-      "It is not the case that I study maths iff I study physics",
+      "I study maths if and only if I study physics",
+      "I study maths"
+    ],
+    "conclusion": "I do not study physics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "I study maths if and only if I study physics",
+      "I do not study maths"
+    ],
+    "conclusion": "I study physics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "I study maths if and only if I study physics",
+      "I do not study maths"
+    ],
+    "conclusion": "I do not study physics",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "I do not study maths if and only if I do not study physics",
+      "I do not study maths"
+    ],
+    "conclusion": "I do not study physics",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "I do not study maths if and only if I do not study physics",
+      "I study maths"
+    ],
+    "conclusion": "I do not study physics",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "I do not study maths if and only if I do not study physics",
+      "I study maths"
+    ],
+    "conclusion": "I study physics",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "It is not the case that I study maths if and only if I study physics",
       "I study maths"
     ],
     "conclusion": "I study physics",
@@ -73,7 +81,7 @@
   },
   {
     "premises": [
-      "It is not the case that I study maths iff I study physics",
+      "It is not the case that I study maths if and only if I study physics",
       "I study maths"
     ],
     "conclusion": "I do not study physics",

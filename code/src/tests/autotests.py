@@ -5,10 +5,11 @@ from logics.NaturalTableauxSolver import NaturalTableauxSolver
 from termcolor import colored
 
 test_files = [
-    "simple_tests.json",
-    # "syllogism_tests.json",
-    # "todo_tests.json",
-    "iff_tests.json"
+    #"simple_tests.json",
+     #"syllogism_tests.json",
+     #"todo_tests.json",
+    "iff_tests.json",
+    "quantified_tests.json"
 ]
 
 class FailedTest:

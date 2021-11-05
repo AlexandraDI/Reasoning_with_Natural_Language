@@ -1,0 +1,19 @@
+[
+  {
+    "premises": [
+      "for all cats, for all mouses, cats are bigger than mouses",
+      "Tom is a cat and Jerry is a mouse"
+    ],
+    "conclusion": "Tom is bigger than Jerry",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "for all x, for all y, if x is a parent of y, then x is older than y",
+      "for all x, for all y, if x is the mother of y, then x is a parent of y",
+      "Lulu is the mother of Fifi"
+    ],
+    "conclusion": "Lulu is older than Fifi",
+    "result": "valid"
+  }
+]

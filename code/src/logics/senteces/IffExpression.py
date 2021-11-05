@@ -16,12 +16,14 @@ class IffExpression(Expression):
             # Go over each connection key word
             for iff_keyword in iff_keywords:
                 # Go over each word and create expression split by keyword
-                if iff_keyword in self.tokens:
+                keyword_tokens = iff_keyword.split(" ")
+                if contains_sub_array(self.tokens, keyword_tokens):
                     from logics.senteces.Helper import create_expression
-                    keyword_idx = self.tokens.index(iff_keyword)
+                    keyword_begin_idx = self.tokens.index(keyword_tokens[0])
+                    keyword_end_idx = keyword_begin_idx + len(keyword_tokens)
                     # Create the expressions from the left and right tokens
-                    self.left_expression = create_expression(separator.join(self.tokens[:keyword_idx]))
-                    self.right_expression = create_expression(separator.join(self.tokens[keyword_idx + 1:]))
+                    self.left_expression = create_expression(separator.join(self.tokens[:keyword_begin_idx]))
+                    self.right_expression = create_expression(separator.join(self.tokens[keyword_end_idx:]))
                     self.connection_keyword = iff_keyword
                     break
 
@@ -77,3 +79,6 @@ class IffExpression(Expression):
 
     def replace_variable(self, replace, replace_with):
         pass
+
+def contains_sub_array(array, subarray):
+    return [x for x in range(len(array) - len(subarray) + 1) if array[x:x+len(subarray)] == subarray]

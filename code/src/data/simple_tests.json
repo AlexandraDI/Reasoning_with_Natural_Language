@@ -7,5 +7,45 @@
     ],
     "conclusion": "John does not play football",
     "result": "valid"
+  },
+  {
+    "premises": [
+      "When I play football or you play cricket then the field is used",
+      "I play football"
+    ],
+    "conclusion": "The field is used",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "When I play football or you play cricket then the field is used",
+      "I play football"
+    ],
+    "conclusion": "The field is not used",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "When I play football or you play cricket then the field is used",
+      "I do not play football"
+    ],
+    "conclusion": "The field is not used",
+    "result": "invalid"
+  },
+  {
+    "premises": [
+      "When neither I love him nor you love him then he becomes sad",
+      "I do not love him and you do not love him"
+    ],
+    "conclusion": "He becomes sad",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "When neither I dont visit him nor you dont visit him then he becomes happy",
+      "I visit him and you visit him"
+    ],
+    "conclusion": "He becomes happy",
+    "result": "valid"
   }
 ]
