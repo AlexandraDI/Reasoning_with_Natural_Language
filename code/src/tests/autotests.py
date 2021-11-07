@@ -25,8 +25,10 @@ class FailedTest:
         print(f"Actual result: {self.actual_result}")
 
 for test_file_name in test_files:
-
-    f = open(f"../data/{test_file_name}")
+    try:
+        f = open(f"data/{test_file_name}")
+    except FileNotFoundError:
+        f = open(f"data/{test_file_name}")
     current_file = json.load(f)
 
     failed_tests = []
