@@ -26,7 +26,7 @@ class FailedTest:
 
 for test_file_name in test_files:
     try:
-        f = open(f"data/{test_file_name}")
+        f = open(f"../data/{test_file_name}")
     except FileNotFoundError:
         f = open(f"data/{test_file_name}")
     current_file = json.load(f)
