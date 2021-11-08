@@ -7,12 +7,14 @@ from logics.senteces.ParseExceptions import ParseException
 from logics.senteces.QuantifiedExpression import QuantifiedExpression
 from logics.senteces.SyllogismExpression import SyllogismExpression
 from logics.senteces.WhenExpression import WhenExpression
+from logics.senteces.UnlessExpression import UnlessExpression
 
 import re
 
 # List of expressions and their matched regex that we support
 creating_structures = [
     (IffExpression, iff_regex),
+    (UnlessExpression, unless_regex),
     (QuantifiedExpression, quantified_regex),
     (FunctionExpression, function_regex),
     (SyllogismExpression, syllogism_regex_complete),
@@ -105,6 +107,22 @@ def create_expression_representation(expression, ret_dict = None):
         ret_dict["list"].append(create_expression_representation(expression.right_expression, dict()))
         return ret_dict
     elif type(expression) == WhenExpression:
+        ret_dict['type'] = 3
+        ret_dict['name'] = f"{'Left' if expression.left_match else 'Right'} Conditional Expression"
+        if expression.left_match:
+            ret_dict["list"].append(dict(
+                type = -3,
+                tokens = expression.key_words[0]
+            ))
+        ret_dict["list"].append(create_expression_representation(expression.premise, dict()))
+        ret_dict["list"].append(dict(
+            type = -3,
+            tokens = expression.key_words[1 if expression.left_match else 0]
+        ))
+        ret_dict["list"].append(create_expression_representation(expression.conclusion, dict()))
+        return ret_dict
+
+    elif type(expression) == UnlessExpression:
         ret_dict['type'] = 3
         ret_dict['name'] = f"{'Left' if expression.left_match else 'Right'} Conditional Expression"
         if expression.left_match:

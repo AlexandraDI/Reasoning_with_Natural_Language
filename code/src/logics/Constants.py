@@ -59,8 +59,16 @@ connected_regex = f"{base_regex}({demoregen_regex}|{true_connected_regex})"
 iff_keywords = ['iff', "if and only if"]
 iff_regex = f"{WORDS} ({or_join(iff_keywords)}) {WORDS}"
 
+# Unless keywords
+unless_keywords = ['unless']
+unless_split_tokens = [',', 'then', ', then']
+unless_split_right = ['unless']
+unless_left_regex = f"{or_reg(unless_keywords)} {WORDS}{or_reg(unless_split_tokens)} {WORDS}"
+unless_right_regex = f"{WORDS}{or_reg(unless_split_right)} {WORDS}"
+unless_regex = f"{base_regex}({unless_left_regex}|{unless_right_regex})"
+
 # When keywords and regex
-when_keywords = ['when', 'if']
+when_keywords = ['when', 'if', 'unless']
 when_split_tokens = [',', 'then', ', then']
 when_split_right = ['because', ', because', 'if', ', if', ', because of']
 when_left_regex = f"{or_reg(when_keywords)} {WORDS}{or_reg(when_split_tokens)} {WORDS}"

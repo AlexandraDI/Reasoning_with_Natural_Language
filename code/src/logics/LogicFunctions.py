@@ -5,6 +5,7 @@ from logics.logic_functions.OrRule import OrRule
 from logics.logic_functions.QuantificationRule import QuantificationRule
 from logics.logic_functions.SyllogismRule import SyllogismRule
 from logics.logic_functions.WhenRule import WhenRule
+from logics.logic_functions.UnlessRule import UnlessRule
 
 # Order is important, try to not branch to early
 rule_set = dict(
@@ -14,6 +15,7 @@ rule_set = dict(
     de_Morgan_Law = DeMorganRule.apply_rule,
     or_rule = OrRule.apply_rule,
     when_rule = WhenRule.apply_rule,
+    unless_rule = UnlessRule.apply_rule,
 
     syllogism_reverse_rule = SyllogismRule.apply_reverse,
     syllogism_rule_1 = SyllogismRule.apply_rule1,

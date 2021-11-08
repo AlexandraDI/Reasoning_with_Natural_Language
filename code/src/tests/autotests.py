@@ -8,6 +8,7 @@ test_files = [
     #"simple_tests.json",
      #"syllogism_tests.json",
      #"todo_tests.json",
+    "unless_tests.json",
     "iff_tests.json",
     "quantified_tests.json"
 ]
