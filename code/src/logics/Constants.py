@@ -68,7 +68,7 @@ unless_right_regex = f"{WORDS}{or_reg(unless_split_right)} {WORDS}"
 unless_regex = f"{base_regex}({unless_left_regex}|{unless_right_regex})"
 
 # When keywords and regex
-when_keywords = ['when', 'if', 'unless']
+when_keywords = ['when', 'if']
 when_split_tokens = [',', 'then', ', then']
 when_split_right = ['because', ', because', 'if', ', if', ', because of']
 when_left_regex = f"{or_reg(when_keywords)} {WORDS}{or_reg(when_split_tokens)} {WORDS}"
