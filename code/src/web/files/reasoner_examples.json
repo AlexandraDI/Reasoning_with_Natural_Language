@@ -156,5 +156,34 @@
         "to_be_shown": "Lulu is older than Fifi"
       }
     ]
+  },
+  {
+    "tab_name": "Prj. 2 extensions",
+    "examples": [
+      {
+        "name": "If-and-only-if simple",
+        "expressions": [
+          {"value": "He studies maths if and only if he studies physics."},
+          {"value": "He studies maths."}
+        ],
+        "to_be_shown": "He studies physics."
+      },
+      {
+        "name": "If-and-only-if negated",
+        "expressions": [
+          {"value": "It is not the case that I study maths if and only if I study physics"},
+          {"value": "I study maths"}
+        ],
+        "to_be_shown": "I do not study physics"
+      },
+      {
+        "name": "Unless",
+        "expressions": [
+          {"value": "Unless I study AI, I am chilling"},
+          {"value": "I do not study AI"}
+        ],
+        "to_be_shown": "I am chilling"
+      }
+    ]
   }
 ]

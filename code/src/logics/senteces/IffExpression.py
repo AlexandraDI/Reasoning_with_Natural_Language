@@ -1,5 +1,5 @@
 from logics.senteces.Expression import Expression
-from logics.Constants import iff_keywords, separator
+from logics.Constants import iff_keywords, separator, complete_negation
 from logics.senteces.ParseExceptions import ParseException
 from utils.Utils import tokenize
 
@@ -51,7 +51,8 @@ class IffExpression(Expression):
         Splice expression back together with the negation word
         :return: The string representation of the expression
         """
-        return f'{self.left_expression.get_string_rep()} {self.connection_keyword} {self.right_expression.get_string_rep()}'
+        str = f'{(complete_negation + " ") if self.negated else ""}{self.left_expression.get_string_rep()} {self.connection_keyword} {self.right_expression.get_string_rep()}'
+        return str
 
     def reverse_expression(self):
         """

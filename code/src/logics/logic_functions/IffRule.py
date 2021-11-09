@@ -16,7 +16,10 @@ class IffRule(Rule):
     def __init__(self, expression, resulting_expression_1, resulting_expression_2):
         self.name = 'If-and-only-if Rule'
         self.applicable = 'Iff Rule'
-        self.description = '(A iff B) => add the two if-expressions B if A and A if B to the node'
+        if not expression.negated:
+            self.description = '(A iff B) => add the two if-expressions B if A and A if B to the node'
+        else:
+            self.description = 'NOT (A iff B) => Create two sibling leaf to the branch containing NOT (A -> B), NOT (B -> A) respectively'
         self.expression = expression
         self.resulting_expression_1 = resulting_expression_1
         self.resulting_expression_2 = resulting_expression_2
@@ -25,15 +28,27 @@ class IffRule(Rule):
         """
         :return: Create the explanation based on the provided data in the object.
         """
-        return dict(
-            name=self.name,
-            description=self.description,
-            basic_in_expression=["Expression 1 IFF Expression 2"],
-            basic_out_expression=[["Expression 1", "Expression 2"]],
-            in_expression=[self.expression.get_string_rep()],
-            out_expression=[
-                [self.resulting_expression_1.get_string_rep(), self.resulting_expression_2.get_string_rep()]],
-        )
+
+        if not self.expression.negated:
+            return dict(
+                name=self.name,
+                description=self.description,
+                basic_in_expression=["Expression 1 IFF Expression 2"],
+                basic_out_expression=[["Expression 1", "Expression 2"]],
+                in_expression=[self.expression.get_string_rep()],
+                out_expression=[
+                    [self.resulting_expression_1.get_string_rep(), self.resulting_expression_2.get_string_rep()]],
+            )
+        else:
+            return dict(
+                name=self.name,
+                description=self.description,
+                basic_in_expression=["It is not the case that Expression 1 if and only if Expression 2"],
+                basic_out_expression=[["It is not the case that Expression 1 then Expression 2"], ["It is not the case that Expression 2 then Expression 1"]],
+                in_expression=[self.expression.get_string_rep()],
+                out_expression=[
+                    [self.resulting_expression_1.get_string_rep(), self.resulting_expression_2.get_string_rep()]],
+            )
 
     @staticmethod
     def apply_rule(clause: IffExpression, *args):
@@ -61,6 +76,9 @@ class IffRule(Rule):
         if clause.negated:
             new_clauses[0] += [left_exp.reverse_expression()]
             new_clauses[1] += [right_exp.reverse_expression()]
+
+            left_exp = left_exp.reverse_expression()
+            right_exp = right_exp.reverse_expression()
         else:
             new_clauses[0] += [left_exp]
             new_clauses[0] += [right_exp]

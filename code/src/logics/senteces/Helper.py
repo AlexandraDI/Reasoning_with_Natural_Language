@@ -32,6 +32,7 @@ def create_expression(hypothesis):
     :return: The create expression
     """
     lower = hypothesis.strip().lower()
+    lower = lower.strip(".")
 
     error_list = []
 

@@ -7,7 +7,7 @@
     "conclusion": "I study physics",
     "result": "valid"
   },
-      {
+  {
     "premises": [
       "Unless I study physics, I study math",
       "I do not study physics"
@@ -15,7 +15,7 @@
     "conclusion": "I study math",
     "result": "valid"
   },
-        {
+  {
     "premises": [
       "Unless I do not study math, I study physics",
       "I study math"
@@ -23,7 +23,7 @@
     "conclusion": "I study physics",
     "result": "valid"
   },
-          {
+  {
     "premises": [
       "Unless I do not study math, I do not study physics",
       "I study math"
@@ -31,7 +31,7 @@
     "conclusion": "I do not study physics",
     "result": "valid"
   },
-           {
+  {
     "premises": [
       "Unless I do not study math, I do not study physics",
       "I do not study math"
@@ -39,7 +39,7 @@
     "conclusion": "I do not study physics",
     "result": "invalid"
   },
-      {
+  {
     "premises": [
       "It is not the case that unless I study math, I study physics",
       "I do not study math"
@@ -47,7 +47,7 @@
     "conclusion": "I do not study physics",
     "result": "valid"
   },
-        {
+  {
     "premises": [
       "It is not the case that unless I study physics, I study math",
       "I do not study physics"
@@ -55,7 +55,7 @@
     "conclusion": "I do not study math",
     "result": "valid"
   },
-            {
+  {
     "premises": [
       "It is not the case that I study physics Unless I study math",
       "I do not study math"
@@ -63,7 +63,7 @@
     "conclusion": "I do not study physic",
     "result": "valid"
   },
-          {
+  {
     "premises": [
       "I study physics unless I study math",
       "I do not study math"
@@ -71,7 +71,7 @@
     "conclusion": "I study physics",
     "result": "valid"
   },
-        {
+  {
     "premises": [
       "I do not study physics unless I study math",
       "I do not study math"

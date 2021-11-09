@@ -1,6 +1,6 @@
 import re
 
-from logics.Constants import when_left_regex, when_right_regex
+from logics.Constants import when_left_regex, when_right_regex, complete_negation, separator
 from logics.senteces.Expression import Expression
 from logics.senteces.ParseExceptions import ParseException
 from utils.Utils import tokenize, get_sentences_key_words
@@ -113,3 +113,7 @@ class WhenExpression(Expression):
             self.left_match,
             self.key_words
         )
+
+    #def get_string_rep(self):
+    #    str = (complete_negation + " " if self.negated else "") + separator.join(self.tokens)
+    #    return str

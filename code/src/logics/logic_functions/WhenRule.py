@@ -13,7 +13,10 @@ class WhenRule(Rule):
     def __init__(self, expression, resulting_expression_1, resulting_expression_2):
         self.name = 'When Rule'
         self.applicable = 'When Rule'
-        self.description = '(When A then B) = (If A then B) = (Not A OR B) => <br> Create two sibling leaf to the branch containing Not A, B, respectively'
+        if not expression.negated:
+            self.description = '(When A then B) = (If A then B) = (Not A OR B) => <br> Create two sibling leaf to the branch containing Not A, B, respectively'
+        else:
+            self.description = 'NOT (When A then B) = NOT (If A then B) = (A and NOT B) => <br> Add two expressions to the node containing A and NOT B'
         self.expression = expression
         self.resulting_expression_1 = resulting_expression_1
         self.resulting_expression_2 = resulting_expression_2
@@ -22,15 +25,26 @@ class WhenRule(Rule):
         """
         :return: Create the explanation based on the provided data in the object.
         """
-        return dict(
-            name = self.name,
-            description = self.description,
-            basic_in_expression = ["When Expression 1 Then Expression 2"],
-            basic_out_expression = [["Expression 1", "Expression 2"]],
-            in_expression = [self.expression.get_string_rep()],
-            out_expression = [
-                [self.resulting_expression_1.get_string_rep(), self.resulting_expression_2.get_string_rep()]],
-        )
+        if not self.expression.negated:
+            return dict(
+                name = self.name,
+                description = self.description,
+                basic_in_expression = ["When Expression 1 Then Expression 2"],
+                basic_out_expression = [["Expression 1", "Expression 2"]],
+                in_expression = [self.expression.get_string_rep()],
+                out_expression = [
+                    [self.resulting_expression_1.get_string_rep(), self.resulting_expression_2.get_string_rep()]],
+            )
+        else:
+            return dict(
+                name=self.name,
+                description=self.description,
+                basic_in_expression=["It is not the case that When Expression 1 Then Expression 2"],
+                basic_out_expression=[["Expression 1", "Not Expression 2"]],
+                in_expression=[self.expression.get_string_rep()],
+                out_expression=[
+                    [self.resulting_expression_1.get_string_rep(), self.resulting_expression_2.get_string_rep()]],
+            )
 
     @staticmethod
     def apply_rule(clause: WhenExpression, *args):

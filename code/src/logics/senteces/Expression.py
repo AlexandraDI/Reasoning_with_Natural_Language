@@ -22,6 +22,7 @@ class Expression(metaclass=abc.ABCMeta):
 
         if type(hypothesis) is str:
             self.init_hypo = hypothesis.lower()  # Only use lower case
+            self.init_hypo = self.init_hypo.strip(".") # Remove period at the end of the sentence
             self.tokens: List = tokenize(self.init_hypo)  # Split hypo into tokens
         else:
             self.init_hypo = " ".join(hypothesis)
