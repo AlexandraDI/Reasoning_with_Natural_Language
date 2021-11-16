@@ -13,9 +13,9 @@ class QuantifiedExpression(Expression):
 
     def __init__(self, *args):
         # When we have only one input it must be a sentence
-        if len(args) == 1:
+        if len(args) <= 2:
             # Call the constructor of the Expression
-            super().__init__(args[0])
+            super().__init__(*args)
 
             # Create expected variables
             self.for_all = True

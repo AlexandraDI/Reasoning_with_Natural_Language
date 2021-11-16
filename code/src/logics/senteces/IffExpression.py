@@ -6,8 +6,8 @@ from utils.Utils import tokenize
 
 class IffExpression(Expression):
     def __init__(self, *args):
-        if len(args) == 1:
-            super().__init__(args[0])
+        if len(args) <= 2:
+            super().__init__(*args)
 
             self.left_expression = None
             self.right_expression = None
