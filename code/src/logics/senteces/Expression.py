@@ -143,39 +143,37 @@ class Expression(metaclass=abc.ABCMeta):
     def __len__(self):
         return len(self.tokens)
 
-    # TODO Fix eq method
-    # def __eq__(self, other: 'Expression') -> bool:
-    #     """
-    #     Args:
-    #         other: expression compared to this one
+    def __eq__(self, other: "Expression") -> bool:
+        """
+        Args:
+            other: expression compared to this one
 
-    #     Returns:
-    #         Whether the given expression is equivalent to this expression
+        Returns:
+            Whether the given expression is equivalent to this expression
 
-    #     Note:
-    #         Check if subclasses have to extend this method.
-    #     """
-    #     # id is unique -> same id same object
-    #     if self.id == other.id:
-    #         return True
+        Note:
+            Check if subclasses have to extend this method.
+        """
+        # id is unique -> same id same object
+        if self.id == other.id:
+            return True
 
-    #     if type(self) != type(other):
-    #         return False
+        if type(self) != type(other):
+            return False
 
-    #     if self.negated != other.negated:
-    #         return False
+        if self.negated != other.negated:
+            return False
 
-    #     if self.tokens != other.tokens:
-    #         return False
-    #     return True
+        if self.tokens != other.tokens:
+            return False
+        return True
 
     def __hash__(self) -> int:
         """
         Returns:
-            Use the id of the object as hash. This method is needed to use expressions
-            in sets.
+            Hash of the object. This method is needed to use expressions in sets.
         """
-        return id(self)
+        return super().__hash__()
 
     @staticmethod
     def support_union(exp1: "Expression", exp2: "Expression") -> Set["Expression"]:
