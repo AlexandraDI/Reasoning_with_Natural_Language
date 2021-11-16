@@ -36,7 +36,8 @@ class DeMorganRule(Rule):
             not clause.negated,
             clause.left_expression.reverse_expression(),
             clause.right_expression.reverse_expression(),
-            "or" if clause.connection_keyword == "and" else "and"
+            "or" if clause.connection_keyword == "and" else "and",
+            clause.copy_support()
         )
 
         if clause.connection_keyword == 'and':

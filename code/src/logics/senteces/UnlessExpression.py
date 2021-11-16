@@ -45,11 +45,11 @@ class UnlessExpression(Expression):
             # Get the unless expression that needs to be negated if necessary
             from logics.senteces.Helper import create_expression
             if self.left_match:
-                self.premise = create_expression(sentences[0])
-                self.conclusion = create_expression(sentences[1])
+                self.premise = create_expression(sentences[0], self.copy_support())
+                self.conclusion = create_expression(sentences[1], self.copy_support())
             else:
-                self.premise = create_expression(sentences[1])
-                self.conclusion = create_expression(sentences[0])
+                self.premise = create_expression(sentences[1], self.copy_support())
+                self.conclusion = create_expression(sentences[0], self.copy_support())
 
         else:
             # Copy constructor
@@ -111,5 +111,5 @@ class UnlessExpression(Expression):
             self.premise,
             self.conclusion,
             self.left_match,
-            self.key_words
+            self.key_words,
         )

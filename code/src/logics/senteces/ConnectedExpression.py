@@ -30,8 +30,8 @@ class ConnectedExpression(Expression):
                     from logics.senteces.Helper import create_expression
                     keyword_idx = self.tokens.index(connection_keyword)
                     # Create the expressions from the left and right tokens
-                    self.left_expression = create_expression(separator.join(self.tokens[:keyword_idx]))
-                    self.right_expression = create_expression(separator.join(self.tokens[keyword_idx + 1:]))
+                    self.left_expression = create_expression(separator.join(self.tokens[:keyword_idx]), self.copy_support())
+                    self.right_expression = create_expression(separator.join(self.tokens[keyword_idx + 1:]), self.copy_support())
 
                     self.connection_keyword = connection_keyword
                     break

@@ -24,7 +24,7 @@ creating_structures = [
 ]
 
 
-def create_expression(hypothesis):
+def create_expression(hypothesis, support = None):
     """
     Function that creates the expressions given a sentence
     If no match is found return a parse expression
@@ -44,7 +44,7 @@ def create_expression(hypothesis):
             regex_match = re.match(expression_regex, lower, re.IGNORECASE)
         if expression_regex is None or (regex_match and regex_match.end() == len(lower)):
             try:
-                expression = constructor(lower)
+                expression = constructor(lower, support)
                 return expression
             except Exception as err:
                 if type(err) is ParseException:

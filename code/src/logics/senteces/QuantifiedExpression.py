@@ -49,7 +49,7 @@ class QuantifiedExpression(Expression):
 
             # Create the remaining expression
             from logics.senteces.Helper import create_expression
-            self.quantified_expression = create_expression(sentences[1])
+            self.quantified_expression = create_expression(sentences[1], self.copy_support())
         else:
             # Copy constructor
             self.count_id()

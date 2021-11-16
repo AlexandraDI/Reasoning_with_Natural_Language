@@ -30,6 +30,7 @@ class Expression(metaclass=abc.ABCMeta):
     """
 
     id_counter = 0  # The expression counter for each new expression
+    support = {}
 
     def __init__(
         self,
@@ -135,7 +136,7 @@ class Expression(metaclass=abc.ABCMeta):
         return separator.join(self.tokens)
 
     def __str__(self):
-        return f"{type(self).__name__}(neg={self.negated}, tokens={self.tokens})"
+        return f"{type(self).__name__}(neg={self.negated}, tokens={self.tokens}), support={self.support}"
 
     def __repr__(self):
         return f"{self.tokens}"
