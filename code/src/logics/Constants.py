@@ -75,7 +75,7 @@ when_left_regex = f"{or_reg(when_keywords)} {WORDS}{or_reg(when_split_tokens)} {
 when_right_regex = f"{WORDS}{or_reg(when_split_right)} {WORDS}"
 when_regex = f"{base_regex}({when_left_regex}|{when_right_regex})"
 
-de_morgen_expression = 'neither'
+de_morgan_expression = 'neither'
 
 pluralism_keywords = ['all', 'some', 'no']
 pos_middle_keywords = ["have", "are", "is an", "is a", "is", "has"]
