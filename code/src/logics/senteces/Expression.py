@@ -30,7 +30,7 @@ class Expression(metaclass=abc.ABCMeta):
     """
 
     id_counter = 0  # The expression counter for each new expression
-    support = {}
+    support = set()
 
     def __init__(
         self,

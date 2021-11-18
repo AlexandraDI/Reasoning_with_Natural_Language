@@ -25,6 +25,7 @@ class TableauxSolver:
         self.applied_rules = dict(root_node = create_root_node_rule())
         self.solve_tree = None
         self.all_branches_closed = True
+        self.closing_arguments = set()
 
     def proof(self):
         """
@@ -107,6 +108,11 @@ class TableauxSolver:
                 applied_rule = create_tautologie_rule(curr_clause, matched_clause)
                 self.solve_tree.add_node(node, applied_rule, len(self.applied_rules))
                 self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
+
+                # adding support of both expressions if we have found a contradiction to the argument list
+                self.closing_arguments = self.closing_arguments.union(matched_clause.support)
+                self.closing_arguments = self.closing_arguments.union(curr_clause.support)
+
                 return True
 
         # Go over each clause and check if we can apply a rule
@@ -126,6 +132,10 @@ class TableauxSolver:
                 # Apply rule and check if we have created branches
                 branches, created_rule = rule(curr_clause, clauses, list_of_new_objects)
                 new_nodes = None
+
+                for j, branch in branches.items():
+                    for sentence in branch:
+                        sentence.support.add(curr_clause)
 
                 # If we have add the node to the documentation otherwise continue
                 if len(branches) != 0:

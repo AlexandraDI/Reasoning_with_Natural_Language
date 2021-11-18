@@ -2,14 +2,14 @@ graph " " {
 0 [id=root_node, label=<
         <table border="0" CELLBORDER="1">
         <tr><td COLSPAN="3" ALIGN="CENTER" SIDES="B">Initial root</td></tr>
-        <tr><td BORDER="0" CELLSPACING="10">0:</td><td BORDER="0" ALIGN="LEFT">all human are mortal</td></tr><tr><td BORDER="0" CELLSPACING="10">1:</td><td BORDER="0" ALIGN="LEFT">all greek are human</td></tr><tr><td BORDER="0" CELLSPACING="10">3:</td><td BORDER="0" ALIGN="LEFT">it is not the case that all greek are mortal</td></tr>
+        <tr><td BORDER="0" CELLSPACING="10">0:</td><td BORDER="0" ALIGN="LEFT">all human are mortal</td></tr><tr><td BORDER="0" CELLSPACING="10">2:</td><td BORDER="0" ALIGN="LEFT">all greek are human</td></tr><tr><td BORDER="0" CELLSPACING="10">6:</td><td BORDER="0" ALIGN="LEFT">it is not the case that all greek are mortal</td></tr>
         
         </table>
         >, shape=polygon, tooltip=" "];
 1 [id=node_1, label=<
         <table border="0" CELLBORDER="1">
         <tr><td COLSPAN="3" ALIGN="CENTER" SIDES="B">Syllogism Rule</td></tr>
-        <tr><td BORDER="0" CELLSPACING="10">4:</td><td BORDER="0" ALIGN="LEFT">some greek are not mortal</td><td ROWSPAN="1" SIDES="L">3</td></tr>
+        <tr><td BORDER="0" CELLSPACING="10">7:</td><td BORDER="0" ALIGN="LEFT">some greek are not mortal</td><td ROWSPAN="1" SIDES="L">6</td></tr>
         
         </table>
         >, shape=polygon, tooltip=" "];
@@ -17,7 +17,7 @@ graph " " {
 2 [id=node_2, label=<
         <table border="0" CELLBORDER="1">
         <tr><td COLSPAN="3" ALIGN="CENTER" SIDES="B">Syllogism Rule</td></tr>
-        <tr><td BORDER="0" CELLSPACING="10">5:</td><td BORDER="0" ALIGN="LEFT">There is a greek</td><td ROWSPAN="2" SIDES="L">4</td></tr><tr><td BORDER="0" CELLSPACING="10">6:</td><td BORDER="0" ALIGN="LEFT">There is not a mortal</td></tr>
+        <tr><td BORDER="0" CELLSPACING="10">8:</td><td BORDER="0" ALIGN="LEFT">There is a greek</td><td ROWSPAN="2" SIDES="L">7</td></tr><tr><td BORDER="0" CELLSPACING="10">9:</td><td BORDER="0" ALIGN="LEFT">There is not a mortal</td></tr>
         
         </table>
         >, shape=polygon, tooltip=" "];
@@ -25,7 +25,7 @@ graph " " {
 3 [id=node_3, label=<
         <table border="0" CELLBORDER="1">
         <tr><td COLSPAN="3" ALIGN="CENTER" SIDES="B">Syllogism Rule</td></tr>
-        <tr><td BORDER="0" CELLSPACING="10">7:</td><td BORDER="0" ALIGN="LEFT">There is a human</td><td ROWSPAN="1" SIDES="L">1</td></tr>
+        <tr><td BORDER="0" CELLSPACING="10">10:</td><td BORDER="0" ALIGN="LEFT">There is a human</td><td ROWSPAN="1" SIDES="L">2</td></tr>
         
         </table>
         >, shape=polygon, tooltip=" "];
@@ -33,7 +33,7 @@ graph " " {
 4 [id=node_4, label=<
         <table border="0" CELLBORDER="1">
         <tr><td COLSPAN="3" ALIGN="CENTER" SIDES="B">Syllogism Rule</td></tr>
-        <tr><td BORDER="0" CELLSPACING="10">8:</td><td BORDER="0" ALIGN="LEFT">There is a mortal</td><td ROWSPAN="1" SIDES="L">0</td></tr>
+        <tr><td BORDER="0" CELLSPACING="10">11:</td><td BORDER="0" ALIGN="LEFT">There is a mortal</td><td ROWSPAN="1" SIDES="L">0</td></tr>
         
         </table>
         >, shape=polygon, tooltip=" "];
@@ -41,7 +41,7 @@ graph " " {
 5 [id=node_5, label=<
         <table border="0" CELLBORDER="1">
         
-        <tr><td BORDER="0" CELLSPACING="10">6:</td><td BORDER="0" ALIGN="LEFT">There is not a mortal</td><td ROWSPAN="2" SIDES="L">6</td></tr><tr><td BORDER="0" CELLSPACING="10">8:</td><td BORDER="0" ALIGN="LEFT">There is a mortal</td></tr>
+        <tr><td BORDER="0" CELLSPACING="10">9:</td><td BORDER="0" ALIGN="LEFT">There is not a mortal</td><td ROWSPAN="2" SIDES="L">9</td></tr><tr><td BORDER="0" CELLSPACING="10">11:</td><td BORDER="0" ALIGN="LEFT">There is a mortal</td></tr>
         <tr><td COLSPAN="3" ALIGN="CENTER" SIDES="T">X</td></tr>
         </table>
         >, shape=polygon, tooltip=" "];
