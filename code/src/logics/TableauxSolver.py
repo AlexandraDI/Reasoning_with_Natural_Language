@@ -44,6 +44,8 @@ class TableauxSolver:
                 clauses.append(claus)
             # Reverse the expression and append it to the clause list
             neg_thesis = self.to_be_shown.reverse_expression()
+            neg_thesis.test = True
+            neg_thesis.support.add(neg_thesis)
             clauses.append(neg_thesis)
 
             # Create the solve tree and call the recursive proof
