@@ -22,7 +22,7 @@ class TableauxSolver:
     def __init__(self, hypothesis, thesis):
         self.hypothesis: List[Expression] = hypothesis
         self.to_be_shown: Expression = thesis
-        self.applied_rules = dict(root_node = create_root_node_rule())
+        self.applied_rules = dict(root_node=create_root_node_rule())
         self.solve_tree = None
         self.all_branches_closed = True
         self.closing_arguments = set()
@@ -51,10 +51,10 @@ class TableauxSolver:
             # Create the solve tree and call the recursive proof
             self.solve_tree = TreeGenerator(clauses)
             result = self.recursive_proof(
-                clauses = clauses,
-                applied_rules = [],
-                list_of_new_objects = [],
-                parent = self.solve_tree.root_node
+                clauses=clauses,
+                applied_rules=[],
+                list_of_new_objects=[],
+                parent=self.solve_tree.root_node
             )
         except RuntimeError as e:
             print(e)
@@ -81,7 +81,7 @@ class TableauxSolver:
                 return True, clause, unification_replacements
         return False, None, None
 
-    def recursive_proof(self, clauses, applied_rules, list_of_new_objects, parent = None) -> bool:
+    def recursive_proof(self, clauses, applied_rules, list_of_new_objects, parent=None) -> bool:
         """
         The recursive prove first searches for a tautology.
         If none is found try to apply a rule.
@@ -100,11 +100,13 @@ class TableauxSolver:
             if not (type(curr_clause) == BaseExpression or type(curr_clause) == FunctionExpression):
                 continue
 
-            res, matched_clause, unification_replacements = TableauxSolver.check_for_tautology(curr_clause, clauses, list_of_new_objects)
+            res, matched_clause, unification_replacements = TableauxSolver.check_for_tautology(curr_clause, clauses,
+                                                                                               list_of_new_objects)
             if res:
                 node = parent
                 if unification_replacements:
-                    node = self.create_unification_replacements(curr_clause, matched_clause, unification_replacements, parent)
+                    node = self.create_unification_replacements(curr_clause, matched_clause, unification_replacements,
+                                                                parent)
 
                 # Found Tautology with the matched clause
                 applied_rule = create_tautologie_rule(curr_clause, matched_clause)
@@ -124,9 +126,9 @@ class TableauxSolver:
 
                 # Dont apply rule twice
                 applied_rule = AppliedRule(
-                    rule_name = rule_name,
-                    referenced_line = curr_clause.id,
-                    c_expression = curr_clause,
+                    rule_name=rule_name,
+                    referenced_line=curr_clause.id,
+                    c_expression=curr_clause,
                 )
                 if applied_rule in applied_rules:
                     continue
@@ -135,9 +137,11 @@ class TableauxSolver:
                 branches, created_rule = rule(curr_clause, clauses, list_of_new_objects)
                 new_nodes = None
 
+                # for loop for argumentation tableau
                 for j, branch in branches.items():
+                    # Adding support for each new generated sentences, the support is always the parents support
                     for sentence in branch:
-                        sentence.support.add(curr_clause)
+                        sentence.support = sentence.support.union(curr_clause.support)
 
                 # If we have add the node to the documentation otherwise continue
                 if len(branches) != 0:
@@ -155,10 +159,10 @@ class TableauxSolver:
                 if len(branches) == 1:
                     clauses += branches[0]  # Not sure if we want to create a copy of the list
                     return self.recursive_proof(
-                        clauses = clauses,
-                        applied_rules = applied_rules,
-                        list_of_new_objects = list(list_of_new_objects),
-                        parent = new_nodes[0]
+                        clauses=clauses,
+                        applied_rules=applied_rules,
+                        list_of_new_objects=list(list_of_new_objects),
+                        parent=new_nodes[0]
                     )
                 # If there is more then one branch we need to close every branch
                 # Go over the list of clauses and create a recursive call for each
@@ -167,10 +171,10 @@ class TableauxSolver:
                     next_clauses = list(clauses)
                     next_clauses += branch
                     branch_close = self.recursive_proof(
-                        clauses = next_clauses,
-                        applied_rules = list(applied_rules),
-                        list_of_new_objects = list(list_of_new_objects),
-                        parent = new_nodes[j]
+                        clauses=next_clauses,
+                        applied_rules=list(applied_rules),
+                        list_of_new_objects=list(list_of_new_objects),
+                        parent=new_nodes[j]
                     )
                     if not branch_close:
                         closes = False
@@ -198,7 +202,8 @@ class TableauxSolver:
             # Go over the order of the matched pair
             for current_clause, comp_clause in [(curr_clause, matched_clause), (matched_clause, curr_clause)]:
                 # If its a function expression get the variable list otherwise geht the object and subject
-                var_list = current_clause.variables if type(curr_clause) == FunctionExpression else [current_clause.object, current_clause.subject]
+                var_list = current_clause.variables if type(curr_clause) == FunctionExpression else [
+                    current_clause.object, current_clause.subject]
                 # Iterate over the variables
                 for var_idx, variable in enumerate(var_list):
                     # Search for the unified variable and replace it
