@@ -10,7 +10,8 @@ test_files = [
      #"todo_tests.json",
     "unless_tests.json",
     "iff_tests.json",
-    "quantified_tests.json"
+    "quantified_tests.json",
+    "other_tests.json"
 ]
 
 class FailedTest:

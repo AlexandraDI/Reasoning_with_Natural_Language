@@ -1,0 +1,12 @@
+[
+  {
+    "premises": [
+      "John plays football or chess",
+      "John does not play chess",
+      "Mary plays football or chess"
+    ],
+    "conclusion": "John plays football",
+    "result": "valid",
+    "comment": "Check in the web UI that also the 3rd premise is expanded"
+  }
+]
