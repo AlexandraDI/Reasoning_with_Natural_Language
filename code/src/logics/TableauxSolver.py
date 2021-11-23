@@ -8,6 +8,7 @@ from logics.RuleCreatorUtil import create_root_node_rule, create_unification_rul
 from logics.senteces.Expression import Expression
 from logics.LogicFunctions import rule_set
 from logics.senteces.BaseExpression import BaseExpression
+from logics.senteces.BaseExpressionWithPreposition import BaseExpressionWithPreposition
 from logics.senteces.FunctionExpression import FunctionExpression
 from logics.senteces.UnifiableVariable import UnifiableVariable
 from visualization.AppliedRule import AppliedRule
@@ -69,7 +70,7 @@ class TableauxSolver:
         """
         # Go over each clause and check whether it is a base or a function expression
         for clause in clauses:
-            if clause == hypothesis or not (type(clause) == BaseExpression or type(clause) == FunctionExpression):
+            if clause == hypothesis or not (type(clause) == BaseExpression or type(clause) == BaseExpressionWithPreposition or type(clause) == FunctionExpression):
                 continue
 
             # If it is check if it is a tautologie with the hypothesis expression
@@ -94,7 +95,7 @@ class TableauxSolver:
 
         # Check if we have a tautology in this branch
         for i, curr_clause in enumerate(clauses):
-            if not (type(curr_clause) == BaseExpression or type(curr_clause) == FunctionExpression):
+            if not (type(curr_clause) == BaseExpression or type(curr_clause) == BaseExpressionWithPreposition or type(curr_clause) == FunctionExpression):
                 continue
 
             res, matched_clause, unification_replacements = TableauxSolver.check_for_tautology(curr_clause, clauses, list_of_new_objects)
@@ -195,6 +196,11 @@ class TableauxSolver:
                         orig_sentence = current_clause.get_string_rep()
                         # Replace it
                         if type(curr_clause) == BaseExpression:
+                            if var_idx == 0:
+                                current_clause.object = unification[0]
+                            else:
+                                current_clause.subject = unification[0]
+                        elif type(curr_clause) == BaseExpressionWithPreposition:
                             if var_idx == 0:
                                 current_clause.object = unification[0]
                             else:

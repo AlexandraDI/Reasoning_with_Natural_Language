@@ -1,4 +1,5 @@
 from logics.Constants import *
+from logics.senteces.BaseExpressionWithPreposition import BaseExpressionWithPreposition
 from logics.senteces.BaseExpression import BaseExpression
 from logics.senteces.ConnectedExpression import ConnectedExpression
 from logics.senteces.FunctionExpression import FunctionExpression
@@ -20,7 +21,9 @@ creating_structures = [
     (SyllogismExpression, syllogism_regex_complete),
     (WhenExpression, when_regex),
     (ConnectedExpression, connected_regex),
+    (BaseExpressionWithPreposition, None),
     (BaseExpression, None),
+
 ]
 
 
@@ -174,6 +177,35 @@ def create_expression_representation(expression, ret_dict = None):
             type = -5,
             name = "Object",
             tokens = expression.object
+        ))
+        return ret_dict
+    elif type(expression) == BaseExpressionWithPreposition:
+        ret_dict['type'] = 5
+        ret_dict['name'] = "Basis Information"
+        ret_dict["list"].append(dict(
+            type = -5,
+            name = "Subject",
+            tokens = expression.subject,
+        ))
+        ret_dict["list"].append(dict(
+            type = -5,
+            name = "Verb",
+            tokens = expression.verb
+        ))
+        ret_dict["list"].append(dict(
+            type = -5,
+            name = "Object1",
+            tokens = expression.object1
+        ))
+        ret_dict["list"].append(dict(
+            type = -5,
+            name = "Preposition",
+            tokens = expression.preposition
+        ))
+        ret_dict["list"].append(dict(
+            type = -5,
+            name = "Object2",
+            tokens = expression.object2
         ))
         return ret_dict
     elif type(expression) == FunctionExpression:

@@ -32,7 +32,8 @@ class ConnectedExpression(Expression):
                     # Create the expressions from the left and right tokens
                     self.left_expression = create_expression(separator.join(self.tokens[:keyword_idx]))
                     self.right_expression = create_expression(separator.join(self.tokens[keyword_idx + 1:]))
-
+                    # if(connection_keyword == ','):
+                    #     connection_keyword='and'
                     self.connection_keyword = connection_keyword
                     break
 

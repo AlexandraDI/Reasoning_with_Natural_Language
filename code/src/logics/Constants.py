@@ -45,14 +45,20 @@ base_regex = f"({complete_negation} )?"
 separator = ' '
 
 negation_keywords = [['do', 'not'], ['does', 'not'], 'not', 'never', 'dont', 'don\'t', 'doesnt', 'doesn\'t']
-base_filler_words = ['the', 'must', 'a']
+base_filler_words = ['the', 'must', 'a', 'an']
+prepositions = ['aboard', 'about', 'above', 'across','after','against','along','amid','among','anti','around','as',
+                'at','before','behind','below','beneath','beside','besides','between','beyond','but','by','concerning',
+                'considering','despite','down','during','except','excepting','excluding','following','for','from','in',
+                'inside','into','like','minus','near','of','off','on','onto','opposite','outside','over','past','per',
+                'plus','regarding','round','since','than','through','to','toward','towards','under','underneath','unlike',
+                'until','up','upon','versus','via','with','within','without']
 
-connection_keywords = ['or', 'and', ';', 'nor']
+connection_keywords = ['or', 'and', ';', 'nor',',']
 and_connection_keywords = ['and', ';']
 or_connection_keywords = ['or', 'nor']
 
 demoregen_regex = f"Neither {WORDS} (nor|and|or) {WORDS}"
-true_connected_regex = f"{WORDS} (or|and|;) {WORDS}"
+true_connected_regex = f"{WORDS} (or|and|;|,) {WORDS}"
 connected_regex = f"{base_regex}({demoregen_regex}|{true_connected_regex})"
 
 # If-and-only-if keywords
