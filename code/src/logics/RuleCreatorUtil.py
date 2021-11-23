@@ -16,14 +16,14 @@ def create_root_node_rule():
             )
         )
 
-def create_tautologie_rule(curr_clause, matched_clause):
+def create_contradiction_rule(curr_clause, matched_clause):
     applied_rule = AppliedRule(
-        rule_name = "Tautologie",
+        rule_name = "contradiction",
         referenced_line = curr_clause.id,
         c_expression = curr_clause,
         matched_expression = matched_clause,
         rule_desc_obj = dict(
-            name = "Tautologie",
+            name = "contradiction",
             description = "This means we have found an expression that shows the opposite.",
             basic_in_expression = ["¬A ∧ A"],
             basic_out_expression = ["X"],

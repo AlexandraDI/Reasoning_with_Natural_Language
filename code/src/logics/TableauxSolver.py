@@ -7,7 +7,7 @@ from typing import List
 from logics.RuleCreatorUtil import (
     create_root_node_rule,
     create_unification_rule,
-    create_tautologie_rule,
+    create_contradiction_rule,
 )
 from logics.senteces.Expression import Expression
 from logics.LogicFunctions import rule_set
@@ -67,11 +67,11 @@ class TableauxSolver:
         return result
 
     @staticmethod
-    def check_for_tautology(
+    def check_for_contradiction(
         hypothesis: BaseExpression, clauses: List[Expression], list_of_new_objects
     ):
         """
-        Helper function that checks for the given hypothesis if there is a tautology in the created classes
+        Helper function that checks for the given hypothesis if there is a contradiction in the created classes
         :param hypothesis:          The expression to check with
         :param clauses:             The list of clauses
         :param list_of_new_objects: If we need to creat a new object in the process
@@ -82,11 +82,11 @@ class TableauxSolver:
             if clause == hypothesis or not isinstance(clause, (BaseExpression, FunctionExpression)):
                 continue
 
-            # If it is check if it is a tautologie with the hypothesis expression
-            is_tautologie, unification_replacements = hypothesis.is_tautologie_of(
+            # If it is check if it is a contradiction with the hypothesis expression
+            is_contradiction, unification_replacements = hypothesis.is_contradiction_of(
                 clause, list_of_new_objects
             )
-            if is_tautologie:
+            if is_contradiction:
                 return True, clause, unification_replacements
         return False, None, None
 
@@ -94,7 +94,7 @@ class TableauxSolver:
         self, clauses, applied_rules, list_of_new_objects, parent=None
     ) -> bool:
         """
-        The recursive prove first searches for a tautology.
+        The recursive prove first searches for a contradiction.
         If none is found try to apply a rule.
         If one is applied successfully call the recursive proof with the new clause.
         Otherwise return false
@@ -174,7 +174,7 @@ class TableauxSolver:
                 # If not every branch closes then this doesnt work
                 return closes
 
-        # Check if we have a tautology in this branch
+        # Check if we have a contradiction in this branch
         for i, curr_clause in enumerate(clauses):
             if not isinstance(curr_clause, (BaseExpression, FunctionExpression)):
                 continue
@@ -182,7 +182,7 @@ class TableauxSolver:
                 res,
                 matched_clause,
                 unification_replacements,
-            ) = TableauxSolver.check_for_tautology(
+            ) = TableauxSolver.check_for_contradiction(
                 curr_clause, clauses, list_of_new_objects
             )
             if res:
@@ -192,8 +192,8 @@ class TableauxSolver:
                         curr_clause, matched_clause, unification_replacements, parent
                     )
 
-                # Found Tautology with the matched clause
-                applied_rule = create_tautologie_rule(curr_clause, matched_clause)
+                # Found contradiction with the matched clause
+                applied_rule = create_contradiction_rule(curr_clause, matched_clause)
                 self.solve_tree.add_node(node, applied_rule, len(self.applied_rules))
                 self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
 
@@ -216,8 +216,8 @@ class TableauxSolver:
     ):
         """
         This function creates unification replacements for the visualization
-        :param curr_clause:                 The clause that was found for the tautology
-        :param matched_clause:              The matched tautology
+        :param curr_clause:                 The clause that was found for the contradiction
+        :param matched_clause:              The matched contradiction
         :param unification_replacements:    The used unification replacements
         :param parent:                      The tree node
         :return: The last parent that was used
