@@ -31,7 +31,7 @@ class WhenRule(Rule):
                 description = self.description,
                 basic_in_expression = ["When Expression 1 Then Expression 2"],
                 basic_out_expression = [["Expression 1", "Expression 2"]],
-                in_expression = [self.expression.get_string_rep()],
+                in_expression = [f"{self.expression.get_string_rep()} {'[↝]' if self.expression.defeasible else ''}"],
                 out_expression = [
                     [self.resulting_expression_1.get_string_rep(), self.resulting_expression_2.get_string_rep()]],
             )

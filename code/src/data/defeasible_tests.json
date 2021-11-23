@@ -1,0 +1,10 @@
+[
+  {
+    "premises": [
+      "Normally when I play football then the field is used",
+      "I play football"
+    ],
+    "conclusion": "The field is used",
+    "result": "valid"
+  }
+]

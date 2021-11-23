@@ -6,8 +6,8 @@ from utils.Utils import tokenize
 
 class IffExpression(Expression):
     def __init__(self, *args):
-        if len(args) == 1:
-            super().__init__(args[0])
+        if len(args) <= 2:
+            super().__init__(*args)
 
             self.left_expression = None
             self.right_expression = None
@@ -22,8 +22,8 @@ class IffExpression(Expression):
                     keyword_begin_idx = self.tokens.index(keyword_tokens[0])
                     keyword_end_idx = keyword_begin_idx + len(keyword_tokens)
                     # Create the expressions from the left and right tokens
-                    self.left_expression = create_expression(separator.join(self.tokens[:keyword_begin_idx]))
-                    self.right_expression = create_expression(separator.join(self.tokens[keyword_end_idx:]))
+                    self.left_expression = create_expression(separator.join(self.tokens[:keyword_begin_idx]), self.copy_support())
+                    self.right_expression = create_expression(separator.join(self.tokens[keyword_end_idx:]), self.copy_support())
                     self.connection_keyword = iff_keyword
                     break
 
@@ -36,6 +36,7 @@ class IffExpression(Expression):
             self.left_expression = args[1]
             self.right_expression = args[2]
             self.connection_keyword = args[3]
+            self.support = args[4]
             self.tokenize_expression()
 
     def tokenize_expression(self):
@@ -75,7 +76,8 @@ class IffExpression(Expression):
             self.negated,
             self.left_expression,
             self.right_expression,
-            self.connection_keyword
+            self.connection_keyword,
+            self.copy_support()
         )
 
     def replace_variable(self, replace, replace_with):

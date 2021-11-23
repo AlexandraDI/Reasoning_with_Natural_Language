@@ -1,6 +1,6 @@
 import re
 
-from logics.Constants import when_left_regex, when_right_regex, complete_negation, separator
+from logics.Constants import when_left_regex, when_right_regex, complete_negation, separator, defeasible_indicators
 from logics.senteces.Expression import Expression
 from logics.senteces.ParseExceptions import ParseException
 from utils.Utils import tokenize, get_sentences_key_words
@@ -13,15 +13,26 @@ class WhenExpression(Expression):
 
     def __init__(self, *args):
         # When we have only one input it must be a sentence
-        if len(args) == 1:
+        if len(args) <= 2:
             # Call the constructor of the Expression
-            super().__init__(args[0])
+            super().__init__(*args)
 
-            # Get the string rep with the overall negation removed
-            test_sentence = self.get_string_rep()
 
             self.left_match = None
             self.key_words = None
+
+            self.defeasible = False
+            self.defeasible_keyword = None
+            for defeasible_indicator in defeasible_indicators:
+                if self.tokens[0] == defeasible_indicator:
+                    self.defeasible_keyword = defeasible_indicator
+                    self.defeasible = True
+                    self.tokens = self.tokens[1:]
+                    if self.tokens[0] == ",":
+                        self.tokens = self.tokens[1:]
+
+            # Get the string rep with the overall negation removed
+            test_sentence = self.get_string_rep(include_defeasible=False)
 
             # Check whether we have a left when expression or right when expression
             reg_match = None
@@ -45,20 +56,23 @@ class WhenExpression(Expression):
             # Get the when expression that needs to be negated if necessary
             from logics.senteces.Helper import create_expression
             if self.left_match:
-                self.premise = create_expression(sentences[0])
-                self.conclusion = create_expression(sentences[1])
+                self.premise = create_expression(sentences[0], self.copy_support())
+                self.conclusion = create_expression(sentences[1], self.copy_support())
             else:
-                self.premise = create_expression(sentences[1])
-                self.conclusion = create_expression(sentences[0])
+                self.premise = create_expression(sentences[1], self.copy_support())
+                self.conclusion = create_expression(sentences[0], self.copy_support())
 
         else:
             # Copy constructor
             self.count_id()
             self.negated = args[0]
-            self.premise = args[1]
-            self.conclusion = args[2]
-            self.left_match = args[3]
-            self.key_words = args[4]
+            self.defeasible = args[1]
+            self.defeasible_keyword = args[2]
+            self.premise = args[3]
+            self.conclusion = args[4]
+            self.left_match = args[5]
+            self.key_words = args[6]
+            self.support = args[7]
             self.tokenize_expression()
 
     def tokenize_expression(self):
@@ -95,10 +109,13 @@ class WhenExpression(Expression):
         """
         return WhenExpression(
             not self.negated,
+            self.defeasible,
+            self.defeasible_keyword,
             self.premise,
             self.conclusion,
             self.left_match,
-            self.key_words
+            self.key_words,
+            self.copy_support()
         )
 
     def copy(self):
@@ -108,12 +125,15 @@ class WhenExpression(Expression):
         """
         return WhenExpression(
             self.negated,
+            self.defeasible,
+            self.defeasible_keyword,
             self.premise,
             self.conclusion,
             self.left_match,
-            self.key_words
+            self.key_words,
+            self.copy_support()
         )
 
-    #def get_string_rep(self):
-    #    str = (complete_negation + " " if self.negated else "") + separator.join(self.tokens)
-    #    return str
+    def get_string_rep(self, include_defeasible = True):
+        str = (self.defeasible_keyword + " " if self.defeasible and include_defeasible else "") + Expression.get_string_rep(self)
+        return str

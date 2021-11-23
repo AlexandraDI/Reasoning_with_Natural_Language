@@ -4,7 +4,11 @@ File containing the majority of the tableaux logic
 
 from typing import List
 
-from logics.RuleCreatorUtil import create_root_node_rule, create_unification_rule, create_tautologie_rule
+from logics.RuleCreatorUtil import (
+    create_root_node_rule,
+    create_unification_rule,
+    create_contradiction_rule,
+)
 from logics.senteces.Expression import Expression
 from logics.LogicFunctions import rule_set
 from logics.senteces.BaseExpression import BaseExpression
@@ -23,9 +27,10 @@ class TableauxSolver:
     def __init__(self, hypothesis, thesis):
         self.hypothesis: List[Expression] = hypothesis
         self.to_be_shown: Expression = thesis
-        self.applied_rules = dict(root_node = create_root_node_rule())
+        self.applied_rules = dict(root_node=create_root_node_rule())
         self.solve_tree = None
         self.all_branches_closed = True
+        self.closing_arguments = set()
 
     def proof(self):
         """
@@ -39,30 +44,35 @@ class TableauxSolver:
             # Set the unifiable variables to new
             UnifiableVariable.used_variables = []
             # Create a clean clauses list
-            clauses = []
-            for claus in self.hypothesis:
-                clauses.append(claus)
+            clauses = [i for i in self.hypothesis]
+
+
             # Reverse the expression and append it to the clause list
             neg_thesis = self.to_be_shown.reverse_expression()
+            neg_thesis.test = True
+            neg_thesis.support = {neg_thesis,} # change the support
             clauses.append(neg_thesis)
 
             # Create the solve tree and call the recursive proof
             self.solve_tree = TreeGenerator(clauses)
             result = self.recursive_proof(
-                clauses = clauses,
-                applied_rules = [],
-                list_of_new_objects = [],
-                parent = self.solve_tree.root_node
+                clauses=clauses,
+                applied_rules=[],
+                list_of_new_objects=[],
+                parent=self.solve_tree.root_node,
             )
         except RuntimeError as e:
             print(e)
             raise e
+        #print(self.closing_arguments)
         return result
 
     @staticmethod
-    def check_for_tautology(hypothesis: BaseExpression, clauses: List[Expression], list_of_new_objects):
+    def check_for_contradiction(
+        hypothesis: BaseExpression, clauses: List[Expression], list_of_new_objects
+    ):
         """
-        Helper function that checks for the given hypothesis if there is a tautology in the created classes
+        Helper function that checks for the given hypothesis if there is a contradiction in the created classes
         :param hypothesis:          The expression to check with
         :param clauses:             The list of clauses
         :param list_of_new_objects: If we need to creat a new object in the process
@@ -70,18 +80,22 @@ class TableauxSolver:
         """
         # Go over each clause and check whether it is a base or a function expression
         for clause in clauses:
-            if clause == hypothesis or not (type(clause) == BaseExpression or type(clause) == BaseExpressionWithPreposition or type(clause) == FunctionExpression):
+            if clause == hypothesis or not (isinstance(clause, (BaseExpression, FunctionExpression)) or not isinstance(clause, (BaseExpressionWithPreposition, FunctionExpression))):
                 continue
 
-            # If it is check if it is a tautologie with the hypothesis expression
-            is_tautologie, unification_replacements = hypothesis.is_tautologie_of(clause, list_of_new_objects)
-            if is_tautologie:
+            # If it is check if it is a contradiction with the hypothesis expression
+            is_contradiction, unification_replacements = hypothesis.is_contradiction_of(
+                clause, list_of_new_objects
+            )
+            if is_contradiction:
                 return True, clause, unification_replacements
         return False, None, None
 
-    def recursive_proof(self, clauses, applied_rules, list_of_new_objects, parent = None) -> bool:
+    def recursive_proof(
+        self, clauses, applied_rules, list_of_new_objects, parent=None
+    ) -> bool:
         """
-        The recursive prove first searches for a tautology.
+        The recursive prove first searches for a contradiction.
         If none is found try to apply a rule.
         If one is applied successfully call the recursive proof with the new clause.
         Otherwise return false
@@ -117,9 +131,9 @@ class TableauxSolver:
 
                 # Dont apply rule twice
                 applied_rule = AppliedRule(
-                    rule_name = rule_name,
-                    referenced_line = curr_clause.id,
-                    c_expression = curr_clause,
+                    rule_name=rule_name,
+                    referenced_line=curr_clause.id,
+                    c_expression=curr_clause,
                 )
                 if applied_rule in applied_rules:
                     continue
@@ -128,13 +142,22 @@ class TableauxSolver:
                 branches, created_rule = rule(curr_clause, clauses, list_of_new_objects)
                 new_nodes = None
 
+                # TODO why this is working
+                # for loop for argumentation tableau
+                for j, branch in branches.items():
+                    # Adding support for each new generated sentences, the support is always the parents support
+                    for sentence in branch:
+                        sentence.support = sentence.support.union(curr_clause.support)
+
                 # If we have add the node to the documentation otherwise continue
                 if len(branches) != 0:
                     applied_rule.created_expressions = branches
                     rule_explanation = created_rule.get_explanation()
                     applied_rule.rule_desc_obj = rule_explanation
                     applied_rules.append(applied_rule)
-                    new_nodes = self.solve_tree.add_node(parent, applied_rule, len(self.applied_rules))
+                    new_nodes = self.solve_tree.add_node(
+                        parent, applied_rule, len(self.applied_rules)
+                    )
                     self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
                 else:
                     continue
@@ -144,10 +167,10 @@ class TableauxSolver:
                 if len(branches) == 1:
                     clauses += branches[0]  # Not sure if we want to create a copy of the list
                     return self.recursive_proof(
-                        clauses = clauses,
-                        applied_rules = applied_rules,
-                        list_of_new_objects = list(list_of_new_objects),
-                        parent = new_nodes[0]
+                        clauses=clauses,
+                        applied_rules=applied_rules,
+                        list_of_new_objects=list(list_of_new_objects),
+                        parent=new_nodes[0],
                     )
                 # If there is more then one branch we need to close every branch
                 # Go over the list of clauses and create a recursive call for each
@@ -156,10 +179,10 @@ class TableauxSolver:
                     next_clauses = list(clauses)
                     next_clauses += branch
                     branch_close = self.recursive_proof(
-                        clauses = next_clauses,
-                        applied_rules = list(applied_rules),
-                        list_of_new_objects = list(list_of_new_objects),
-                        parent = new_nodes[j]
+                        clauses=next_clauses,
+                        applied_rules=list(applied_rules),
+                        list_of_new_objects=list(list_of_new_objects),
+                        parent=new_nodes[j],
                     )
                     if not branch_close:
                         closes = False
@@ -167,15 +190,50 @@ class TableauxSolver:
                 # If not every branch closes then this doesnt work
                 return closes
 
+        # Check if we have a contradiction in this branch
+        for i, curr_clause in enumerate(clauses):
+            if not isinstance(curr_clause, (BaseExpression, FunctionExpression)):
+                continue
+            (
+                res,
+                matched_clause,
+                unification_replacements,
+            ) = TableauxSolver.check_for_contradiction(
+                curr_clause, clauses, list_of_new_objects
+            )
+            if res:
+                node = parent
+                if unification_replacements:
+                    node = self.create_unification_replacements(
+                        curr_clause, matched_clause, unification_replacements, parent
+                    )
+
+                # Found contradiction with the matched clause
+                applied_rule = create_contradiction_rule(curr_clause, matched_clause)
+                self.solve_tree.add_node(node, applied_rule, len(self.applied_rules))
+                self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
+
+                # adding support of both expressions if we have found a contradiction to the argument list
+                self.closing_arguments = self.closing_arguments.union(
+                    matched_clause.support
+                )
+                self.closing_arguments = self.closing_arguments.union(
+                    curr_clause.support
+                )
+
+                return True
+
         # Tested every rule and didn't find anything applicable to close the branch
         self.all_branches_closed = False
         return False
 
-    def create_unification_replacements(self, curr_clause, matched_clause, unification_replacements, parent):
+    def create_unification_replacements(
+        self, curr_clause, matched_clause, unification_replacements, parent
+    ):
         """
         This function creates unification replacements for the visualization
-        :param curr_clause:                 The clause that was found for the tautology
-        :param matched_clause:              The matched tautology
+        :param curr_clause:                 The clause that was found for the contradiction
+        :param matched_clause:              The matched contradiction
         :param unification_replacements:    The used unification replacements
         :param parent:                      The tree node
         :return: The last parent that was used
@@ -185,9 +243,16 @@ class TableauxSolver:
         # Create the tree node and rule
         for unification in unification_replacements:
             # Go over the order of the matched pair
-            for current_clause, comp_clause in [(curr_clause, matched_clause), (matched_clause, curr_clause)]:
+            for current_clause, comp_clause in [
+                (curr_clause, matched_clause),
+                (matched_clause, curr_clause),
+            ]:
                 # If its a function expression get the variable list otherwise geht the object and subject
-                var_list = current_clause.variables if type(curr_clause) == FunctionExpression else [current_clause.object, current_clause.subject]
+                var_list = (
+                    current_clause.variables
+                    if type(curr_clause) == FunctionExpression
+                    else [current_clause.object, current_clause.subject]
+                )
                 # Iterate over the variables
                 for var_idx, variable in enumerate(var_list):
                     # Search for the unified variable and replace it
@@ -210,7 +275,13 @@ class TableauxSolver:
 
                         # Re Tokenize and create the rule
                         current_clause.tokenize_expression()
-                        applied_rule = create_unification_rule(unification, current_clause, orig_sentence)
-                        curr_parent = self.solve_tree.add_node(curr_parent, applied_rule, len(self.applied_rules))[0]
-                        self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
+                        applied_rule = create_unification_rule(
+                            unification, current_clause, orig_sentence
+                        )
+                        curr_parent = self.solve_tree.add_node(
+                            curr_parent, applied_rule, len(self.applied_rules)
+                        )[0]
+                        self.applied_rules[
+                            f"node_{len(self.applied_rules)}"
+                        ] = applied_rule
         return curr_parent

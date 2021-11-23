@@ -1,4 +1,4 @@
-from logics.Constants import connection_keywords, separator, de_morgen_expression
+from logics.Constants import connection_keywords, separator, de_morgan_expression
 from logics.senteces.Expression import Expression
 from logics.senteces.ParseExceptions import ParseException
 from utils.Utils import tokenize
@@ -10,12 +10,12 @@ class ConnectedExpression(Expression):
     """
     def __init__(self, *args):
         # When we have only one input it must be a sentence
-        if len(args) == 1:
+        if len(args) <= 2:
             # Call the constructor of the Expression
-            super().__init__(args[0])
+            super().__init__(*args)
 
             # Remove the de morgen expression and reverse the negation
-            if self.tokens[0] == de_morgen_expression:
+            if self.tokens[0] == de_morgan_expression:
                 self.negated = not self.negated
                 self.tokens = self.tokens[1:]
 
@@ -30,10 +30,9 @@ class ConnectedExpression(Expression):
                     from logics.senteces.Helper import create_expression
                     keyword_idx = self.tokens.index(connection_keyword)
                     # Create the expressions from the left and right tokens
-                    self.left_expression = create_expression(separator.join(self.tokens[:keyword_idx]))
-                    self.right_expression = create_expression(separator.join(self.tokens[keyword_idx + 1:]))
-                    # if(connection_keyword == ','):
-                    #     connection_keyword='and'
+                    self.left_expression = create_expression(separator.join(self.tokens[:keyword_idx]), self.copy_support())
+                    self.right_expression = create_expression(separator.join(self.tokens[keyword_idx + 1:]), self.copy_support())
+
                     self.connection_keyword = connection_keyword
                     break
 
@@ -54,7 +53,7 @@ class ConnectedExpression(Expression):
         Create the tokens of the expression based on detected elements
         """
         self.tokens = tokenize(
-            f'{de_morgen_expression if self.negated else ""} '
+            f'{de_morgan_expression if self.negated else ""} '
             f'{self.left_expression.get_string_rep()} {self.connection_keyword} {self.right_expression.get_string_rep()}'
         )
 

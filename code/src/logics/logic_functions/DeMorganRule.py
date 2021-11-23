@@ -32,19 +32,20 @@ class DeMorganRule(Rule):
         if clause.negated is False:
             return new_clauses, None
 
-        de_morgen = ConnectedExpression(
+        de_morgan = ConnectedExpression(
             not clause.negated,
             clause.left_expression.reverse_expression(),
             clause.right_expression.reverse_expression(),
-            "or" if clause.connection_keyword == "and" else "and"
+            "or" if clause.connection_keyword == "and" else "and",
+            clause.copy_support()
         )
 
         if clause.connection_keyword == 'and':
-            new_clauses[0].append(de_morgen.left_expression)
-            new_clauses[1].append(de_morgen.right_expression)
+            new_clauses[0].append(de_morgan.left_expression)
+            new_clauses[1].append(de_morgan.right_expression)
 
         if clause.contains('or'):
-            new_clauses[0].append(de_morgen.left_expression)
-            new_clauses[0].append(de_morgen.right_expression)
+            new_clauses[0].append(de_morgan.left_expression)
+            new_clauses[0].append(de_morgan.right_expression)
 
-        return new_clauses, DeMorganRule(clause, de_morgen.left_expression, de_morgen.right_expression)
+        return new_clauses, DeMorganRule(clause, de_morgan.left_expression, de_morgan.right_expression)

@@ -1,7 +1,13 @@
 import inflect
+import nltk
+
+nltk.download('punkt')
+
+# Get the inflect engine
+inflect_engine = inflect.engine()
 
 
-def create_new_object(list_of_new_objects, ref_object = None):
+def create_new_object(list_of_new_objects, ref_object=None):
     """
     Function that creates the new object based on the new object list
     :param list_of_new_objects: The previously created new objects
@@ -29,10 +35,14 @@ def get_sentences_key_words(reg_match, sentence):
     :return: sentences, keywords
     """
     # Filter unnecessary group matches
-    reg_groups = list(filter(
-        lambda x: not ((x[0] == 0 and x[1] == len(sentence)) or (x[0] == -1 and x[1] == -1)),
-        reg_match.regs
-    ))
+    reg_groups = list(
+        filter(
+            lambda x: not (
+                (x[0] == 0 and x[1] == len(sentence)) or (x[0] == -1 and x[1] == -1)
+            ),
+            reg_match.regs,
+        )
+    )
 
     sentences = []
     key_words = []
@@ -48,7 +58,9 @@ def get_sentences_key_words(reg_match, sentence):
     sentences.append(sentence[c_index:])
     return sentences, key_words
 
-exception_tokens = ['is', 'chess', 'poisonous', 'does', 'has', 'unless']
+
+exception_tokens = ["is", "chess", "poisonous", "does", "has", "unless"]
+
 
 def single_tokens(sentence_tokens):
     """
@@ -56,13 +68,11 @@ def single_tokens(sentence_tokens):
     :param sentence_tokens:
     :return:
     """
-    # Get the inflect engine
-    single = inflect.engine()
     single_tokens = []
     for i, token in enumerate(sentence_tokens):
-        token_single = single.singular_noun(token)
-        if token_single == 'mouses' or token_single == 'mou':
-            token_single = 'mouse'
+        token_single = inflect_engine.singular_noun(token)
+        if token_single == "mouses" or token_single == "mou":
+            token_single = "mouse"
         if token_single != False and token not in exception_tokens:
             single_tokens.append(token_single)
         else:
@@ -119,36 +129,13 @@ def check_if_list_in_list(check_list, reference_list):
         else:
             return None
 
+
 def tokenize(sentence: str):
     """
     Tokenizer of the sentence
     :param sentence: The input sentence
     :return: The tokenized sentence
     """
-    tokens = sentence.split(" ")
-    ret_tokens = []
-    for i, token in enumerate(tokens):
-        if ',' in token or '!' in token or ')' in token or '(' in token:
-            if ',' in token:
-                c_token = token.split(',')
-                if len(c_token[0]) != 0:
-                    ret_tokens.append(c_token[0])
-                ret_tokens.append(',')
-            if '!(' in token:
-                c_token = token.split('!(')
-                ret_tokens.append('!')
-                ret_tokens.append('(')
-                ret_tokens.append(c_token[1])
-            elif '!' in token:
-                c_token = token.split('!')
-                ret_tokens.append('!')
-                ret_tokens.append(c_token[1])
-            if ')' in token:
-                c_token = token.split(')')
-                ret_tokens.append(c_token[0])
-                ret_tokens.append(')')
-        else:
-            ret_tokens.append(token)
+    ret_tokens = nltk.word_tokenize(sentence)
     ret_tokens = single_tokens(ret_tokens)
     return ret_tokens
-

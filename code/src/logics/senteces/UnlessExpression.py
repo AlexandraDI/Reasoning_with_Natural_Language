@@ -13,9 +13,9 @@ class UnlessExpression(Expression):
 
     def __init__(self, *args):
         # unless we have only one input it must be a sentence
-        if len(args) == 1:
+        if len(args) <= 2:
             # Call the constructor of the Expression
-            super().__init__(args[0])
+            super().__init__(*args)
 
             # Get the string rep with the overall negation removed
             test_sentence = self.get_string_rep()
@@ -45,11 +45,11 @@ class UnlessExpression(Expression):
             # Get the unless expression that needs to be negated if necessary
             from logics.senteces.Helper import create_expression
             if self.left_match:
-                self.premise = create_expression(sentences[0])
-                self.conclusion = create_expression(sentences[1])
+                self.premise = create_expression(sentences[0], self.copy_support())
+                self.conclusion = create_expression(sentences[1], self.copy_support())
             else:
-                self.premise = create_expression(sentences[1])
-                self.conclusion = create_expression(sentences[0])
+                self.premise = create_expression(sentences[1], self.copy_support())
+                self.conclusion = create_expression(sentences[0], self.copy_support())
 
         else:
             # Copy constructor
@@ -111,5 +111,5 @@ class UnlessExpression(Expression):
             self.premise,
             self.conclusion,
             self.left_match,
-            self.key_words
+            self.key_words,
         )
