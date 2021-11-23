@@ -102,7 +102,7 @@ class Expression(metaclass=abc.ABCMeta):
 
                 self.tokens = left_tokens + [reference] + base_tokens + right_tokens
 
-    def is_tautologie_of(self, clause, list_of_new_objects):
+    def is_contradiction_of(self, clause, list_of_new_objects):
         return False
 
     @abc.abstractmethod

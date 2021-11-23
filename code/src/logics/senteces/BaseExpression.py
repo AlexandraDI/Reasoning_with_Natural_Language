@@ -126,12 +126,12 @@ class BaseExpression(Expression):
         new_base_expression.tokenize_expression()
         return new_base_expression
 
-    def is_tautologie_of(self, clause, list_of_new_objects):
+    def is_contradiction_of(self, clause, list_of_new_objects):
         """
-        Get whether the given clause is a tautologie of this clause
+        Get whether the given clause is a contradiction of this clause
         :param clause:               The comparative clause
         :param list_of_new_objects:  List of new objects in case we need to create a new one
-        :return: True and the unification replacements if it is a tautologie otherwise False
+        :return: True and the unification replacements if it is a contradiction otherwise False
         """
         # Base expression only match base expression
         if type(clause) is not BaseExpression:
