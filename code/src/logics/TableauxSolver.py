@@ -43,13 +43,13 @@ class TableauxSolver:
             # Set the unifiable variables to new
             UnifiableVariable.used_variables = []
             # Create a clean clauses list
-            clauses = []
-            for claus in self.hypothesis:
-                clauses.append(claus)
+            clauses = [i for i in self.hypothesis]
+
+
             # Reverse the expression and append it to the clause list
             neg_thesis = self.to_be_shown.reverse_expression()
             neg_thesis.test = True
-            neg_thesis.support.add(neg_thesis)
+            neg_thesis.support = {neg_thesis,} # change the support
             clauses.append(neg_thesis)
 
             # Create the solve tree and call the recursive proof
@@ -63,6 +63,7 @@ class TableauxSolver:
         except RuntimeError as e:
             print(e)
             raise e
+        print(self.closing_arguments)
         return result
 
     @staticmethod
@@ -78,9 +79,7 @@ class TableauxSolver:
         """
         # Go over each clause and check whether it is a base or a function expression
         for clause in clauses:
-            if clause == hypothesis or not (
-                type(clause) == BaseExpression or type(clause) == FunctionExpression
-            ):
+            if clause == hypothesis or not isinstance(clause, (BaseExpression, FunctionExpression)):
                 continue
 
             # If it is check if it is a tautologie with the hypothesis expression
@@ -125,6 +124,7 @@ class TableauxSolver:
                 branches, created_rule = rule(curr_clause, clauses, list_of_new_objects)
                 new_nodes = None
 
+                # TODO why this is working
                 # for loop for argumentation tableau
                 for j, branch in branches.items():
                     # Adding support for each new generated sentences, the support is always the parents support
@@ -176,12 +176,8 @@ class TableauxSolver:
 
         # Check if we have a tautology in this branch
         for i, curr_clause in enumerate(clauses):
-            if not (
-                type(curr_clause) == BaseExpression
-                or type(curr_clause) == FunctionExpression
-            ):
+            if not isinstance(curr_clause, (BaseExpression, FunctionExpression)):
                 continue
-
             (
                 res,
                 matched_clause,
