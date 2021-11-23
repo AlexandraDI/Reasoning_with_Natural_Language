@@ -63,7 +63,7 @@ class TableauxSolver:
         except RuntimeError as e:
             print(e)
             raise e
-        print(self.closing_arguments)
+        #print(self.closing_arguments)
         return result
 
     @staticmethod
