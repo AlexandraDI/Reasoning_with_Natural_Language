@@ -1,6 +1,8 @@
 import inflect
 import nltk
 
+nltk.download('punkt')
+
 # Get the inflect engine
 inflect_engine = inflect.engine()
 
