@@ -4,7 +4,7 @@ from logics.Constants import (
     connection_keywords,
     complete_negation,
     separator,
-    de_morgan_expression,
+    de_morgan_expression, defeasible_indicators,
 )
 from logics.senteces.ParseExceptions import ParseException
 from utils.Utils import tokenize
@@ -63,6 +63,7 @@ class Expression(metaclass=abc.ABCMeta):
         if complete_negation in self.init_hypo:
             self.negated = True
             self.tokens = self.tokens[6:]
+
 
         # Get the a plays b or c -> a plays b or a plays c
         self.split_references()

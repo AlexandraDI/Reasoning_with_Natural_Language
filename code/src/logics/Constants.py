@@ -38,9 +38,14 @@ WORD = "[a-zA-Z0-9-]+"
 def or_join(args):
     return "|".join(args)
 
+def optional(arg):
+    return f"({arg})?"
+
 complete_negation = 'it is not the case that'
 complete_negation_tokens = ['it', 'is', 'not', 'the', 'case', 'that']
 base_regex = f"({complete_negation} )?"
+
+defeasible_indicators = ["normally", "usually"]
 
 separator = ' '
 
@@ -73,7 +78,7 @@ when_split_tokens = [',', 'then', ', then']
 when_split_right = ['because', ', because', 'if', ', if', ', because of']
 when_left_regex = f"{or_reg(when_keywords)} {WORDS}{or_reg(when_split_tokens)} {WORDS}"
 when_right_regex = f"{WORDS}{or_reg(when_split_right)} {WORDS}"
-when_regex = f"{base_regex}({when_left_regex}|{when_right_regex})"
+when_regex = f"{optional(or_join(defeasible_indicators))}{optional(' ')}{optional(', ')}{base_regex}({when_left_regex}|{when_right_regex})"
 
 de_morgan_expression = 'neither'
 
