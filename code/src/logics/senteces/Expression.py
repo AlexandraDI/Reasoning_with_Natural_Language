@@ -110,7 +110,7 @@ class Expression(metaclass=abc.ABCMeta):
                     right_tokens = self.tokens[different_keyword_idx[0] + 1:]
 
                     if len(middle_tokens) == 1 and len(right_tokens) == 1:
-                        start_idx = 1 if self.tokens[0] == de_morgen_expression else 0
+                        start_idx = 1 if self.tokens[0] == de_morgan_expression else 0
                         base_tokens = self.tokens[start_idx:reference_idx - 1]
                         left_tokens = self.tokens[:reference_idx]
 

@@ -112,14 +112,14 @@ class TableauxSolver:
             if not (type(curr_clause) == BaseExpression or type(curr_clause) == BaseExpressionWithPreposition or type(curr_clause) == FunctionExpression):
                 continue
 
-            res, matched_clause, unification_replacements = TableauxSolver.check_for_tautology(curr_clause, clauses, list_of_new_objects)
+            res, matched_clause, unification_replacements = TableauxSolver.check_for_contradiction(curr_clause, clauses, list_of_new_objects)
             if res:
                 node = parent
                 if unification_replacements:
                     node = self.create_unification_replacements(curr_clause, matched_clause, unification_replacements, parent)
 
                 # Found Tautology with the matched clause
-                applied_rule = create_tautologie_rule(curr_clause, matched_clause)
+                applied_rule = create_contradiction_rule(curr_clause, matched_clause)
                 self.solve_tree.add_node(node, applied_rule, len(self.applied_rules))
                 self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
                 return True

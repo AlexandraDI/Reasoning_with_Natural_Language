@@ -13,9 +13,9 @@ class BaseExpressionWithPreposition(Expression):
 
     def __init__(self, *args):
         # When we have only one input it must be a sentence
-        if len(args) == 1:
+        if len(args) <= 2:
             # Call the constructor of the Expression
-            super().__init__(args[0])
+            super().__init__(*args)
 
             # Get whether the sentence is negated
             self.negation_word = 'not'
@@ -144,9 +144,9 @@ class BaseExpressionWithPreposition(Expression):
         new_base_expression.tokenize_expression()
         return new_base_expression
 
-    def is_tautologie_of(self, clause, list_of_new_objects):
+    def is_contradiction_of(self, clause, list_of_new_objects):
         """
-        Get whether the given clause is a tautologie of this clause
+        Get whether the given clause is a contradiction of this clause
         :param clause:               The comparative clause
         :param list_of_new_objects:  List of new objects in case we need to create a new one
         :return: True and the unification replacements if it is a tautologie otherwise False
