@@ -49,7 +49,9 @@ class TableauxSolver:
             # Reverse the expression and append it to the clause list
             neg_thesis = self.to_be_shown.reverse_expression()
             neg_thesis.test = True
-            neg_thesis.support = {neg_thesis,} # change the support
+            neg_thesis_support = neg_thesis.copy()
+            neg_thesis_support.is_support = True
+            neg_thesis.support = {neg_thesis_support,} # change the support
             clauses.append(neg_thesis)
 
             # Create the solve tree and call the recursive proof
@@ -125,6 +127,7 @@ class TableauxSolver:
                 new_nodes = None
 
                 # TODO why this is working
+                # because we are adding the support in the helper
                 # for loop for argumentation tableau
                 for j, branch in branches.items():
                     # Adding support for each new generated sentences, the support is always the parents support

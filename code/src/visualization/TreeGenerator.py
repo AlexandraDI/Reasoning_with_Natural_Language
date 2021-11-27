@@ -62,6 +62,12 @@ class TreeGenerator:
         """
         sorted_exp = sorted(expression, key = lambda expr: expr.id)
 
+        expr_with_support = []
+        for (i, expr) in enumerate(sorted_exp):
+            expr_with_support.append(expr)
+            for support in expr.support:
+                expr_with_support.append(support)
+
         reference_line_str = f'<td ROWSPAN="{len(expression)}" SIDES="L">{reference_line}</td>' if reference_line is not None or rule_name == 'Tautologie' else ""
 
         tautologie_line = ""
@@ -73,7 +79,7 @@ class TreeGenerator:
         return f'''<
         <table border="0" CELLBORDER="1">
         {table_head}
-        {''.join([f'<tr><td BORDER="0" CELLSPACING="10">{orig.id}:</td><td BORDER="0" ALIGN="LEFT">{orig.get_string_rep()}</td>{reference_line_str if i == 0 else ""}</tr>' for i, orig in enumerate(sorted_exp)])}
+        {''.join([f'<tr><td BORDER="0" CELLSPACING="10">{ "S" if orig.is_support else  orig.id }:</td><td BORDER="0" ALIGN="LEFT">{orig.get_string_rep()}</td>{reference_line_str if i == 0 else ""}</tr>' for i, orig in enumerate(expr_with_support)])}
         {tautologie_line}
         </table>
         >'''

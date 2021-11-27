@@ -31,6 +31,7 @@ class Expression(metaclass=abc.ABCMeta):
 
     id_counter = 0  # The expression counter for each new expression
     support = set()
+    is_support = False
 
     def __init__(
         self,
@@ -73,9 +74,12 @@ class Expression(metaclass=abc.ABCMeta):
 
         # Setup the support
         if support is None:
-            self.support = {self.__class__(hypothesis, {})}
+            temp_support = self.__class__(hypothesis, {})
+            temp_support.is_support = True
+            self.support = {temp_support,}
         elif isinstance(support, set):
             self.support = self.copy_support()
+
 
     def count_id(self) -> None:
         """
