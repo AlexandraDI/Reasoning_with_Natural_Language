@@ -12,6 +12,7 @@ from logics.RuleCreatorUtil import (
 from logics.senteces.Expression import Expression
 from logics.LogicFunctions import rule_set
 from logics.senteces.BaseExpression import BaseExpression
+from logics.senteces.BaseExpressionWithPreposition import BaseExpressionWithPreposition
 from logics.senteces.FunctionExpression import FunctionExpression
 from logics.senteces.UnifiableVariable import UnifiableVariable
 from visualization.AppliedRule import AppliedRule
@@ -81,7 +82,7 @@ class TableauxSolver:
         """
         # Go over each clause and check whether it is a base or a function expression
         for clause in clauses:
-            if clause == hypothesis or not isinstance(clause, (BaseExpression, FunctionExpression)):
+            if clause == hypothesis or not (isinstance(clause, (BaseExpression, FunctionExpression)) or not isinstance(clause, (BaseExpressionWithPreposition, FunctionExpression))):
                 continue
 
             # If it is check if it is a contradiction with the hypothesis expression
@@ -107,6 +108,23 @@ class TableauxSolver:
         :param parent:              The tree node parent for this branch
         :return: If the branch closes or not
         """
+
+        # Check if we have a tautology in this branch
+        for i, curr_clause in enumerate(clauses):
+            if not (type(curr_clause) == BaseExpression or type(curr_clause) == BaseExpressionWithPreposition or type(curr_clause) == FunctionExpression):
+                continue
+
+            res, matched_clause, unification_replacements = TableauxSolver.check_for_contradiction(curr_clause, clauses, list_of_new_objects)
+            if res:
+                node = parent
+                if unification_replacements:
+                    node = self.create_unification_replacements(curr_clause, matched_clause, unification_replacements, parent)
+
+                # Found Tautology with the matched clause
+                applied_rule = create_contradiction_rule(curr_clause, matched_clause)
+                self.solve_tree.add_node(node, applied_rule, len(self.applied_rules))
+                self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
+                return True
 
         # Go over each clause and check if we can apply a rule
         # Keep the branching clauses to the end
@@ -150,9 +168,7 @@ class TableauxSolver:
                 # if only one branch then we just add the rules to the current set and return
                 # the recursive call
                 if len(branches) == 1:
-                    clauses += branches[
-                        0
-                    ]  # Not sure if we want to create a copy of the list
+                    clauses += branches[0]  # Not sure if we want to create a copy of the list
                     return self.recursive_proof(
                         clauses=clauses,
                         applied_rules=applied_rules,
@@ -248,6 +264,11 @@ class TableauxSolver:
                         orig_sentence = current_clause.get_string_rep()
                         # Replace it
                         if type(curr_clause) == BaseExpression:
+                            if var_idx == 0:
+                                current_clause.object = unification[0]
+                            else:
+                                current_clause.subject = unification[0]
+                        elif type(curr_clause) == BaseExpressionWithPreposition:
                             if var_idx == 0:
                                 current_clause.object = unification[0]
                             else:

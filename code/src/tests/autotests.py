@@ -13,6 +13,7 @@ test_files = [
     "iff_tests.json",
     #"quantified_tests.json",
     #"other_tests.json"
+    #"implicit_and_or.json"
 ]
 
 class FailedTest:

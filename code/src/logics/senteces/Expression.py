@@ -92,20 +92,46 @@ class Expression(metaclass=abc.ABCMeta):
         """
         Splits the sentence that references previous subjects into multiple base tokens
         """
+
+
+        different_keyword = []
+        comma_idx = []
+        different_keyword_idx = []
+        # print(self.tokens)
         for reference in connection_keywords:
             if reference in self.tokens:
-                reference_idx = self.tokens.index(reference)
-                right_tokens = self.tokens[reference_idx + 1 :]
+                # in case we have comma we want to split sentences differently
+                 if reference == ',':
+                    comma_idx.append(self.tokens.index(reference))
+                 else:
+                    different_keyword.append(reference)
+                    different_keyword_idx.append(self.tokens.index(reference))
 
-                # If the right sentence is not just one word we dont support that atm
-                if len(right_tokens) != 1:
-                    continue
+        if(len(comma_idx) ==1 and len(different_keyword_idx) ==1):
 
-                start_idx = 1 if self.tokens[0] == de_morgan_expression else 0
-                base_tokens = self.tokens[start_idx : reference_idx - 1]
-                left_tokens = self.tokens[:reference_idx]
+                    reference_idx = comma_idx[0]
+                    middle_tokens = self.tokens[reference_idx + 1:different_keyword_idx[0]]
+                    right_tokens = self.tokens[different_keyword_idx[0] + 1:]
 
-                self.tokens = left_tokens + [reference] + base_tokens + right_tokens
+                    if len(middle_tokens) == 1 and len(right_tokens) == 1:
+                        start_idx = 1 if self.tokens[0] == de_morgan_expression else 0
+                        base_tokens = self.tokens[start_idx:reference_idx - 1]
+                        left_tokens = self.tokens[:reference_idx]
+
+                        self.tokens = left_tokens + [different_keyword[0]] + base_tokens + middle_tokens + [different_keyword[0]] + base_tokens + right_tokens
+
+        elif (len(comma_idx) == 0 and len(different_keyword_idx) == 1):
+            reference_idx = different_keyword_idx[0]
+            right_tokens = self.tokens[reference_idx + 1:]
+
+            if len(right_tokens) == 1:
+                    start_idx = 1 if self.tokens[0] == de_morgan_expression else 0
+                    base_tokens = self.tokens[start_idx:reference_idx - 1]
+                    left_tokens = self.tokens[:reference_idx]
+
+                    self.tokens = left_tokens + [different_keyword[0]] + base_tokens + right_tokens
+
+
 
     def is_contradiction_of(self, clause, list_of_new_objects):
         return False
