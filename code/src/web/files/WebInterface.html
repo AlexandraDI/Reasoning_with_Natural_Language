@@ -26,6 +26,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="icon" href="../favicon.ico" type="image/x-icon"/>
+
     <style>
         html {
             height: 100%
@@ -66,7 +67,7 @@
 
         .graph {
             text-align: center;
-            width: 90%;
+            width: 70%;
             margin-left: auto;
             margin-right: auto;
         }
@@ -78,26 +79,9 @@
     <div id="app">
         <main>
 
-            <header>
-                <h1 class="heading">Natural Language Reasoner</h1>
-            </header>
+            <application-header></application-header>
+            <mode-switcher @switch-page="change_page"></mode-switcher>
 
-            <ul class="nav nav-pills nav-fill pb-3" id="tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link border" id="reasoner-tab" v-on:click="change_page('reasoner')"
-                            type="button" data-bs-toggle="tab" data-bs-target="#reasoner"
-                            role="tab" aria-controls="reasoner" aria-selected="false">
-                        Reasoner
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link border" id="language-tab" v-on:click="change_page('language')"
-                            type="button" data-bs-toggle="tab" data-bs-target="#language"
-                            role="tab" aria-controls="language" aria-selected="false">
-                        Language Check
-                    </button>
-                </li>
-            </ul>
 
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane" id="reasoner" role="tabpanel" aria-labelledby="reasoner-tab">
@@ -226,7 +210,6 @@
 
                         <p v-if="response">*You can hover over each node to receive a more detailed explanation of the
                             applied rule.</p>
-                        <div id="graph" class="graph" :class="{border: response}"></div>
                     </div>
 
                 </div>
@@ -342,7 +325,6 @@
                 </div>
             </div>
 
-            <div v-if="response || language_output" style="height: calc(0.5 * 100vh)"></div>
             <div id="tooltip" class="card"
                  :style="{'display': tooltip_visible ? 'block' : 'none', 'top': topOffset, 'left': leftOffset}"
                  style="position: fixed">
@@ -395,11 +377,54 @@
                 </div>
             </div>
         </main>
+        <div id="graph" class="graph" :class="{border: response}"></div>
+        <div v-if="response || language_output" style="height: calc(0.5 * 100vh)"></div>
     </div>
 </div>
 
 </body>
 <script>
+
+    Vue.component(
+        'application-header',
+        {
+            template: `
+                <header>
+                    <h1 class="heading">Natural Language Reasoner</h1>
+                </header>
+            `
+        }
+    );
+
+    Vue.component(
+        'mode-switcher',
+        {
+            template: `
+                <ul class="nav nav-pills nav-fill pb-3" id="tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link border" id="reasoner-tab" @click="switchPage('reasoner')"
+                                type="button" data-bs-toggle="tab" data-bs-target="#reasoner"
+                                role="tab" aria-controls="reasoner" aria-selected="false">
+                            Reasoner
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link border" id="language-tab" @click="switchPage('language')"
+                                type="button" data-bs-toggle="tab" data-bs-target="#language"
+                                role="tab" aria-controls="language" aria-selected="false">
+                            Language Check
+                        </button>
+                    </li>
+                </ul>
+            `,
+            methods: {
+                switchPage(pageName) {
+                    this.$emit('switch-page', pageName);
+                }
+            }
+        }
+    )
+
     var router = new VueRouter({});
     var app = new Vue({
         el: '#app',
