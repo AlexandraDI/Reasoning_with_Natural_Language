@@ -3,3 +3,4 @@ pyramid~=2.0
 graphviz~=0.16
 inflect~=5.3.0
 pandas~=1.2.4
+nltk~=3.6.5

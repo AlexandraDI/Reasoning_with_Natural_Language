@@ -91,3 +91,7 @@ class TreeGenerator:
         :return:
         """
         return self.graph.to_string()
+
+
+    def save_pdf(self, file, formated):
+        self.graph.write(file, format=formated)

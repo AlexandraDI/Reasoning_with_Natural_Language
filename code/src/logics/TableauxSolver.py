@@ -51,6 +51,7 @@ class TableauxSolver:
             neg_thesis = self.to_be_shown.reverse_expression()
             neg_thesis.test = True
             neg_thesis_support = neg_thesis.copy()
+            neg_thesis_support.test = True
             neg_thesis_support.is_support = True
             neg_thesis.support = {neg_thesis_support,} # change the support
             clauses.append(neg_thesis)
@@ -109,22 +110,22 @@ class TableauxSolver:
         :return: If the branch closes or not
         """
 
-        # Check if we have a tautology in this branch
-        for i, curr_clause in enumerate(clauses):
-            if not (type(curr_clause) == BaseExpression or type(curr_clause) == BaseExpressionWithPreposition or type(curr_clause) == FunctionExpression):
-                continue
-
-            res, matched_clause, unification_replacements = TableauxSolver.check_for_contradiction(curr_clause, clauses, list_of_new_objects)
-            if res:
-                node = parent
-                if unification_replacements:
-                    node = self.create_unification_replacements(curr_clause, matched_clause, unification_replacements, parent)
-
-                # Found Tautology with the matched clause
-                applied_rule = create_contradiction_rule(curr_clause, matched_clause)
-                self.solve_tree.add_node(node, applied_rule, len(self.applied_rules))
-                self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
-                return True
+        # # Check if we have a tautology in this branch
+        # for i, curr_clause in enumerate(clauses):
+        #     if not (type(curr_clause) == BaseExpression or type(curr_clause) == BaseExpressionWithPreposition or type(curr_clause) == FunctionExpression):
+        #         continue
+        #
+        #     res, matched_clause, unification_replacements = TableauxSolver.check_for_contradiction(curr_clause, clauses, list_of_new_objects)
+        #     if res:
+        #         node = parent
+        #         if unification_replacements:
+        #             node = self.create_unification_replacements(curr_clause, matched_clause, unification_replacements, parent)
+        #
+        #         # Found Tautology with the matched clause
+        #         applied_rule = create_contradiction_rule(curr_clause, matched_clause)
+        #         self.solve_tree.add_node(node, applied_rule, len(self.applied_rules))
+        #         self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
+        #         return True
 
         # Go over each clause and check if we can apply a rule
         # Keep the branching clauses to the end
