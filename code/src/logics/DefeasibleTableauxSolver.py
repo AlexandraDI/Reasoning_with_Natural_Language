@@ -21,6 +21,7 @@ class DefeasibleTableauxSolver:
         self.to_be_shown = create_expression(to_be_shown)
 
         self.solver = TableauxSolver(self.expressions, self.to_be_shown)
+        self.i = 0
 
     def expand_defeasible_rules(self):
 
@@ -30,9 +31,18 @@ class DefeasibleTableauxSolver:
             solver = TableauxSolver(self.expressions, defeasible.premise.copy())
             solver.proof()
             if solver.all_branches_closed:
+                # print(solver.solve_tree.create_file())
+                solver.solve_tree.save_pdf(f"image_{self.i}.pdf", "pdf")
+                self.i += 1
                 expression = defeasible.conclusion.copy()
+                defeasibleCopy = defeasible.copy()
+                defeasibleCopy.is_support = True
                 expression.support = set([x for x in solver.closing_arguments if not x.test])
-                expression.support.add(defeasible)
+                # print(solver.closing_arguments)
+                # for arg in solver.closing_arguments:
+                #     print(arg)
+                #     print(arg.test)
+                expression.support.add(defeasibleCopy)
                 self.expressions.append(expression)
                 self.defeasible_expressions.remove(defeasible)
                 self.expand_defeasible_rules()

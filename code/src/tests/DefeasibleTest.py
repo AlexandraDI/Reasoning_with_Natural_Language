@@ -19,4 +19,6 @@ print([ str(i) for i in nts.solver.closing_arguments])
 
 print(nts.solver.closing_arguments)
 
+nts.solver.solve_tree.save_pdf("image_3.pdf","pdf")
+
 # nts.solver.solve_tree
