@@ -110,22 +110,29 @@ class TableauxSolver:
         :return: If the branch closes or not
         """
 
-        # # Check if we have a tautology in this branch
-        # for i, curr_clause in enumerate(clauses):
-        #     if not (type(curr_clause) == BaseExpression or type(curr_clause) == BaseExpressionWithPreposition or type(curr_clause) == FunctionExpression):
-        #         continue
-        #
-        #     res, matched_clause, unification_replacements = TableauxSolver.check_for_contradiction(curr_clause, clauses, list_of_new_objects)
-        #     if res:
-        #         node = parent
-        #         if unification_replacements:
-        #             node = self.create_unification_replacements(curr_clause, matched_clause, unification_replacements, parent)
-        #
-        #         # Found Tautology with the matched clause
-        #         applied_rule = create_contradiction_rule(curr_clause, matched_clause)
-        #         self.solve_tree.add_node(node, applied_rule, len(self.applied_rules))
-        #         self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
-        #         return True
+        # Check if we have a contradiction in this branch
+        for i, curr_clause in enumerate(clauses):
+            if not (type(curr_clause) == BaseExpression or type(curr_clause) == BaseExpressionWithPreposition or type(curr_clause) == FunctionExpression):
+                continue
+
+            res, matched_clause, unification_replacements = TableauxSolver.check_for_contradiction(curr_clause, clauses, list_of_new_objects)
+            if res:
+                node = parent
+                if unification_replacements:
+                    node = self.create_unification_replacements(curr_clause, matched_clause, unification_replacements, parent)
+
+                # Found Tautology with the matched clause
+                applied_rule = create_contradiction_rule(curr_clause, matched_clause)
+                self.solve_tree.add_node(node, applied_rule, len(self.applied_rules))
+                self.applied_rules[f"node_{len(self.applied_rules)}"] = applied_rule
+
+                self.closing_arguments = self.closing_arguments.union(
+                    matched_clause.support
+                )
+                self.closing_arguments = self.closing_arguments.union(
+                    curr_clause.support
+                )
+                return True
 
         # Go over each clause and check if we can apply a rule
         # Keep the branching clauses to the end
@@ -146,7 +153,7 @@ class TableauxSolver:
                 new_nodes = None
 
                 # TODO why this is working
-                # because we are adding the support in the helper
+                # because we auto generated the support to be itself when we use the constructor of Expression
                 # for loop for argumentation tableau
                 for j, branch in branches.items():
                     # Adding support for each new generated sentences, the support is always the parents support
