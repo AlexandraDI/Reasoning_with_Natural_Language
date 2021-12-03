@@ -83,7 +83,7 @@ class TableauxSolver:
         """
         # Go over each clause and check whether it is a base or a function expression
         for clause in clauses:
-            if clause == hypothesis and not (isinstance(clause, (BaseExpression, FunctionExpression)) and not isinstance(clause, (BaseExpressionWithPreposition, FunctionExpression))):
+            if clause == hypothesis or not (isinstance(clause, (BaseExpression, FunctionExpression)) or not isinstance(clause, (BaseExpressionWithPreposition, FunctionExpression))):
                 continue
 
             # If it is check if it is a contradiction with the hypothesis expression
@@ -203,7 +203,7 @@ class TableauxSolver:
 
         # Check if we have a contradiction in this branch
         for i, curr_clause in enumerate(clauses):
-            if not isinstance(curr_clause, (BaseExpression, FunctionExpression)) and not isinstance(curr_clause, (BaseExpressionWithPreposition, FunctionExpression)):
+            if not isinstance(curr_clause, (BaseExpression, FunctionExpression)):
                 continue
             (
                 res,
