@@ -61,7 +61,7 @@
                                                     <div class="d-flex flex-row justify-content-between flex-wrap">
                                                         <button 
                                                           type="button" class="btn m-1 text-nowrap flex-grow-1"
-                                                          :class="{'btn-outline-success': sentence != language_example, 'btn-success': sentence == language_example}"
+                                                          :class="{'btn-outline-success': sentence !== language_example, 'btn-success': sentence === language_example}"
                                                           v-for="language_example in group['examples']"
                                                           v-on:click="select_language_example(language_example)"
                                                           :key="language_example"
@@ -104,19 +104,19 @@
 
             <div class="card bg-danger mt-2" v-if="error">
                 <div class="card-header">
-                    <span class="lead" v-if="error.type == 'ParseException'">
+                    <span class="lead" v-if="error.type === 'ParseException'">
                         Parse Exception
                     </span>
-                    <span class="lead" v-if="error.type != 'ParseException'">
+                    <span class="lead" v-if="error.type !== 'ParseException'">
                         Internal Error
                     </span>
                 </div>
                 <div class="card-body">
-                    <div v-if="error.type != 'ParseException'">
+                    <div v-if="error.type !== 'ParseException'">
                         <span class="lead">Oops something went wrong and we dont really know what.</span><br>
                         <span class="lead">This could help tho: {{error.error}}</span>
                     </div>
-                    <div v-if="error.type == 'ParseException'">
+                    <div v-if="error.type === 'ParseException'">
                         <span class="lead">We detected a error in the parsing process</span><br>
                         <span class="lead">This are the errors we collected along the way:</span><br>
                         <ul>
@@ -136,7 +136,7 @@
                             <td style="text-align: center;">
                                 <span v-for="(in_expression, index) in basic_in_expressions" :key="index">
                                     {{in_expression}}
-                                    <span v-if="basic_in_expressions.length > 1 && index != basic_in_expressions.length - 1">,</span>
+                                    <span v-if="basic_in_expressions.length > 1 && index !== basic_in_expressions.length - 1">,</span>
                                 </span>
                             </td>
                         </tr>
@@ -145,9 +145,9 @@
                                 <span v-for="(out_expression, index) in basic_out_expressions" :key="index">
                                     <span v-for="(out_inner_expression, index_2) in out_expression" :key="index_2">
                                         {{out_inner_expression}}<span
-                                            v-if="out_expression.length > 1 && index_2 != out_expression.length - 1">,</span>
+                                            v-if="out_expression.length > 1 && index_2 !== out_expression.length - 1">,</span>
                                     </span>
-                                    <span v-if="basic_out_expressions.length > 1 && index != basic_out_expressions.length - 1">|</span>
+                                    <span v-if="basic_out_expressions.length > 1 && index !== basic_out_expressions.length - 1">|</span>
                                 </span>
                             </td>
                         </tr>
@@ -158,7 +158,7 @@
                             <td style="text-align: center;">
                                 <span v-for="(in_expression, index) in in_expressions" :key="index">
                                     {{in_expression}}
-                                    <span v-if="in_expressions.length > 1 && index != in_expressions.length - 1">,</span>
+                                    <span v-if="in_expressions.length > 1 && index !== in_expressions.length - 1">,</span>
                                 </span>
                             </td>
                         </tr>
@@ -167,9 +167,9 @@
                                 <span v-for="(out_expression, index) in out_expressions" :key="index">
                                     <span v-for="(out_inner_expression, index_2) in out_expression" :key="index_2">
                                         {{out_inner_expression}}
-                                        <span v-if="out_expression.length > 1 && index_2 != out_expression.length - 1">,</span>
+                                        <span v-if="out_expression.length > 1 && index_2 !== out_expression.length - 1">,</span>
                                     </span>
-                                    <span v-if="out_expressions.length > 1 && index != out_expressions.length - 1">|</span>
+                                    <span v-if="out_expressions.length > 1 && index !== out_expressions.length - 1">|</span>
                                 </span>
                             </td>
                         </tr>
@@ -439,10 +439,6 @@ export default {
       font-size: 4.5rem;
       text-align: center;
       margin-bottom: 3rem;
-  }
-
-  .applied_rules {
-      margin-top: 3rem;
   }
 
   .graph {

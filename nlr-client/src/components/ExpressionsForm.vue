@@ -5,9 +5,9 @@
       <input type="text" v-model="item.value" placeholder="Next Expression"
              class="form-control"/>
       <button v-on:click="remove_field(index)" type="button" class="btn btn-danger"
-              :class="{disabled: expressions.length == 1}">-
+              :class="{disabled: expressions.length === 1}">-
       </button>
-      <button v-if="index == expressions.length-1" v-on:click="add_field" type="button"
+      <button v-if="index === expressions.length-1" v-on:click="add_field" type="button"
               class="btn btn-success">+
       </button>
       <br>

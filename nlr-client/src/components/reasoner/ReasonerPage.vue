@@ -17,7 +17,7 @@
           close</h2>
       </div>
 
-      <div class="accordion mb-4" id="accordionAppliedRule" v-if="applied_rules.length != 0">
+      <div class="accordion mb-4" id="accordionAppliedRule" v-if="applied_rules.length !== 0">
         <div class="accordion-item">
           <h1 class="accordion-header" id="heading-applied-rule">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -34,7 +34,7 @@
               <div id="accordion" class="accordion">
                 <div class="accordion-item" v-for="(rule, index) in applied_rules" :key="index">
                   <h1 class="accordion-header" :id="'heading-applied-rule-' + index"
-                      v-if="index != 'root_node'">
+                      v-if="index !== 'root_node'">
                     <button class="accordion-button collapsed" type="button"
                             data-bs-toggle="collapse"
                             :data-bs-target="'#collapseAppliedRule-' + index"
@@ -57,7 +57,7 @@
                           </th>
                           <th scope="col">Used Expression</th>
                           <th scope="col"
-                              v-if="rule.matched_expression != 'None'">
+                              v-if="rule.matched_expression !== 'None'">
                             Matched
                             Expression
                           </th>
@@ -74,7 +74,7 @@
                             </ul>
                           </td>
                           <td>{{rule.c_expression}}</td>
-                          <td v-if="rule.matched_expression != 'None'">
+                          <td v-if="rule.matched_expression !== 'None'">
                             {{rule.matched_expression}}
                           </td>
                         </tr>
