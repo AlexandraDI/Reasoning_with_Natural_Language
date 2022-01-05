@@ -73,6 +73,10 @@ class IffRule(Rule):
         right_exp = WhenExpression(
             f"If {clause.right_expression.get_string_rep()} then {clause.left_expression.get_string_rep()}")
 
+        # we need to remove the auto-generated self support otherwise it adds itself to the support which is wrong!
+        left_exp.support = set()
+        right_exp.support = set()
+
         if clause.negated:
             new_clauses[0] += [left_exp.reverse_expression()]
             new_clauses[1] += [right_exp.reverse_expression()]
