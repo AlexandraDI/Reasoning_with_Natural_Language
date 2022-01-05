@@ -130,7 +130,9 @@ def start_web_server():
         config.add_view(get_solve_request, route_name='solve-request')
         config.add_view(get_language_request, route_name='language-request')
         config.add_view(get_file, route_name='examples', http_cache=0)
-        config.add_static_view("/", "C:/Users/leong/Development/reasoning_with_nl_2_the_sequel/code/src/web/dist");
+
+        here = os.path.dirname(os.path.abspath(__file__))
+        config.add_static_view("/", os.path.join(here, f'dist'))
 
         app = config.make_wsgi_app()
     server = make_server('0.0.0.0', 6543, app)

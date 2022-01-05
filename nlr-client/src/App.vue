@@ -178,7 +178,7 @@
                 </div>
             </div>
         </main>
-        <div id="graph" class="graph" :class="{border: response}"></div>
+        <div id="graph" class="graph" :class="{border: graph_rendered}"></div>
         <div v-if="response || language_output" style="height: calc(0.5 * 100vh)"></div>
     </div>
 </template>
@@ -280,12 +280,15 @@ export default {
         if (to_page === "reasoner") {
             reasoner_panel_tab.classList.add("active");
             reasoner_panel.classList.add("active");
+            $("#graph").show();
             router.push("reasoner")
         } else {
             language_panel_tab.classList.add("active");
             language_panel.classList.add("active");
+          $("#graph").hide();
             router.push("language")
         }
+
     },
     remove_field(index) {
         this.expressions.splice(index, 1);
