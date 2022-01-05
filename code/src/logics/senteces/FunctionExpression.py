@@ -1,11 +1,24 @@
 import re
 
-from logics.Constants import separator, quantified_keywords_plural, quantified_keywords_singular, multi_function_regex, \
-    single_function_regex, neg_function_keywords, get_opposite_of_function, pos_function_keywords
+from logics.Constants import (
+    separator,
+    quantified_keywords_plural,
+    quantified_keywords_singular,
+    multi_function_regex,
+    single_function_regex,
+    neg_function_keywords,
+    get_opposite_of_function,
+    pos_function_keywords,
+)
 from logics.senteces.Expression import Expression
 from logics.senteces.ParseExceptions import ParseException
 from logics.senteces.UnifiableVariable import UnifiableVariable
-from utils.Utils import tokenize, get_sentences_key_words, list_in_check, create_new_object
+from utils.Utils import (
+    tokenize,
+    get_sentences_key_words,
+    list_in_check,
+    create_new_object,
+)
 
 
 class FunctionExpression(Expression):
@@ -36,7 +49,10 @@ class FunctionExpression(Expression):
 
             # Get whether it is a multi or single function by checking with the respective regex
             reg_match = None
-            for test_reg, multi in [(multi_function_regex, True), (single_function_regex, False)]:
+            for test_reg, multi in [
+                (multi_function_regex, True),
+                (single_function_regex, False),
+            ]:
                 reg_match = re.match(test_reg, test_sentence, re.IGNORECASE)
                 if reg_match:
                     self.multi = multi
@@ -44,8 +60,10 @@ class FunctionExpression(Expression):
 
             # If we have no match return false.. What ever happend here
             if reg_match is None:
-                raise ParseException(f"No regex match found for the function expression: \n"
-                                     f"Original sentence: {test_sentence}")
+                raise ParseException(
+                    f"No regex match found for the function expression: \n"
+                    f"Original sentence: {test_sentence}"
+                )
 
             # Get the variables and keywords of the sentence
             variables, key_words = get_sentences_key_words(reg_match, test_sentence)
@@ -54,11 +72,13 @@ class FunctionExpression(Expression):
             self.check_negation(key_words)
 
             # We dont want it here... it would be a base expression
-            if variables[0] == 'it':
+            if variables[0] == "it":
                 raise ParseException(f"It is not valid as a variable.")
 
             # Get the variables and the other stuff
-            self.variables = [variables[0]] if not self.multi else [variables[0], variables[-1]]
+            self.variables = (
+                [variables[0]] if not self.multi else [variables[0], variables[-1]]
+            )
             self.quantified_function = variables[1]
             self.key_words = key_words
         else:
@@ -70,6 +90,8 @@ class FunctionExpression(Expression):
             self.quantified_function = args[2]
             self.key_words = args[3]
             self.multi = args[4]
+            self.support = args[5]
+            self.defeasible = args[6]
 
         # Re tokenize the expression
         self.tokenize_expression()
@@ -95,10 +117,11 @@ class FunctionExpression(Expression):
         """
         Create the tokens of the expression based on detected elements
         """
-        sentence = \
-            f'{self.variables[0]} {self.key_words[0]} {self.quantified_function} {self.key_words[1]} {self.variables[1]}' \
-                if self.multi else \
-                f'{self.variables[0]} {self.key_words[0]} {self.quantified_function}'
+        sentence = (
+            f"{self.variables[0]} {self.key_words[0]} {self.quantified_function} {self.key_words[1]} {self.variables[1]}"
+            if self.multi
+            else f"{self.variables[0]} {self.key_words[0]} {self.quantified_function}"
+        )
         self.tokens = tokenize(sentence)
 
     def replace_variable(self, replace, replace_with):
@@ -150,7 +173,10 @@ class FunctionExpression(Expression):
             elif variable != clause.variables[i]:
                 return False, None
 
-        return self.quantified_function == clause.quantified_function, unification_replacements
+        return (
+            self.quantified_function == clause.quantified_function,
+            unification_replacements,
+        )
 
     def reverse_expression(self):
         """
@@ -164,7 +190,9 @@ class FunctionExpression(Expression):
             self.variables,
             self.quantified_function,
             [opposite_keyword] + self.key_words[1:],
-            self.multi
+            self.multi,
+            self.copy_support(),
+            self.defeasible,
         )
 
     def get_string_rep(self):
@@ -172,7 +200,7 @@ class FunctionExpression(Expression):
         Just joins the tokens using the separator
         :return: The string representation of the expression
         """
-        return f'{separator.join(self.tokens)}'
+        return f"{separator.join(self.tokens)}"
 
     def copy(self):
         """
@@ -184,5 +212,7 @@ class FunctionExpression(Expression):
             self.variables,
             self.quantified_function,
             self.key_words,
-            self.multi
+            self.multi,
+            self.copy_support(),
+            self.defeasible,
         )

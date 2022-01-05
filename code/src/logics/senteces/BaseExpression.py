@@ -18,7 +18,7 @@ class BaseExpression(Expression):
             super().__init__(*args)
 
             # Get whether the sentence is negated
-            self.negation_word = 'not'
+            self.negation_word = "not"
             for negation_keyword in negation_keywords:
                 if type(negation_keyword) == list:
                     found_index = check_if_list_in_list(negation_keyword, self.tokens)
@@ -34,7 +34,7 @@ class BaseExpression(Expression):
             # Remove the negation keyword
             if self.negated:
                 if type(self.negation_word) == list:
-                    del self.tokens[found_index: found_index + len(self.negation_word)]
+                    del self.tokens[found_index : found_index + len(self.negation_word)]
                 else:
                     self.tokens.remove(self.negation_word)
 
@@ -46,7 +46,9 @@ class BaseExpression(Expression):
 
             # Only allow subject verb object terms
             if len(self.tokens) - extra_allowed != 3:
-                raise ParseException(f"This base expression is not supported: {self.init_hypo}")
+                raise ParseException(
+                    f"This base expression is not supported: {self.init_hypo}"
+                )
 
             # Get the subject verb and object with their filler words
             start_index = 0
@@ -57,7 +59,9 @@ class BaseExpression(Expression):
                     end_index += 1
                 else:
                     if fill_counter == 0:
-                        self.subject = separator.join(self.tokens[start_index:end_index])
+                        self.subject = separator.join(
+                            self.tokens[start_index:end_index]
+                        )
                     elif fill_counter == 1:
                         self.verb = separator.join(self.tokens[start_index:end_index])
                     elif fill_counter == 2:
@@ -73,6 +77,8 @@ class BaseExpression(Expression):
             self.subject = args[2]
             self.verb = args[3]
             self.object = args[4]
+            self.support = args[5]
+            self.defeasible = args[6]
 
         self.tokenize_expression()
 
@@ -83,20 +89,18 @@ class BaseExpression(Expression):
         if self.negated:
             if type(self.negation_word) == list:
                 self.tokens = tokenize(
-                    f'{self.subject} {separator.join(self.negation_word)} {self.verb} {self.object}'
+                    f"{self.subject} {separator.join(self.negation_word)} {self.verb} {self.object}"
                 )
-            elif 'do' in self.negation_word:
+            elif "do" in self.negation_word:
                 self.tokens = tokenize(
-                    f'{self.subject} {self.negation_word} {self.verb} {self.object}'
+                    f"{self.subject} {self.negation_word} {self.verb} {self.object}"
                 )
             else:
                 self.tokens = tokenize(
-                    f'{self.subject} {self.verb} {self.negation_word} {self.object}'
+                    f"{self.subject} {self.verb} {self.negation_word} {self.object}"
                 )
         else:
-            self.tokens = tokenize(
-                f'{self.subject} {self.verb} {self.object}'
-            )
+            self.tokens = tokenize(f"{self.subject} {self.verb} {self.object}")
 
     def reverse_expression(self):
         """
@@ -108,7 +112,9 @@ class BaseExpression(Expression):
             self.negation_word,
             self.subject,
             self.verb,
-            self.object
+            self.object,
+            self.copy_support(),
+            self.defeasible,
         )
 
     def replace_variable(self, replace, replace_with):
@@ -144,7 +150,10 @@ class BaseExpression(Expression):
         unification_replacements = []
 
         # Check whether the object or subject is unified variable and replace it respectively
-        for variable, comp_var in [(self.object, clause.object), (self.subject, clause.subject)]:
+        for variable, comp_var in [
+            (self.object, clause.object),
+            (self.subject, clause.subject),
+        ]:
             if type(variable) == UnifiableVariable:
                 if type(comp_var) == UnifiableVariable:
                     # When both are unified variables you have to introduce a new variable
@@ -187,5 +196,7 @@ class BaseExpression(Expression):
             self.negation_word,
             self.subject,
             self.verb,
-            self.object
+            self.object,
+            self.copy_support(),
+            self.defeasible,
         )

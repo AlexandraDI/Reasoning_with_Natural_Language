@@ -18,9 +18,9 @@ class SyllogismExpression(Expression):
             super().__init__(*args)
 
             # Check for the therefore, and remove it
-            if self.tokens[0] == 'therefore':
+            if self.tokens[0] == "therefore":
                 self.tokens = self.tokens[1:]
-            if self.tokens[0] == ',':
+            if self.tokens[0] == ",":
                 self.tokens = self.tokens[1:]
 
             # The syllogism keyword
@@ -31,11 +31,15 @@ class SyllogismExpression(Expression):
             reg_match = re.match(syllogism_regex, test_sentence, re.IGNORECASE)
 
             if reg_match is None:
-                raise ParseException(f"No regex match found for the when expression: \n"
-                                     f"Original sentence: {test_sentence}")
+                raise ParseException(
+                    f"No regex match found for the when expression: \n"
+                    f"Original sentence: {test_sentence}"
+                )
 
             # Go over each group and get the sentences between the keywords
-            sentences, self.syllogism_keywords = get_sentences_key_words(reg_match, test_sentence)
+            sentences, self.syllogism_keywords = get_sentences_key_words(
+                reg_match, test_sentence
+            )
 
             # Get the subject and object
             self.object = sentences[0]
@@ -47,6 +51,8 @@ class SyllogismExpression(Expression):
             self.syllogism_keywords = args[1]
             self.object = args[2]
             self.subject = args[3]
+            self.support = args[4]
+            self.defeasible = args[5]
 
             # Re tokenize the expression
             self.tokenize_expression()
@@ -57,7 +63,7 @@ class SyllogismExpression(Expression):
         """
         self.tokens = tokenize(
             f'{"it is not the case that " if self.negated else ""}'
-            f'{self.syllogism_keywords[0]} {self.object} {self.syllogism_keywords[1]} {self.subject}'
+            f"{self.syllogism_keywords[0]} {self.object} {self.syllogism_keywords[1]} {self.subject}"
         )
 
     def replace_variable(self, replace, replace_with):
@@ -84,7 +90,9 @@ class SyllogismExpression(Expression):
             not self.negated,
             self.syllogism_keywords,
             self.object,
-            self.subject
+            self.subject,
+            self.copy_support(),
+            self.defeasible,
         )
 
     def get_string_rep(self):
@@ -92,7 +100,7 @@ class SyllogismExpression(Expression):
         Just joins the tokens using the separator
         :return: The string representation of the expression
         """
-        return f'{separator.join(self.tokens)}'
+        return f"{separator.join(self.tokens)}"
 
     def copy(self):
         """
@@ -103,5 +111,7 @@ class SyllogismExpression(Expression):
             self.negated,
             self.syllogism_keywords,
             self.object,
-            self.subject
+            self.subject,
+            self.copy_support(),
+            self.defeasible,
         )

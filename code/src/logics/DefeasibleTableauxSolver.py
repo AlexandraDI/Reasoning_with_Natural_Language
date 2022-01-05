@@ -15,9 +15,14 @@ class DefeasibleTableauxSolver:
         self.all_expressions = [
             create_expression(clause) for clause in clauses if len(clause) != 0
         ]
-        self.defeasible_expressions = [x for x in self.all_expressions if
-                                       ( isinstance(x, WhenExpression) and x.defeasible)]
-        self.expressions = [x for x in self.all_expressions if not (isinstance(x, WhenExpression) and x.defeasible)]
+        # self.defeasible_expressions = [x for x in self.all_expressions if
+        # ( isinstance(x, WhenExpression) and x.defeasible)]
+        self.defeasible_expressions = [x for x in self.all_expressions if x.defeasible]
+        self.expressions = [
+            x
+            for x in self.all_expressions
+            if not (isinstance(x, WhenExpression) and x.defeasible)
+        ]
         self.to_be_shown = create_expression(to_be_shown)
 
         self.solver = TableauxSolver(self.expressions, self.to_be_shown)
@@ -27,17 +32,48 @@ class DefeasibleTableauxSolver:
 
         # adding all conclusions from defeasible information
         for defeasible in self.defeasible_expressions:
-
-            solver = TableauxSolver(self.expressions, defeasible.premise.copy())
-            solver.proof()
-            if solver.all_branches_closed:
-                # print(solver.solve_tree.create_file())
+            # If it is a def. when exp. we have to prove the premise
+            # Otherwise, we simply add the rule
+            proved = True
+            expression = defeasible.copy()
+            tmp = expression.copy()
+            tmp.is_support = True
+            expression.support = {tmp}
+            if isinstance(defeasible, WhenExpression):
+                solver = TableauxSolver(self.expressions, defeasible.premise.copy())
+                solver.proof()
+                proved = solver.all_branches_closed
                 solver.solve_tree.save_pdf(f"image_{self.i}.pdf", "pdf")
-                self.i += 1
                 expression = defeasible.conclusion.copy()
+                expression.support = set(
+                    [x for x in solver.closing_arguments if not x.test]
+                )
+
+            # if solver.all_branches_closed:
+            #     # print(solver.solve_tree.create_file())
+            #     solver.solve_tree.save_pdf(f"image_{self.i}.pdf", "pdf")
+            #     self.i += 1
+            #     expression = defeasible.conclusion.copy()
+            #     defeasibleCopy = defeasible.copy()
+            #     defeasibleCopy.is_support = True
+            #     expression.support = set([x for x in solver.closing_arguments if not x.test])
+            #     # print(solver.closing_arguments)
+            #     # for arg in solver.closing_arguments:
+            #     #     print(arg)
+            #     #     print(arg.test)
+            #     expression.support.add(defeasibleCopy)
+            #     self.expressions.append(expression)
+            #     self.defeasible_expressions.remove(defeasible)
+            #     self.expand_defeasible_rules()
+            #     return
+
+            if proved:
+                # print(solver.solve_tree.create_file())
+                self.i += 1
+
                 defeasibleCopy = defeasible.copy()
                 defeasibleCopy.is_support = True
-                expression.support = set([x for x in solver.closing_arguments if not x.test])
+
                 # print(solver.closing_arguments)
                 # for arg in solver.closing_arguments:
                 #     print(arg)
@@ -48,10 +84,8 @@ class DefeasibleTableauxSolver:
                 self.expand_defeasible_rules()
                 return
 
-
-
     def solve(self):
-
+        # TODO expand the def. exps one by one
         self.expand_defeasible_rules()
         self.solver = TableauxSolver(self.expressions, self.to_be_shown)
         return self.solver.proof()

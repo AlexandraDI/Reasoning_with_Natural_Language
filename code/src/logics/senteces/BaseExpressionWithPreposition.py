@@ -1,4 +1,9 @@
-from logics.Constants import negation_keywords, separator, base_filler_words, prepositions
+from logics.Constants import (
+    negation_keywords,
+    separator,
+    base_filler_words,
+    prepositions,
+)
 from logics.senteces.Expression import Expression
 from logics.senteces.ParseExceptions import ParseException
 from logics.senteces.UnifiableVariable import UnifiableVariable
@@ -18,7 +23,7 @@ class BaseExpressionWithPreposition(Expression):
             super().__init__(*args)
 
             # Get whether the sentence is negated
-            self.negation_word = 'not'
+            self.negation_word = "not"
             for negation_keyword in negation_keywords:
                 if type(negation_keyword) == list:
                     found_index = check_if_list_in_list(negation_keyword, self.tokens)
@@ -34,13 +39,13 @@ class BaseExpressionWithPreposition(Expression):
             # Remove the negation keyword
             if self.negated:
                 if type(self.negation_word) == list:
-                    del self.tokens[found_index: found_index + len(self.negation_word)]
+                    del self.tokens[found_index : found_index + len(self.negation_word)]
                 else:
                     self.tokens.remove(self.negation_word)
 
             # Go over all possible filler words and add them to the allowed list
             extra_allowed = 0
-            number_of_prepositions=0
+            number_of_prepositions = 0
             for token in self.tokens:
                 if token in base_filler_words:
                     extra_allowed += 1
@@ -49,10 +54,17 @@ class BaseExpressionWithPreposition(Expression):
 
             # Only allow subject verb object1 preposition object2 terms
             # with the restriction of at most 1 preposition
-            if len(self.tokens) - extra_allowed != 5 and len(self.tokens) - extra_allowed != 4:
-                raise ParseException(f"This base expression with preposition is not supported: {self.init_hypo}")
+            if (
+                len(self.tokens) - extra_allowed != 5
+                and len(self.tokens) - extra_allowed != 4
+            ):
+                raise ParseException(
+                    f"This base expression with preposition is not supported: {self.init_hypo}"
+                )
             elif number_of_prepositions > 1 or number_of_prepositions == 0:
-                raise ParseException(f"This base expression with preposition is not supported, the number of prepositions is greater or lower than the allowed: {self.init_hypo}")
+                raise ParseException(
+                    f"This base expression with preposition is not supported, the number of prepositions is greater or lower than the allowed: {self.init_hypo}"
+                )
 
             # Get the subject verb and objects with their filler words
             start_index = 0
@@ -63,20 +75,28 @@ class BaseExpressionWithPreposition(Expression):
                     end_index += 1
                 else:
                     if fill_counter == 0:
-                        self.subject = separator.join(self.tokens[start_index:end_index])
+                        self.subject = separator.join(
+                            self.tokens[start_index:end_index]
+                        )
                     elif fill_counter == 1:
                         self.verb = separator.join(self.tokens[start_index:end_index])
                     elif fill_counter == 2:
-                        self.object1 = separator.join(self.tokens[start_index:end_index])
+                        self.object1 = separator.join(
+                            self.tokens[start_index:end_index]
+                        )
                     elif fill_counter == 3:
-                        self.preposition = separator.join(self.tokens[start_index:end_index])
+                        self.preposition = separator.join(
+                            self.tokens[start_index:end_index]
+                        )
                     elif fill_counter == 4:
-                        self.object2 = separator.join(self.tokens[start_index:end_index])
+                        self.object2 = separator.join(
+                            self.tokens[start_index:end_index]
+                        )
                     fill_counter += 1
                     start_index = end_index
                     end_index = start_index + 1
-            if(len(self.tokens) - extra_allowed == 4):
-                self.object2=""
+            if len(self.tokens) - extra_allowed == 4:
+                self.object2 = ""
         else:
             # Copy constructor
             self.count_id()
@@ -87,6 +107,8 @@ class BaseExpressionWithPreposition(Expression):
             self.object1 = args[4]
             self.preposition = args[5]
             self.object2 = args[6]
+            self.support = args[7]
+            self.defeasible = args[8]
 
         self.tokenize_expression()
 
@@ -97,19 +119,19 @@ class BaseExpressionWithPreposition(Expression):
         if self.negated:
             if type(self.negation_word) == list:
                 self.tokens = tokenize(
-                    f'{self.subject} {separator.join(self.negation_word)} {self.verb} {self.object1} {self.preposition} {self.object2}'
+                    f"{self.subject} {separator.join(self.negation_word)} {self.verb} {self.object1} {self.preposition} {self.object2}"
                 )
-            elif 'do' in self.negation_word:
+            elif "do" in self.negation_word:
                 self.tokens = tokenize(
-                    f'{self.subject} {self.negation_word} {self.verb} {self.object1} {self.preposition} {self.object2}'
+                    f"{self.subject} {self.negation_word} {self.verb} {self.object1} {self.preposition} {self.object2}"
                 )
             else:
                 self.tokens = tokenize(
-                    f'{self.subject} {self.verb} {self.negation_word} {self.object1} {self.preposition} {self.object2}'
+                    f"{self.subject} {self.verb} {self.negation_word} {self.object1} {self.preposition} {self.object2}"
                 )
         else:
             self.tokens = tokenize(
-                f'{self.subject} {self.verb} {self.object1} {self.preposition} {self.object2}'
+                f"{self.subject} {self.verb} {self.object1} {self.preposition} {self.object2}"
             )
 
     def reverse_expression(self):
@@ -124,7 +146,9 @@ class BaseExpressionWithPreposition(Expression):
             self.verb,
             self.object1,
             self.preposition,
-            self.object2
+            self.object2,
+            self.copy_support(),
+            self.defeasible,
         )
 
     def replace_variable(self, replace, replace_with):
@@ -162,7 +186,12 @@ class BaseExpressionWithPreposition(Expression):
         unification_replacements = []
 
         # Check whether the object or subject is unified variable and replace it respectively
-        for variable, comp_var in [(self.object2, clause.object2),(self.preposition, clause.preposition),(self.object1, clause.object1), (self.subject, clause.subject)]:
+        for variable, comp_var in [
+            (self.object2, clause.object2),
+            (self.preposition, clause.preposition),
+            (self.object1, clause.object1),
+            (self.subject, clause.subject),
+        ]:
             if type(variable) == UnifiableVariable:
                 if type(comp_var) == UnifiableVariable:
                     # When both are unified variables you have to introduce a new variable
@@ -207,5 +236,7 @@ class BaseExpressionWithPreposition(Expression):
             self.verb,
             self.object1,
             self.preposition,
-            self.object2
+            self.object2,
+            self.copy_support(),
+            self.defeasible,
         )
