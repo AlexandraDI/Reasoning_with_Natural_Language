@@ -4,140 +4,12 @@
 
             <application-header></application-header>
 
-            <div id="testgraph"></div>
-
-            <mode-switcher @switch-page="change_page"></mode-switcher>
+            <ModeSwitcher @switch-page="change_page"></ModeSwitcher>
 
 
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane" id="reasoner" role="tabpanel" aria-labelledby="reasoner-tab">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item" :key="tab.tab_name" v-for="tab in tabs" :class="{ dropdown: tab.examples.length >= 1}"
-                            role="presentation">
-                            <a v-if="tab.examples.length == 1" class="nav-link"
-                               :class="{ active: tab.tab_name == current_tab}"
-                               href="#"
-                               aria-current="page" v-on:click="change_tab(tab, -1)">{{tab.tab_name}}</a>
-
-                            <a v-if="tab.examples.length > 1" class="nav-link dropdown-toggle" data-toggle="dropdown"
-                               :class="{ active: tab.tab_name == current_tab}" data-bs-toggle="dropdown"
-                               data-bs-auto-close="true" href="#" aria-expanded="false">{{tab.tab_name}}</a>
-                            <ul v-if="tab.examples.length > 1" class="dropdown dropdown-menu" role="menu"
-                                v-bind:id="tab.tab_name">
-                                <li v-for="(example, index) in tab.examples" :key="index">
-                                    <a class="dropdown-item" href="#" v-on:click="change_tab(tab, index)">{{example.name}}</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <fieldset name="form" class="list-group p-4 border-end border-bottom border-start tab-content">
-                        <div v-for="(item, index) in expressions" :key="index" class="expression_input pb-1">
-                            <label class="form-label">{{index + 1}}. input:</label>
-                            <input type="text" v-model="item.value" placeholder="Next Expression"
-                                   class="form-control"/>
-                            <button v-on:click="remove_field(index)" type="button" class="btn btn-danger"
-                                    :class="{disabled: expressions.length == 1}">-
-                            </button>
-                            <button v-if="index == expressions.length-1" v-on:click="add_field" type="button"
-                                    class="btn btn-success">+
-                            </button>
-                            <br>
-                        </div>
-                        <div class="expression_input list-group-item">
-                            <label>To be shown:</label>
-                            <input type="text" v-model="to_be_shown" class="form-control"/>
-                            <br>
-                        </div>
-                        <button v-on:click="send_request" type="button" class="btn btn-primary"
-                                style="margin-top: 8px;">Solve
-                        </button>
-                    </fieldset>
-
-                    <div :style="{'display': response && error == null ? 'block' : 'none'}">
-                        <div class="card my-4"
-                             :class="{'bg-success': tree_closes, 'bg-danger': !tree_closes}">
-                            <h2 v-if="tree_closes" class="display-5 text-center">The statement is valid</h2>
-                            <h2 v-if="!tree_closes" class="display-5 text-center">There is a branch that doesn't
-                                close</h2>
-                        </div>
-
-                        <div class="accordion mb-4" id="accordionAppliedRule" v-if="applied_rules.length != 0">
-                            <div class="accordion-item">
-                                <h1 class="accordion-header" id="heading-applied-rule">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseAppliedRule" aria-expanded="false"
-                                            aria-controls="collapseAppliedRule">
-                                    <span class="fs-3">
-                                        Applied Rules
-                                    </span>
-                                    </button>
-                                </h1>
-                                <div id="collapseAppliedRule" class="accordion-collapse collapse"
-                                     aria-labelledby="heading-applied-rule" data-bs-parent="#accordionAppliedRule">
-                                    <div class="accordion-body">
-                                        <div id="accordion" class="accordion">
-                                            <div class="accordion-item" v-for="(rule, index) in applied_rules" :key="index">
-                                                <h1 class="accordion-header" :id="'heading-applied-rule-' + index"
-                                                    v-if="index != 'root_node'">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            :data-bs-target="'#collapseAppliedRule-' + index"
-                                                            aria-expanded="false"
-                                                            :aria-controls="'collapseAppliedRule-' + index">
-                                                    <span class="fs-5">
-                                                        {{rule.rule_name}}
-                                                    </span>
-                                                    </button>
-                                                </h1>
-                                                <div :id="'collapseAppliedRule-' + index"
-                                                     class="accordion-collapse collapse" data-bs-parent="#accordion">
-                                                    <div class="accordion-body">
-                                                        <table class="table">
-                                                            <thead>
-                                                            <tr>
-                                                                <th scope="col">Referenced Line</th>
-                                                                <th scope="col" v-if="rule.created_expressions">Created
-                                                                    Expressions
-                                                                </th>
-                                                                <th scope="col">Used Expression</th>
-                                                                <th scope="col"
-                                                                    v-if="rule.matched_expression != 'None'">
-                                                                    Matched
-                                                                    Expression
-                                                                </th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>{{rule.referenced_line}}</td>
-                                                                <td v-if="rule.created_expressions">
-                                                                    <ul>
-                                                                        <li v-for="(expression_list, index) in rule.created_expressions" :key="index">
-                                                                            {{expression_list}}
-                                                                        </li>
-                                                                    </ul>
-                                                                </td>
-                                                                <td>{{rule.c_expression}}</td>
-                                                                <td v-if="rule.matched_expression != 'None'">
-                                                                    {{rule.matched_expression}}
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <p v-if="response">*You can hover over each node to receive a more detailed explanation of the
-                            applied rule.</p>
-                    </div>
-
+                  <ReasonerPage @display-tree="display_tree"/>
                 </div>
                 <div class="tab-pane" id="language" role="tabpanel" aria-labelledby="language-tab">
                     <h3>Language Check</h3>
@@ -326,35 +198,24 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 
 import ApplicationHeader from './components/ApplicationHeader.vue'
 import ModeSwitcher from "@/components/ModeSwitcher";
-
-//import '@hpcc-js/wasm/dist/index'; good
-//import "d3/dist/d3";
-//import * as d3 from "d3-selection";
-//import * as d3 from "d3-graphviz"; good
-//import "d3/dist/d3.js"
-//import {graphviz} from "d3-graphviz";
-
-
+import ReasonerPage from "@/components/reasoner/ReasonerPage";
 
 Vue.use(VueRouter)
 const router = new VueRouter({});
-//Object.defineProperty(Vue.prototype, '$server_url', { value: 'http://localhost:8080/api' });
-Object.defineProperty(Vue.prototype, '$server_url', { value: '' });
 
 export default {
   name: 'App',
   components: {
+    ReasonerPage,
     ApplicationHeader,
-    ModeSwitcher
+    ModeSwitcher,
   },
   data() {
     return {
       expressions: [],
       to_be_shown: null,
-      response: null,
       error: null,
-      applied_rules: [],
-      tree_closes: true,
+      response: null,
       up: true,
       current_tab: 'Normal Examples',
       tabs: [],
@@ -375,8 +236,6 @@ export default {
     };
   },
   mounted() {
-    if (window.location.hash === "#/" || window.location.hash === "/")
-        router.push("reasoner")
     if (window.location.hash === "#/language")
         this.change_page("language")
     else
@@ -390,15 +249,8 @@ export default {
             this.leftOffset = (x + 20) + 'px';
         }
     };
-
     axios
-        .get(this.$server_url + '/examples?name=reasoner_examples.json')
-        .then(response => {
-            this.tabs = response['data']
-            this.change_tab(this.tabs[0], -1)
-        })
-    axios
-        .get(this.$server_url + '/examples?name=language_examples.json')
+        .get('/examples?name=language_examples.json')
         .then(response => {
             this.language_examples = response['data']
             this.sentence = this.language_examples[0]["examples"][0]
@@ -435,19 +287,6 @@ export default {
             router.push("language")
         }
     },
-    change_tab(tab, idx) {
-        if (idx < 0)
-            idx = 0
-        let selected_example = JSON.parse(JSON.stringify(tab.tab_name));
-        this.current_tab = selected_example
-        let example = JSON.parse(JSON.stringify(tab.examples[idx]));
-        this.expressions = example.expressions
-        this.to_be_shown = example.to_be_shown
-
-        let myDropdown = document.getElementById(selected_example)
-        if (myDropdown)
-            myDropdown.classList.remove("show");
-    },
     remove_field(index) {
         this.expressions.splice(index, 1);
     },
@@ -469,37 +308,6 @@ export default {
             // error callback
             this.error = JSON.parse(response.bodyText.replaceAll("\"", '`').replaceAll("'", '"'))
         });
-    },
-    send_request() {
-        this.error = null
-        // GET /someUrl
-        let data = {expressions: this.expressions, to_be_shown: this.to_be_shown};
-
-
-        axios
-          .post(this.$server_url + '/solve-request', data)
-          .catch(error => {
-            this.error = JSON.parse(error.response.data.replaceAll("\"", '`').replaceAll("'", '"'))
-          })
-          .then(response => {
-
-            const responseData = response.data;
-
-            // get body data
-            this.response = responseData;
-            this.applied_rules = responseData['applied_rules']
-            this.tree_closes = JSON.parse(responseData['all_branches_closed'])
-
-            for (let applied_rule_idx in this.applied_rules) {
-              let applied_rule = this.applied_rules[applied_rule_idx]
-              if (applied_rule.created_expressions) {
-                console.log(applied_rule.created_expressions.replaceAll("'", '"'))
-                applied_rule.created_expressions = JSON.parse(applied_rule.created_expressions.replaceAll("\"", '`').replaceAll("'", '"'))
-              }
-            }
-
-            this.display_tree(responseData['dot_graph']);
-          });
     },
     toggle_tooltip(element, enter) {
         let c_rule = this.applied_rules[element[0].id]['rule_desc_obj']
@@ -620,17 +428,6 @@ export default {
       min-width: 800px;
       margin-left: auto;
       margin-right: auto;
-  }
-
-  .expression_input > label {
-      display: inline-block;
-      width: 100px;
-  }
-
-  .expression_input > input {
-      display: inline-block;
-      width: 500px;
-      transform: translateY(2px);
   }
 
   #graph > svg {
