@@ -4,7 +4,8 @@ from logics.Constants import (
     connection_keywords,
     complete_negation,
     separator,
-    de_morgan_expression, defeasible_indicators,
+    de_morgan_expression,
+    defeasible_indicators,
 )
 from logics.senteces.ParseExceptions import ParseException
 from utils.Utils import tokenize
@@ -66,7 +67,6 @@ class Expression(metaclass=abc.ABCMeta):
             self.negated = True
             self.tokens = self.tokens[6:]
 
-
         # Get the a plays b or c -> a plays b or a plays c
         self.split_references()
 
@@ -77,10 +77,21 @@ class Expression(metaclass=abc.ABCMeta):
         if support is None:
             temp_support = self.__class__(hypothesis, {})
             temp_support.is_support = True
-            self.support = {temp_support,}
+            self.support = {
+                temp_support,
+            }
         elif isinstance(support, set):
             self.support = self.copy_support()
 
+        self.defeasible = False
+        self.defeasible_keyword = None
+        for defeasible_indicator in defeasible_indicators:
+            if self.tokens[0] == defeasible_indicator:
+                self.defeasible_keyword = defeasible_indicator
+                self.defeasible = True
+                self.tokens = self.tokens[1:]
+                if self.tokens[0] == ",":
+                    self.tokens = self.tokens[1:]
 
     def count_id(self) -> None:
         """
@@ -94,7 +105,6 @@ class Expression(metaclass=abc.ABCMeta):
         Splits the sentence that references previous subjects into multiple base tokens
         """
 
-
         different_keyword = []
         comma_idx = []
         different_keyword_idx = []
@@ -102,37 +112,45 @@ class Expression(metaclass=abc.ABCMeta):
         for reference in connection_keywords:
             if reference in self.tokens:
                 # in case we have comma we want to split sentences differently
-                 if reference == ',':
+                if reference == ",":
                     comma_idx.append(self.tokens.index(reference))
-                 else:
+                else:
                     different_keyword.append(reference)
                     different_keyword_idx.append(self.tokens.index(reference))
 
-        if(len(comma_idx) ==1 and len(different_keyword_idx) ==1):
+        if len(comma_idx) == 1 and len(different_keyword_idx) == 1:
 
-                    reference_idx = comma_idx[0]
-                    middle_tokens = self.tokens[reference_idx + 1:different_keyword_idx[0]]
-                    right_tokens = self.tokens[different_keyword_idx[0] + 1:]
+            reference_idx = comma_idx[0]
+            middle_tokens = self.tokens[reference_idx + 1 : different_keyword_idx[0]]
+            right_tokens = self.tokens[different_keyword_idx[0] + 1 :]
 
-                    if len(middle_tokens) == 1 and len(right_tokens) == 1:
-                        start_idx = 1 if self.tokens[0] == de_morgan_expression else 0
-                        base_tokens = self.tokens[start_idx:reference_idx - 1]
-                        left_tokens = self.tokens[:reference_idx]
+            if len(middle_tokens) == 1 and len(right_tokens) == 1:
+                start_idx = 1 if self.tokens[0] == de_morgan_expression else 0
+                base_tokens = self.tokens[start_idx : reference_idx - 1]
+                left_tokens = self.tokens[:reference_idx]
 
-                        self.tokens = left_tokens + [different_keyword[0]] + base_tokens + middle_tokens + [different_keyword[0]] + base_tokens + right_tokens
+                self.tokens = (
+                    left_tokens
+                    + [different_keyword[0]]
+                    + base_tokens
+                    + middle_tokens
+                    + [different_keyword[0]]
+                    + base_tokens
+                    + right_tokens
+                )
 
-        elif (len(comma_idx) == 0 and len(different_keyword_idx) == 1):
+        elif len(comma_idx) == 0 and len(different_keyword_idx) == 1:
             reference_idx = different_keyword_idx[0]
-            right_tokens = self.tokens[reference_idx + 1:]
+            right_tokens = self.tokens[reference_idx + 1 :]
 
             if len(right_tokens) == 1:
-                    start_idx = 1 if self.tokens[0] == de_morgan_expression else 0
-                    base_tokens = self.tokens[start_idx:reference_idx - 1]
-                    left_tokens = self.tokens[:reference_idx]
+                start_idx = 1 if self.tokens[0] == de_morgan_expression else 0
+                base_tokens = self.tokens[start_idx : reference_idx - 1]
+                left_tokens = self.tokens[:reference_idx]
 
-                    self.tokens = left_tokens + [different_keyword[0]] + base_tokens + right_tokens
-
-
+                self.tokens = (
+                    left_tokens + [different_keyword[0]] + base_tokens + right_tokens
+                )
 
     def is_contradiction_of(self, clause, list_of_new_objects):
         return False
@@ -168,7 +186,7 @@ class Expression(metaclass=abc.ABCMeta):
         return separator.join(self.tokens)
 
     def __str__(self):
-        return f"{type(self).__name__}(neg={self.negated}, tokens={self.tokens}), support={self.support}"
+        return f"{type(self).__name__}(neg={self.negated}, tokens={self.tokens}), support={self.support}, defeasible={self.defeasible}"
 
     def __repr__(self):
         return f"{self.tokens}"

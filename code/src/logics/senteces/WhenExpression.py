@@ -21,15 +21,15 @@ class WhenExpression(Expression):
             self.left_match = None
             self.key_words = None
 
-            self.defeasible = False
-            self.defeasible_keyword = None
-            for defeasible_indicator in defeasible_indicators:
-                if self.tokens[0] == defeasible_indicator:
-                    self.defeasible_keyword = defeasible_indicator
-                    self.defeasible = True
-                    self.tokens = self.tokens[1:]
-                    if self.tokens[0] == ",":
-                        self.tokens = self.tokens[1:]
+            # self.defeasible = False
+            # self.defeasible_keyword = None
+            # for defeasible_indicator in defeasible_indicators:
+            #     if self.tokens[0] == defeasible_indicator:
+            #         self.defeasible_keyword = defeasible_indicator
+            #         self.defeasible = True
+            #         self.tokens = self.tokens[1:]
+            #         if self.tokens[0] == ",":
+            #             self.tokens = self.tokens[1:]
 
             # Get the string rep with the overall negation removed
             test_sentence = self.get_string_rep(include_defeasible=False)
