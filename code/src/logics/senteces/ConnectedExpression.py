@@ -8,6 +8,7 @@ class ConnectedExpression(Expression):
     """
     Class that represents the and / or connected expressions
     """
+
     def __init__(self, *args):
         # When we have only one input it must be a sentence
         if len(args) <= 2:
@@ -28,10 +29,16 @@ class ConnectedExpression(Expression):
                 # Go over each word and create expression split by keyword
                 if connection_keyword in self.tokens:
                     from logics.senteces.Helper import create_expression
+
                     keyword_idx = self.tokens.index(connection_keyword)
                     # Create the expressions from the left and right tokens
-                    self.left_expression = create_expression(separator.join(self.tokens[:keyword_idx]), self.copy_support())
-                    self.right_expression = create_expression(separator.join(self.tokens[keyword_idx + 1:]), self.copy_support())
+                    self.left_expression = create_expression(
+                        separator.join(self.tokens[:keyword_idx]), self.copy_support()
+                    )
+                    self.right_expression = create_expression(
+                        separator.join(self.tokens[keyword_idx + 1 :]),
+                        self.copy_support(),
+                    )
 
                     self.connection_keyword = connection_keyword
                     break
@@ -46,6 +53,8 @@ class ConnectedExpression(Expression):
             self.left_expression = args[1]
             self.right_expression = args[2]
             self.connection_keyword = args[3]
+            self.support = args[4]
+            self.defeasible = args[5]
             self.tokenize_expression()
 
     def tokenize_expression(self):
@@ -54,7 +63,7 @@ class ConnectedExpression(Expression):
         """
         self.tokens = tokenize(
             f'{de_morgan_expression if self.negated else ""} '
-            f'{self.left_expression.get_string_rep()} {self.connection_keyword} {self.right_expression.get_string_rep()}'
+            f"{self.left_expression.get_string_rep()} {self.connection_keyword} {self.right_expression.get_string_rep()}"
         )
 
     def replace_variable(self, replace, replace_with):
@@ -65,8 +74,12 @@ class ConnectedExpression(Expression):
         :return: A new expression with the replaced variables
         """
         new_connected_expression = self.copy()
-        new_connected_expression.left_expression = new_connected_expression.left_expression.replace_variable(replace, replace_with)
-        new_connected_expression.right_expression = new_connected_expression.right_expression.replace_variable(replace, replace_with)
+        new_connected_expression.left_expression = new_connected_expression.left_expression.replace_variable(
+            replace, replace_with
+        )
+        new_connected_expression.right_expression = new_connected_expression.right_expression.replace_variable(
+            replace, replace_with
+        )
         new_connected_expression.tokenize_expression()
         return new_connected_expression
 
@@ -75,7 +88,7 @@ class ConnectedExpression(Expression):
         Splice expression back together with the negation word
         :return: The string representation of the expression
         """
-        return f'{separator.join(self.tokens)}'
+        return f"{separator.join(self.tokens)}"
 
     def reverse_expression(self):
         """
@@ -86,7 +99,9 @@ class ConnectedExpression(Expression):
             not self.negated,
             self.left_expression,
             self.right_expression,
-            self.connection_keyword
+            self.connection_keyword,
+            self.copy_support(),
+            self.defeasible,
         )
 
     def copy(self):
@@ -98,5 +113,7 @@ class ConnectedExpression(Expression):
             self.negated,
             self.left_expression,
             self.right_expression,
-            self.connection_keyword
+            self.connection_keyword,
+            self.copy_support(),
+            self.defeasible,
         )

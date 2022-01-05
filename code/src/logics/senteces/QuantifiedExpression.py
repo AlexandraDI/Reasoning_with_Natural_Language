@@ -1,6 +1,10 @@
 import re
 
-from logics.Constants import separator, quantified_regex_plural, quantified_regex_singular
+from logics.Constants import (
+    separator,
+    quantified_regex_plural,
+    quantified_regex_singular,
+)
 from logics.senteces.Expression import Expression
 from logics.senteces.ParseExceptions import ParseException
 from utils.Utils import tokenize, get_sentences_key_words
@@ -28,7 +32,10 @@ class QuantifiedExpression(Expression):
 
             # Get whether it is for all or it exists quantified
             reg_match = None
-            for test_reg, for_all in [(quantified_regex_plural, True), (quantified_regex_singular, False)]:
+            for test_reg, for_all in [
+                (quantified_regex_plural, True),
+                (quantified_regex_singular, False),
+            ]:
                 reg_match = re.match(test_reg, test_sentence, re.IGNORECASE)
                 if reg_match:
                     self.for_all = for_all
@@ -36,8 +43,10 @@ class QuantifiedExpression(Expression):
 
             # If we have no match return false.. What ever happend here
             if reg_match is None:
-                raise ParseException(f"No regex match found for the quantified expression: \n"
-                                     f"Original sentence: {test_sentence}")
+                raise ParseException(
+                    f"No regex match found for the quantified expression: \n"
+                    f"Original sentence: {test_sentence}"
+                )
 
             # Go over each group and get the sentences between the keywords
             sentences, key_words = get_sentences_key_words(reg_match, test_sentence)
@@ -49,7 +58,10 @@ class QuantifiedExpression(Expression):
 
             # Create the remaining expression
             from logics.senteces.Helper import create_expression
-            self.quantified_expression = create_expression(sentences[1], self.copy_support())
+
+            self.quantified_expression = create_expression(
+                sentences[1], self.copy_support()
+            )
         else:
             # Copy constructor
             self.count_id()
@@ -60,6 +72,8 @@ class QuantifiedExpression(Expression):
             self.quantification_split = args[3]
             self.quantified_variable = args[4]
             self.quantified_expression = args[5]
+            self.support = args[6]
+            self.defeasible = args[7]
 
         # Re tokenize the expression
         self.tokenize_expression()
@@ -70,7 +84,7 @@ class QuantifiedExpression(Expression):
         """
         self.tokens = tokenize(
             f'{"it is not the case that " if self.negated else ""}'
-            f'{self.quantification_sentence} {self.quantified_variable} {self.quantification_split} {self.quantified_expression.get_string_rep()}'
+            f"{self.quantification_sentence} {self.quantified_variable} {self.quantification_split} {self.quantified_expression.get_string_rep()}"
         )
 
     def replace_variable(self, replace, replace_with):
@@ -84,7 +98,8 @@ class QuantifiedExpression(Expression):
         if new_quantified_expression.quantified_variable == replace:
             new_quantified_expression.quantified_variable = replace_with
         new_quantified_expression.quantified_expression = new_quantified_expression.quantified_expression.replace_variable(
-            replace, replace_with)
+            replace, replace_with
+        )
         new_quantified_expression.tokenize_expression()
         return new_quantified_expression
 
@@ -99,7 +114,9 @@ class QuantifiedExpression(Expression):
             self.quantification_sentence,
             self.quantification_split,
             self.quantified_variable,
-            self.quantified_expression
+            self.quantified_expression,
+            self.copy_support(),
+            self.defeasible,
         )
 
     def get_string_rep(self):
@@ -107,7 +124,7 @@ class QuantifiedExpression(Expression):
         Just joins the tokens using the separator
         :return: The string representation of the expression
         """
-        return f'{separator.join(self.tokens)}'
+        return f"{separator.join(self.tokens)}"
 
     def copy(self):
         """
@@ -120,5 +137,7 @@ class QuantifiedExpression(Expression):
             self.quantification_sentence,
             self.quantification_split,
             self.quantified_variable,
-            self.quantified_expression
+            self.quantified_expression,
+            self.copy_support(),
+            self.defeasible,
         )
