@@ -148,6 +148,8 @@ class TableauxSolver:
                 if applied_rule in applied_rules:
                     continue
 
+                # if type(curr_clause) == WhenExpression and curr_clause.defeasible:
+
                 # Apply rule and check if we have created branches
                 branches, created_rule = rule(curr_clause, clauses, list_of_new_objects)
                 new_nodes = None
