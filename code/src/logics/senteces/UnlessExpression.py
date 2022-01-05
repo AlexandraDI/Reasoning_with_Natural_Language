@@ -25,25 +25,35 @@ class UnlessExpression(Expression):
 
             # Check whether we have a left unless expression or right unless expression
             reg_match = None
-            for test_reg, is_left in [(unless_left_regex, True), (unless_right_regex, False)]:
+            for test_reg, is_left in [
+                (unless_left_regex, True),
+                (unless_right_regex, False),
+            ]:
                 reg_match = re.match(test_reg, test_sentence, re.IGNORECASE)
                 if reg_match:
                     self.left_match = is_left
                     break
 
             if reg_match is None:
-                raise ParseException(f"No regex match found for the unless expression: \n"
-                                     f"Original sentence: {test_sentence}")
+                raise ParseException(
+                    f"No regex match found for the unless expression: \n"
+                    f"Original sentence: {test_sentence}"
+                )
 
             # Go over each group and get the sentences between the keywords
-            sentences, self.key_words = get_sentences_key_words(reg_match, test_sentence)
+            sentences, self.key_words = get_sentences_key_words(
+                reg_match, test_sentence
+            )
 
             if len(sentences) != 2:
-                raise ParseException(f"The unless expression doesn't have two sentences"
-                                     f"Original sentence: {test_sentence}")
+                raise ParseException(
+                    f"The unless expression doesn't have two sentences"
+                    f"Original sentence: {test_sentence}"
+                )
 
             # Get the unless expression that needs to be negated if necessary
             from logics.senteces.Helper import create_expression
+
             if self.left_match:
                 self.premise = create_expression(sentences[0], self.copy_support())
                 self.conclusion = create_expression(sentences[1], self.copy_support())
@@ -59,6 +69,8 @@ class UnlessExpression(Expression):
             self.conclusion = args[2]
             self.left_match = args[3]
             self.key_words = args[4]
+            self.support = (args[5],)
+            self.defeasible = args[6]
             self.tokenize_expression()
 
     def tokenize_expression(self):
@@ -66,10 +78,11 @@ class UnlessExpression(Expression):
         Create the tokens of the expression based on detected elements
         """
         sentence = f'{"it is not the case that " if self.negated else ""}'
-        sentence += \
-            f'{self.key_words[0]} {self.premise.get_string_rep()} {self.key_words[1]} {self.conclusion.get_string_rep()}' \
-                if self.left_match else \
-                f'{self.conclusion.get_string_rep()} {self.key_words[0]} {self.premise.get_string_rep()}'
+        sentence += (
+            f"{self.key_words[0]} {self.premise.get_string_rep()} {self.key_words[1]} {self.conclusion.get_string_rep()}"
+            if self.left_match
+            else f"{self.conclusion.get_string_rep()} {self.key_words[0]} {self.premise.get_string_rep()}"
+        )
 
         self.tokens = tokenize(sentence)
 
@@ -81,10 +94,12 @@ class UnlessExpression(Expression):
         :return: A new expression with the replaced variables
         """
         new_unless_expression = self.copy()
-        new_unless_expression.premise = new_unless_expression.premise.replace_variable(replace,
-                                                                                   replace_with)
-        new_unless_expression.conclusion = new_unless_expression.conclusion.replace_variable(replace,
-                                                                                         replace_with)
+        new_unless_expression.premise = new_unless_expression.premise.replace_variable(
+            replace, replace_with
+        )
+        new_unless_expression.conclusion = new_unless_expression.conclusion.replace_variable(
+            replace, replace_with
+        )
         new_unless_expression.tokenize_expression()
         return new_unless_expression
 
@@ -98,7 +113,9 @@ class UnlessExpression(Expression):
             self.premise,
             self.conclusion,
             self.left_match,
-            self.key_words
+            self.key_words,
+            self.copy_support(),
+            self.defeasible,
         )
 
     def copy(self):
@@ -112,4 +129,6 @@ class UnlessExpression(Expression):
             self.conclusion,
             self.left_match,
             self.key_words,
+            self.copy_support(),
+            self.defeasible,
         )
