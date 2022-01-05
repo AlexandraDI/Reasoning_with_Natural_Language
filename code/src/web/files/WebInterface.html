@@ -593,6 +593,7 @@
             display_tree(dot_graph) {
                 if (this.graph_rendered)
                     d3.select("#graph").graphviz({useWorker: false}).resetZoom();
+                console.log(d3.select("#graph").graphviz({useWorker: false}));
                 d3.select("#graph")
                     .graphviz({useWorker: false})
                     .on("renderEnd", () => {
