@@ -9,6 +9,6 @@
         font-family: 'Dancing Script', cursive;
         font-size: 4.5rem;
         text-align: center;
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
     }
 </style>
