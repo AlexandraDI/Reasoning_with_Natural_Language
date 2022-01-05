@@ -7,6 +7,9 @@
         v-bind:expressions="this.expressions"
         v-bind:to_be_shown="this.to_be_shown"
         @submit="send_request"
+        @change-expression="this.modify_expression"
+        @add-expression="this.add_expression"
+        @remove-expression="this.remove_expression"
     />
 
     <div :style="{'display': response && error == null ? 'block' : 'none'}">
@@ -122,6 +125,18 @@ export default {
       if (myDropdown)
         myDropdown.classList.remove("show");*/
     },
+    modify_expression(index, value) {
+      if(index < 0)
+        this.to_be_shown = value;
+      else
+        this.expressions[index]["value"] = value;
+    },
+    add_expression() {
+      this.expressions.push({value: ""});
+    },
+    remove_expression(index) {
+      this.expressions.splice(index, 1);
+    },
     send_request() {
       console.log("send_request");
       this.error = null
@@ -152,7 +167,7 @@ export default {
             this.$emit("display-tree", responseData['dot_graph']);
           });
     },
-  }
+  },
 }
 </script>
 
