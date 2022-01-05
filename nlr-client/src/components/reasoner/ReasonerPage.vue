@@ -167,7 +167,7 @@ export default {
             this.$emit("display-tree", responseData['dot_graph']);
           });
     },
-  }
+  },
 }
 </script>
 
