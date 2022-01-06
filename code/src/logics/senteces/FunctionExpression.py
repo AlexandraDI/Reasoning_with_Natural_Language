@@ -92,7 +92,7 @@ class FunctionExpression(Expression):
             self.multi = args[4]
             self.support = args[5]
             self.defeasible = args[6]
-
+            self.defeasible_keyword = args[7]
         # Re tokenize the expression
         self.tokenize_expression()
 
@@ -193,6 +193,7 @@ class FunctionExpression(Expression):
             self.multi,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )
 
     def get_string_rep(self):
@@ -215,4 +216,5 @@ class FunctionExpression(Expression):
             self.multi,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )

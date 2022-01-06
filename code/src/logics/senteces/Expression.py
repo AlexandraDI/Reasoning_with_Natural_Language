@@ -182,7 +182,7 @@ class Expression(metaclass=abc.ABCMeta):
         else:
             return False
 
-    def get_string_rep(self, include_defeasible=True):
+    def get_string_rep(self, include_defeasible=False):
         return (
                    self.defeasible_keyword + " "
                    if self.defeasible and include_defeasible

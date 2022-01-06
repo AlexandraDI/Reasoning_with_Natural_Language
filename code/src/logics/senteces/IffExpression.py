@@ -45,6 +45,7 @@ class IffExpression(Expression):
             self.connection_keyword = args[3]
             self.support = args[4]
             self.defeasible = args[5]
+            self.defeasible_keyword = args[6]
             self.tokenize_expression()
 
     def tokenize_expression(self):
@@ -76,6 +77,7 @@ class IffExpression(Expression):
             self.connection_keyword,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )
 
     def copy(self):
@@ -90,6 +92,7 @@ class IffExpression(Expression):
             self.connection_keyword,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )
 
     def replace_variable(self, replace, replace_with):

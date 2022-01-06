@@ -109,6 +109,7 @@ class BaseExpressionWithPreposition(Expression):
             self.object2 = args[6]
             self.support = args[7]
             self.defeasible = args[8]
+            self.defeasible_keyword = args[9]
 
         self.tokenize_expression()
 
@@ -149,6 +150,7 @@ class BaseExpressionWithPreposition(Expression):
             self.object2,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )
 
     def replace_variable(self, replace, replace_with):
@@ -239,4 +241,5 @@ class BaseExpressionWithPreposition(Expression):
             self.object2,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )

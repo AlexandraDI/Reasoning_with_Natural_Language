@@ -155,7 +155,7 @@ class WhenExpression(Expression):
             self.defeasible,
         )
 
-    def get_string_rep(self, include_defeasible=True):
+    def get_string_rep(self, include_defeasible=False):
         # str = (
         #     self.defeasible_keyword + " "
         #     if self.defeasible and include_defeasible

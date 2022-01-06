@@ -36,7 +36,7 @@ class ConnectedExpression(Expression):
                         separator.join(self.tokens[:keyword_idx]), self.copy_support()
                     )
                     self.right_expression = create_expression(
-                        separator.join(self.tokens[keyword_idx + 1 :]),
+                        separator.join(self.tokens[keyword_idx + 1:]),
                         self.copy_support(),
                     )
 
@@ -55,6 +55,7 @@ class ConnectedExpression(Expression):
             self.connection_keyword = args[3]
             self.support = args[4]
             self.defeasible = args[5]
+            self.defeasible_keyword = args[6]
             self.tokenize_expression()
 
     def tokenize_expression(self):
@@ -83,12 +84,12 @@ class ConnectedExpression(Expression):
         new_connected_expression.tokenize_expression()
         return new_connected_expression
 
-    def get_string_rep(self):
+    def get_string_rep(self, include_defeasible=False):
         """
         Splice expression back together with the negation word
         :return: The string representation of the expression
         """
-        return Expression.get_string_rep(self)
+        return Expression.get_string_rep(self, include_defeasible)
 
     def reverse_expression(self):
         """
@@ -102,6 +103,7 @@ class ConnectedExpression(Expression):
             self.connection_keyword,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )
 
     def copy(self):
@@ -116,4 +118,5 @@ class ConnectedExpression(Expression):
             self.connection_keyword,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )
