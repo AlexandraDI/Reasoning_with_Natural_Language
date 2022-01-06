@@ -222,7 +222,7 @@ class BaseExpressionWithPreposition(Expression):
         Splice the subject, verb and object together with the negation word
         :return: The string representation of the expression
         """
-        return separator.join(self.tokens)
+        return Expression.get_string_rep(self)
 
     def copy(self):
         """

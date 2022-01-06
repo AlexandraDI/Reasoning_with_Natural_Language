@@ -53,13 +53,16 @@ class IffExpression(Expression):
         """
         self.tokens = tokenize(self.get_string_rep())
 
-    def get_string_rep(self):
+    def get_string_rep(self, include_defeasible=True):
         """
         Splice expression back together with the negation word
         :return: The string representation of the expression
         """
         str = f'{(complete_negation + " ") if self.negated else ""}{self.left_expression.get_string_rep()} {self.connection_keyword} {self.right_expression.get_string_rep()}'
-        return str
+
+        return (self.defeasible_keyword + " "
+                if self.defeasible and include_defeasible
+                else "") + str
 
     def reverse_expression(self):
         """
@@ -97,5 +100,5 @@ def contains_sub_array(array, subarray):
     return [
         x
         for x in range(len(array) - len(subarray) + 1)
-        if array[x : x + len(subarray)] == subarray
+        if array[x: x + len(subarray)] == subarray
     ]

@@ -88,7 +88,7 @@ class ConnectedExpression(Expression):
         Splice expression back together with the negation word
         :return: The string representation of the expression
         """
-        return f"{separator.join(self.tokens)}"
+        return Expression.get_string_rep(self)
 
     def reverse_expression(self):
         """

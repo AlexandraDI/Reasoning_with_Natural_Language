@@ -200,7 +200,7 @@ class FunctionExpression(Expression):
         Just joins the tokens using the separator
         :return: The string representation of the expression
         """
-        return f"{separator.join(self.tokens)}"
+        return Expression.get_string_rep(self)
 
     def copy(self):
         """
