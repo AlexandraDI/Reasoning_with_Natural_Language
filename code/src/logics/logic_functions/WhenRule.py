@@ -69,12 +69,15 @@ class WhenRule(Rule):
 
         if clause.defeasible:
             negated_premise = clause.premise.reverse_expression()
+            # negated_conclusion = clause.conclusion
             (contradicted, matched_clause, _) = check_for_contradiction(negated_premise, args[0], args[1])
-            if contradicted:
+            (conclusion_contradicted, _, _) = check_for_contradiction(clause.conclusion.reverse_expression(), args[0], args[1])
+            if contradicted and not conclusion_contradicted:
                 conclusion = clause.conclusion.copy()
                 conclusion.support = conclusion.support.union(matched_clause.support)
                 new_clauses[0].append(conclusion)
-            return new_clauses, WhenRule(clause, clause.premise, clause.conclusion)
+                return new_clauses, WhenRule(clause, clause.premise, clause.conclusion)
+            return new_clauses, None
 
         left_exp = clause.premise.reverse_expression()
         right_exp = clause.conclusion.copy()

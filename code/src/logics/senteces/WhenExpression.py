@@ -161,4 +161,4 @@ class WhenExpression(Expression):
         #     if self.defeasible and include_defeasible
         #     else ""
         # ) + Expression.get_string_rep(self)
-        return Expression.get_string_rep(self)
+        return Expression.get_string_rep(self, include_defeasible)
