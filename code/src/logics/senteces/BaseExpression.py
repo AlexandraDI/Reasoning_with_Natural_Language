@@ -181,12 +181,12 @@ class BaseExpression(Expression):
         # It is a match.. replace the unification variables
         return True, unification_replacements
 
-    def get_string_rep(self):
+    def get_string_rep(self, include_defeasible=False):
         """
         Splice the subject, verb and object together with the negation word
         :return: The string representation of the expression
         """
-        return Expression.get_string_rep(self)
+        return Expression.get_string_rep(self, include_defeasible)
 
     def copy(self):
         """

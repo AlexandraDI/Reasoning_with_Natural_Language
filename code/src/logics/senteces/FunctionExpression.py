@@ -196,12 +196,12 @@ class FunctionExpression(Expression):
             self.defeasible_keyword
         )
 
-    def get_string_rep(self):
+    def get_string_rep(self, include_defeasible=False):
         """
         Just joins the tokens using the separator
         :return: The string representation of the expression
         """
-        return Expression.get_string_rep(self)
+        return Expression.get_string_rep(self, include_defeasible)
 
     def copy(self):
         """

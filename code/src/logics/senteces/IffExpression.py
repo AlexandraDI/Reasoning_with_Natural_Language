@@ -54,7 +54,7 @@ class IffExpression(Expression):
         """
         self.tokens = tokenize(self.get_string_rep())
 
-    def get_string_rep(self, include_defeasible=True):
+    def get_string_rep(self, include_defeasible=False):
         """
         Splice expression back together with the negation word
         :return: The string representation of the expression
