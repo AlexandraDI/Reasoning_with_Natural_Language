@@ -46,14 +46,13 @@ class TableauxSolver:
             # Create a clean clauses list
             clauses = [i for i in self.hypothesis]
 
-
             # Reverse the expression and append it to the clause list
             neg_thesis = self.to_be_shown.reverse_expression()
             neg_thesis.test = True
             neg_thesis_support = neg_thesis.copy()
             neg_thesis_support.test = True
             neg_thesis_support.is_support = True
-            neg_thesis.support = {neg_thesis_support,} # change the support
+            neg_thesis.support = {neg_thesis_support, }  # change the support
             clauses.append(neg_thesis)
 
             # Create the solve tree and call the recursive proof
@@ -67,12 +66,12 @@ class TableauxSolver:
         except RuntimeError as e:
             print(e)
             raise e
-        #print(self.closing_arguments)
+        # print(self.closing_arguments)
         return result
 
     @staticmethod
     def check_for_contradiction(
-        hypothesis: BaseExpression, clauses: List[Expression], list_of_new_objects
+            hypothesis: BaseExpression, clauses: List[Expression], list_of_new_objects
     ):
         """
         Helper function that checks for the given hypothesis if there is a contradiction in the created classes
@@ -83,7 +82,9 @@ class TableauxSolver:
         """
         # Go over each clause and check whether it is a base or a function expression
         for clause in clauses:
-            if clause == hypothesis and not (isinstance(clause, (BaseExpression, FunctionExpression)) and not isinstance(clause, (BaseExpressionWithPreposition, FunctionExpression))):
+            if clause == hypothesis and not (
+                    isinstance(clause, (BaseExpression, FunctionExpression)) and not isinstance(clause, (
+                    BaseExpressionWithPreposition, FunctionExpression))):
                 continue
 
             # If it is check if it is a contradiction with the hypothesis expression
@@ -95,7 +96,7 @@ class TableauxSolver:
         return False, None, None
 
     def recursive_proof(
-        self, clauses, applied_rules, list_of_new_objects, parent=None
+            self, clauses, applied_rules, list_of_new_objects, parent=None
     ) -> bool:
         """
         The recursive prove first searches for a contradiction.
@@ -110,16 +111,26 @@ class TableauxSolver:
         :return: If the branch closes or not
         """
 
+
         # Check if we have a contradiction in this branch
         for i, curr_clause in enumerate(clauses):
-            if not (type(curr_clause) == BaseExpression or type(curr_clause) == BaseExpressionWithPreposition or type(curr_clause) == FunctionExpression):
+            if not (type(curr_clause) == BaseExpression or type(curr_clause) == BaseExpressionWithPreposition or type(
+                    curr_clause) == FunctionExpression):
+                continue
+            # Dont check for contradiction before expanding all the rules if the clause is defeasible
+            if curr_clause.defeasible:
                 continue
 
-            res, matched_clause, unification_replacements = TableauxSolver.check_for_contradiction(curr_clause, clauses, list_of_new_objects)
+            res, matched_clause, unification_replacements = TableauxSolver.check_for_contradiction(curr_clause,
+                                                                                                   self.get_clauses_for_checking_contradiction(
+                                                                                                       clauses,
+                                                                                                       applied_rules),
+                                                                                                   list_of_new_objects)
             if res:
                 node = parent
                 if unification_replacements:
-                    node = self.create_unification_replacements(curr_clause, matched_clause, unification_replacements, parent)
+                    node = self.create_unification_replacements(curr_clause, matched_clause, unification_replacements,
+                                                                parent)
 
                 # Found Tautology with the matched clause
                 applied_rule = create_contradiction_rule(curr_clause, matched_clause)
@@ -136,8 +147,8 @@ class TableauxSolver:
 
         # Go over each clause and check if we can apply a rule
         # Keep the branching clauses to the end
-        for rule_name, rule in rule_set.items():
-            for i, curr_clause in enumerate(clauses):
+        for i, curr_clause in enumerate(clauses):
+            for rule_name, rule in rule_set.items():
 
                 # Dont apply rule twice
                 applied_rule = AppliedRule(
@@ -147,8 +158,6 @@ class TableauxSolver:
                 )
                 if applied_rule in applied_rules:
                     continue
-
-                # if type(curr_clause) == WhenExpression and curr_clause.defeasible:
 
                 # Apply rule and check if we have created branches
                 branches, created_rule = rule(curr_clause, clauses, list_of_new_objects)
@@ -203,16 +212,18 @@ class TableauxSolver:
                 # If not every branch closes then this doesnt work
                 return closes
 
+
         # Check if we have a contradiction in this branch
         for i, curr_clause in enumerate(clauses):
-            if not isinstance(curr_clause, (BaseExpression, FunctionExpression)) and not isinstance(curr_clause, (BaseExpressionWithPreposition, FunctionExpression)):
+            if not isinstance(curr_clause, (BaseExpression, FunctionExpression)) and not isinstance(curr_clause, (
+                    BaseExpressionWithPreposition, FunctionExpression)):
                 continue
             (
                 res,
                 matched_clause,
                 unification_replacements,
             ) = TableauxSolver.check_for_contradiction(
-                curr_clause, clauses, list_of_new_objects
+                curr_clause, self.get_clauses_for_checking_contradiction(clauses, applied_rules), list_of_new_objects
             )
             if res:
                 node = parent
@@ -240,8 +251,22 @@ class TableauxSolver:
         self.all_branches_closed = False
         return False
 
+    def get_clauses_for_checking_contradiction(self, clauses, applied_rules):
+        if self.are_all_normal_rules_expanded(clauses, applied_rules):
+            return clauses
+        return [clause for clause in clauses if not clause.defeasible]
+
+    def are_all_normal_rules_expanded(self, clauses, applied_rules):
+        for clause in clauses:
+            if not clause.defeasible:
+                if len([rule for rule in applied_rules if rule.referenced_line == clause.id]) == 0 and not isinstance(
+                        clause, (BaseExpression,
+                                 BaseExpressionWithPreposition, FunctionExpression)):
+                    return False
+        return True
+
     def create_unification_replacements(
-        self, curr_clause, matched_clause, unification_replacements, parent
+            self, curr_clause, matched_clause, unification_replacements, parent
     ):
         """
         This function creates unification replacements for the visualization
