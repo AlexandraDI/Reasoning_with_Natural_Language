@@ -80,7 +80,7 @@ def get_language_request(request: Request):
         return response
     except Exception as err:
         traceback.print_exc()
-        response = Response(str(dict(
+        response = Response(json.dumps(dict(
             type=type(err).__name__,
             list="null" if type(err) is not ParseException else err.exception_list,
             error=str(err)
@@ -109,7 +109,7 @@ def get_solve_request(request: Request):
         return response
     except Exception as err:
         traceback.print_exc()
-        response = Response(str(dict(
+        response = Response(json.dumps(dict(
             type=type(err).__name__,
             list="null" if type(err) is not ParseException else err.exception_list,
             error=str(err)
