@@ -9,36 +9,21 @@
 
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane" id="reasoner" role="tabpanel" aria-labelledby="reasoner-tab">
-                  <ReasonerPage @display-tree="display_tree"/>
+                  <ReasonerPage
+                      @display-tree="display_tree"
+                      @set-error="set_error"
+                  />
                 </div>
                 <div class="tab-pane" id="language" role="tabpanel" aria-labelledby="language-tab">
-                  <LanguageCheckerPage/>
+                  <LanguageCheckerPage
+                    @set-error="set_error"
+                    />
                 </div>
             </div>
 
-            <div class="card bg-danger mt-2" v-if="error">
-                <div class="card-header">
-                    <span class="lead" v-if="error.type === 'ParseException'">
-                        Parse Exception
-                    </span>
-                    <span class="lead" v-if="error.type !== 'ParseException'">
-                        Internal Error
-                    </span>
-                </div>
-                <div class="card-body">
-                    <div v-if="error.type !== 'ParseException'">
-                        <span class="lead">Oops something went wrong and we dont really know what.</span><br>
-                        <span class="lead">This could help tho: {{error.error}}</span>
-                    </div>
-                    <div v-if="error.type === 'ParseException'">
-                        <span class="lead">We detected a error in the parsing process</span><br>
-                        <span class="lead">This are the errors we collected along the way:</span><br>
-                        <ul>
-                            <li v-for="c_error in error.list" :key="c_error">{{c_error}}</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <ErrorBox
+              v-bind:error="this.error"
+              />
 
             <div id="tooltip" class="card"
                  :style="{'display': tooltip_visible ? 'block' : 'none', 'top': topOffset, 'left': leftOffset}"
@@ -113,6 +98,7 @@ import ApplicationHeader from './components/ApplicationHeader.vue'
 import ModeSwitcher from "@/components/ModeSwitcher";
 import ReasonerPage from "@/components/reasoner/ReasonerPage";
 import LanguageCheckerPage from "@/components/languageChecker/LanguageCheckerPage";
+import ErrorBox from "@/components/ErrorBox";
 
 Vue.use(VueRouter)
 const router = new VueRouter({});
@@ -120,6 +106,7 @@ const router = new VueRouter({});
 export default {
   name: 'App',
   components: {
+    ErrorBox,
     LanguageCheckerPage,
     ReasonerPage,
     ApplicationHeader,
@@ -167,22 +154,25 @@ export default {
   },
   methods: {
     change_page(to_page) {
-        let reasoner_panel = document.getElementById("reasoner")
-        let language_panel = document.getElementById("language")
-        let reasoner_panel_tab = document.getElementById("reasoner-tab")
-        let language_panel_tab = document.getElementById("language-tab")
+      let reasoner_panel = document.getElementById("reasoner")
+      let language_panel = document.getElementById("language")
+      let reasoner_panel_tab = document.getElementById("reasoner-tab")
+      let language_panel_tab = document.getElementById("language-tab")
 
-        if (to_page === "reasoner") {
-            reasoner_panel_tab.classList.add("active");
-            reasoner_panel.classList.add("active");
-            $("#graph").show();
-            router.push("reasoner")
-        } else {
-            language_panel_tab.classList.add("active");
-            language_panel.classList.add("active");
+      this.error = null;
+
+      if (to_page === "reasoner") {
+          reasoner_panel_tab.classList.add("active");
+          reasoner_panel.classList.add("active");
+          $("#graph").show();
+          router.push("reasoner")
+      } else {
+          language_panel_tab.classList.add("active");
+          language_panel.classList.add("active");
+
           $("#graph").hide();
-            router.push("language")
-        }
+          router.push("language")
+      }
 
     },
     remove_field(index) {
@@ -230,6 +220,9 @@ export default {
             }
           })
           .renderDot(dot_graph);
+    },
+    set_error(error) {
+      this.error = error;
     }
   }
 }

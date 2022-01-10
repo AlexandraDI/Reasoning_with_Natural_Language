@@ -144,9 +144,6 @@ export default {
 
       axios
           .post('/solve-request', data)
-          .catch(error => {
-            this.error = JSON.parse(error.response.data.replaceAll("\"", '`').replaceAll("'", '"'))
-          })
           .then(response => {
 
             const responseData = response.data;
@@ -164,8 +161,14 @@ export default {
               }
             }
 
+            this.$emit("set-error", null);
             this.$emit("display-tree", responseData['dot_graph']);
+          })
+          .catch(error => {
+            const data = error.response.data;
+            this.$emit("set-error", data);
           });
+
     },
   },
 }
