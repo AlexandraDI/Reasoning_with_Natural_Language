@@ -197,6 +197,11 @@ export default {
         this.tooltip_visible = enter
     },
     display_tree(dot_graph) {
+      if(dot_graph === null)
+        $("#graph").hide();
+      else
+        $("#graph").show();
+
       if (this.graph_rendered)
           // eslint-disable-next-line no-undef
         d3.select("#graph").graphviz({useWorker: false}).resetZoom();
