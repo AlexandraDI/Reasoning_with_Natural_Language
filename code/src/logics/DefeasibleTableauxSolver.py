@@ -33,44 +33,36 @@ class DefeasibleTableauxSolver:
         # adding all conclusions from defeasible information
         for defeasible in self.defeasible_expressions:
             # If it is a def. when exp. we have to prove the premise
-            # Otherwise, we simply add the rule
-            proved = True
-            expression = defeasible.copy()
-            tmp = expression.copy()
-            tmp.is_support = True
-            expression.support = {tmp}
+            # Otherwise, we check that the negation of the expression does not hold
+            proved = False
+
+            # Try to add the expression
             if isinstance(defeasible, WhenExpression):
+                # Prove the premise
                 solver = TableauxSolver(self.expressions, defeasible.premise.copy())
                 solver.proof()
                 proved = solver.all_branches_closed
                 solver.solve_tree.save_pdf(f"image_{self.i}.pdf", "pdf")
                 expression = defeasible.conclusion.copy()
-                expression.support = set(
-                    [x for x in solver.closing_arguments if not x.test]
+                # expression.support = set(
+                #     [x for x in solver.closing_arguments if not x.test]
+                # )
+            else:
+                # Check the the negation of the expression does not hold
+                solver = TableauxSolver(
+                    self.expressions, defeasible.reverse_expression()
                 )
+                proved = not solver.proof()
+                solver.solve_tree.save_pdf(f"image_{self.i}.pdf", "pdf")
+                expression = defeasible.copy()
 
-            # if solver.all_branches_closed:
-            #     # print(solver.solve_tree.create_file())
-            #     solver.solve_tree.save_pdf(f"image_{self.i}.pdf", "pdf")
-            #     self.i += 1
-            #     expression = defeasible.conclusion.copy()
-            #     defeasibleCopy = defeasible.copy()
-            #     defeasibleCopy.is_support = True
-            #     expression.support = set([x for x in solver.closing_arguments if not x.test])
-            #     # print(solver.closing_arguments)
-            #     # for arg in solver.closing_arguments:
-            #     #     print(arg)
-            #     #     print(arg.test)
-            #     expression.support.add(defeasibleCopy)
-            #     self.expressions.append(expression)
-            #     self.defeasible_expressions.remove(defeasible)
-            #     self.expand_defeasible_rules()
-            #     return
+            expression.support = set(
+                [x for x in solver.closing_arguments if not x.test]
+            )
 
             if proved:
                 # print(solver.solve_tree.create_file())
                 self.i += 1
-
                 defeasibleCopy = defeasible.copy()
                 defeasibleCopy.is_support = True
 

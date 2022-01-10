@@ -105,7 +105,7 @@ class TreeGenerator:
         return f"""<
         <table border="0" CELLBORDER="1">
         {table_head}
-        {''.join([f'<tr><td BORDER="0" CELLSPACING="10">{ "S" if orig.is_support else  orig.id }:</td><td BORDER="0" ALIGN="LEFT">{orig.get_string_rep()}</td>{reference_line_str if i == 0 else ""}</tr>' for i, orig in enumerate(expr_with_support)])}
+        {''.join([f'<tr><td BORDER="0" CELLSPACING="10">{ "S" if orig.is_support else  orig.id }:</td><td BORDER="0" ALIGN="LEFT">{orig.get_string_rep(True)}</td>{reference_line_str if i == 0 else ""}</tr>' for i, orig in enumerate(expr_with_support)])}
         {tautologie_line}
         </table>
         >"""

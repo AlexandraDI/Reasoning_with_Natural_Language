@@ -14,6 +14,9 @@ class NaturalTableauxSolver:
         self.expressions = [
             create_expression(clause) for clause in clauses if len(clause) != 0
         ]
+
+        # make the defeasible information sorted after normal information for argumentation by cases
+        self.expressions.sort(key = lambda x: x.defeasible)
         self.to_be_shown = create_expression(to_be_shown)
 
         self.solver = TableauxSolver(self.expressions, self.to_be_shown)

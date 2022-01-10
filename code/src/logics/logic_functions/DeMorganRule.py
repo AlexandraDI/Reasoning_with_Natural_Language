@@ -42,6 +42,7 @@ class DeMorganRule(Rule):
             "or" if clause.connection_keyword == "and" else "and",
             clause.copy_support(),
             clause.defeasible,
+            clause.defeasible_keyword
         )
 
         if clause.connection_keyword == "and":

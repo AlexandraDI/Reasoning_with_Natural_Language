@@ -79,6 +79,7 @@ class BaseExpression(Expression):
             self.object = args[4]
             self.support = args[5]
             self.defeasible = args[6]
+            self.defeasible_keyword = args[7]
 
         self.tokenize_expression()
 
@@ -115,6 +116,7 @@ class BaseExpression(Expression):
             self.object,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )
 
     def replace_variable(self, replace, replace_with):
@@ -179,12 +181,12 @@ class BaseExpression(Expression):
         # It is a match.. replace the unification variables
         return True, unification_replacements
 
-    def get_string_rep(self):
+    def get_string_rep(self, include_defeasible=False):
         """
         Splice the subject, verb and object together with the negation word
         :return: The string representation of the expression
         """
-        return separator.join(self.tokens)
+        return Expression.get_string_rep(self, include_defeasible)
 
     def copy(self):
         """
@@ -199,4 +201,5 @@ class BaseExpression(Expression):
             self.object,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )

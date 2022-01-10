@@ -71,6 +71,7 @@ class UnlessExpression(Expression):
             self.key_words = args[4]
             self.support = (args[5],)
             self.defeasible = args[6]
+            self.defeasible_keyword = args[7]
             self.tokenize_expression()
 
     def tokenize_expression(self):
@@ -116,6 +117,7 @@ class UnlessExpression(Expression):
             self.key_words,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )
 
     def copy(self):
@@ -131,4 +133,5 @@ class UnlessExpression(Expression):
             self.key_words,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )

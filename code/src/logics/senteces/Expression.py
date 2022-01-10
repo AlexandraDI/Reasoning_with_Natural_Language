@@ -182,8 +182,12 @@ class Expression(metaclass=abc.ABCMeta):
         else:
             return False
 
-    def get_string_rep(self):
-        return separator.join(self.tokens)
+    def get_string_rep(self, include_defeasible=False):
+        return (
+                   self.defeasible_keyword + " "
+                   if self.defeasible and include_defeasible
+                   else ""
+               ) + separator.join(self.tokens)
 
     def __str__(self):
         return f"{type(self).__name__}(neg={self.negated}, tokens={self.tokens}), support={self.support}, defeasible={self.defeasible}"
