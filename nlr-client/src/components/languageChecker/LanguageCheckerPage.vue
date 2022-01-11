@@ -62,7 +62,7 @@
         <label class="w-100">
           <span class="form-label">Test sentence:</span>
           <input type="text" placeholder="Next Expression" class="form-control"
-                 :value="sentence"/>
+                 v-model="sentence"/>
         </label>
       </div>
       <button type="button" class="btn btn-primary" v-on:click="language_request"
@@ -115,14 +115,16 @@ export default {
       let data = {sentence: this.sentence};
       axios
         .post('/language-request', data)
-        .catch(response => {
-          // error callback
-          this.error = JSON.parse(response.bodyText.replaceAll("\"", '`').replaceAll("'", '"'))
-        })
         .then(response => {
           console.log(response)
           // get body data
           this.language_output = response.data;
+          this.$emit("set-error", null);
+        })
+        .catch(error => {
+          const data = error.response.data;
+          this.language_output = null;
+          this.$emit("set-error", data);
         });
     },
     recursive_sentence_structure(sentence_part) {

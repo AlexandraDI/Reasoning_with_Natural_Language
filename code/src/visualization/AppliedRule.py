@@ -1,6 +1,7 @@
 """
 Data class that just encapsulates the applied rule
 """
+import json
 from dataclasses import dataclass, field
 from typing import Dict, List
 
@@ -27,5 +28,5 @@ class AppliedRule:
             created_expressions = None if self.created_expressions is None else str([expression for expression in self.created_expressions.values()]),
             c_expression = str(self.c_expression),
             matched_expression = str(self.matched_expression),
-            rule_desc_obj = str(self.rule_desc_obj)
+            rule_desc_obj = self.rule_desc_obj
         )

@@ -53,7 +53,7 @@ class SyllogismExpression(Expression):
             self.subject = args[3]
             self.support = args[4]
             self.defeasible = args[5]
-
+            self.defeasible_keyword = args[6]
             # Re tokenize the expression
             self.tokenize_expression()
 
@@ -93,14 +93,15 @@ class SyllogismExpression(Expression):
             self.subject,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )
 
-    def get_string_rep(self):
+    def get_string_rep(self, include_defeasible=False):
         """
         Just joins the tokens using the separator
         :return: The string representation of the expression
         """
-        return f"{separator.join(self.tokens)}"
+        return Expression.get_string_rep(self, include_defeasible)
 
     def copy(self):
         """
@@ -114,4 +115,5 @@ class SyllogismExpression(Expression):
             self.subject,
             self.copy_support(),
             self.defeasible,
+            self.defeasible_keyword
         )

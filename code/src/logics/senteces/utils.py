@@ -19,8 +19,7 @@ def check_for_contradiction(
     # Go over each clause and check whether it is a base or a function expression
     for clause in clauses:
         if clause == hypothesis and not (
-                isinstance(clause, (BaseExpression, FunctionExpression)) and not isinstance(clause, [
-            BaseExpressionWithPreposition, FunctionExpression])):
+                isinstance(clause, (BaseExpression, FunctionExpression)) and not isinstance(clause, (BaseExpressionWithPreposition, FunctionExpression))):
             continue
 
         # If it is check if it is a contradiction with the hypothesis expression

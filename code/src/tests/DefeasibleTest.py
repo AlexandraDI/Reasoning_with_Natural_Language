@@ -21,13 +21,13 @@ print(nts.solver.closing_arguments)
 
 nts.solver.solve_tree.save_pdf("image_3.pdf","pdf")
 #
-# nts = NaturalTableauxSolver(premises, conclusion)
-# proof = nts.solve()
-# print(nts.solver.closing_arguments)
-# nts.solver.solve_tree.save_pdf("image_temp.pdf","pdf")
-# print(proof)
-# print([str(i) for i in nts.expressions])
-# print([str(i) for i in nts.solver.closing_arguments])
-# print(nts.solver.closing_arguments)
-#
+nts = NaturalTableauxSolver(premises, conclusion)
+proof = nts.solve()
+print(nts.solver.closing_arguments)
+nts.solver.solve_tree.save_pdf("image_temp.pdf","pdf")
+print(proof)
+print([str(i) for i in nts.expressions])
+print([str(i) for i in nts.solver.closing_arguments])
+print(nts.solver.closing_arguments)
+
 # nts.solver.solve_tree.save_pdf("image_3.pdf", "pdf")

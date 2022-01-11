@@ -133,6 +133,8 @@ class SyllogismRule(Rule):
                 False,
                 clause.copy_support(),
                 clause.defeasible,
+                clause.defeasible_keyword
+
             )
             new_clauses[0] = [created_syllogism_expression]
             break
@@ -177,6 +179,8 @@ class SyllogismRule(Rule):
                 False,
                 clause.copy_support(),
                 clause.defeasible,
+                clause.defeasible_keyword
+
             )
         ]
         new_clauses[0] += [
@@ -188,6 +192,8 @@ class SyllogismRule(Rule):
                 False,
                 clause.copy_support(),
                 clause.defeasible,
+                clause.defeasible_keyword
+
             )
         ]
         # Return the branches and create the rule description
@@ -240,6 +246,8 @@ class SyllogismRule(Rule):
                     False,
                     clause.copy_support(),
                     clause.defeasible,
+                    clause.defeasible_keyword
+
                 )
             ]
             break
@@ -287,6 +295,7 @@ class SyllogismRule(Rule):
                     clause.subject,
                     clause.copy_support(),
                     clause.defeasible,
+                    clause.defeasible_keyword
                 )
             ]
         elif clause.syllogism_keywords[0] == "some" and pos_list_check:
@@ -300,6 +309,8 @@ class SyllogismRule(Rule):
                     clause.subject,
                     clause.copy_support(),
                     clause.defeasible,
+                    clause.defeasible_keyword
+
                 )
             ]
         elif clause.syllogism_keywords[0] == "no" and pos_list_check:
@@ -312,6 +323,8 @@ class SyllogismRule(Rule):
                     clause.subject,
                     clause.copy_support(),
                     clause.defeasible,
+                    clause.defeasible_keyword
+
                 )
             ]
         elif clause.syllogism_keywords[0] == "some" and neg_list_check:
@@ -324,6 +337,8 @@ class SyllogismRule(Rule):
                     clause.subject,
                     clause.copy_support(),
                     clause.defeasible,
+                    clause.defeasible_keyword
+
                 )
             ]
         # Return the branches and create the rule description

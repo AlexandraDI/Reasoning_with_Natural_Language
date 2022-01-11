@@ -95,6 +95,7 @@
       <p v-if="response">*You can hover over each node to receive a more detailed explanation of the
         applied rule.</p>
     </div>
+    <TreeGraph v-bind:graph-data="this.graphData" v-bind:applied-rules="this.applied_rules"/>
   </div>
 </template>
 
@@ -102,9 +103,10 @@
 import ReasoningExamplesMenu from "@/components/reasoner/ReasoningExamplesMenu";
 import axios from "axios";
 import ExpressionsForm from "@/components/ExpressionsForm";
+import TreeGraph from "@/components/reasoner/TreeGraph";
 export default {
   name: "ReasonerPage",
-  components: {ReasoningExamplesMenu, ExpressionsForm},
+  components: {TreeGraph, ReasoningExamplesMenu, ExpressionsForm},
   data() {
     return {
       expressions: [""],
@@ -113,6 +115,7 @@ export default {
       error: null,
       tree_closes: true,
       applied_rules: [],
+      graphData: null
     };
   },
   methods: {
@@ -144,9 +147,6 @@ export default {
 
       axios
           .post('/solve-request', data)
-          .catch(error => {
-            this.error = JSON.parse(error.response.data.replaceAll("\"", '`').replaceAll("'", '"'))
-          })
           .then(response => {
 
             const responseData = response.data;
@@ -156,17 +156,16 @@ export default {
             this.applied_rules = responseData['applied_rules']
             this.tree_closes = JSON.parse(responseData['all_branches_closed'])
 
-            for (let applied_rule_idx in this.applied_rules) {
-              let applied_rule = this.applied_rules[applied_rule_idx]
-              if (applied_rule.created_expressions) {
-                console.log(applied_rule.created_expressions.replaceAll("'", '"'))
-                applied_rule.created_expressions = JSON.parse(applied_rule.created_expressions.replaceAll("\"", '`').replaceAll("'", '"'))
-              }
-            }
-
-            this.$emit("display-tree", responseData['dot_graph']);
+            this.$emit("set-error", null);
+            this.graphData = responseData["dot_graph"];
+          })
+          .catch(error => {
+            const data = error.response.data;
+            this.$emit("set-error", data);
+            this.$emit("display-tree", null);
           });
-    },
+
+    }
   },
 }
 </script>
