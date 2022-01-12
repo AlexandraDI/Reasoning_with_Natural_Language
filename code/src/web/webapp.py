@@ -99,11 +99,15 @@ def get_solve_request(request: Request):
         nts = NaturalTableauxSolver(expressions, to_be_shown)
         nts.solve()
 
+        sup = [exp.get_string_rep() for exp in nts.get_support()]
+        sup.sort()
+
         response_data = json.dumps(dict(
             applied_rules={i: applied_rule.get_dict() for i, applied_rule in nts.get_applied_rules().items()},
             all_branches_closed=nts.tableaux_is_closed(),
-            dot_graph=nts.get_dot_graph())
-        )
+            dot_graph=nts.get_dot_graph(),
+            support=sup
+        ))
         response = Response(response_data)
         enable_cors_external_access(response)
         return response

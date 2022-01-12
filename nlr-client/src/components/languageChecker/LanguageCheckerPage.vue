@@ -109,14 +109,12 @@ export default {
       this.language_request();
     },
     language_request() {
-      this.error = null
-      console.log(this.sentence)
+      this.error = null;
       // GET /someUrl
       let data = {sentence: this.sentence};
       axios
         .post('/language-request', data)
         .then(response => {
-          console.log(response)
           // get body data
           this.language_output = response.data;
           this.$emit("set-error", null);

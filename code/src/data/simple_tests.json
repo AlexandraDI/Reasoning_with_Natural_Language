@@ -47,5 +47,18 @@
     ],
     "conclusion": "He becomes happy",
     "result": "valid"
+  },
+  {
+    "premises": [
+      "When Juliet is free then Juliet plays chess",
+      "When it is sunny and John is free then John plays football",
+      "It is sunny",
+      "John is a boy",
+      "There is an apple",
+      "John is free",
+      "When it is raining then John is sad"
+    ],
+    "conclusion": "John plays football",
+    "result": "valid"
   }
 ]
