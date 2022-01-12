@@ -102,7 +102,8 @@ def get_solve_request(request: Request):
         response_data = json.dumps(dict(
             applied_rules={i: applied_rule.get_dict() for i, applied_rule in nts.get_applied_rules().items()},
             all_branches_closed=nts.tableaux_is_closed(),
-            dot_graph=nts.get_dot_graph())
+            dot_graph=nts.get_dot_graph()),
+            support=nts.get_support()
         )
         response = Response(response_data)
         enable_cors_external_access(response)
