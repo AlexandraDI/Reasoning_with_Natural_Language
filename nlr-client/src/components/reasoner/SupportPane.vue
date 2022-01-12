@@ -2,7 +2,7 @@
     <div class="accordion mb-4" id="accordionSupport" v-if="support !== null">
       <div class="accordion-item">
         <h1 class="accordion-header" id="heading-support">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          <button class="accordion-button" type="button" data-bs-toggle="collapse"
                   data-bs-target="#collapseSupport" aria-expanded="false"
                   aria-controls="collapseSupport">
             <span class="fs-3">
@@ -10,7 +10,7 @@
             </span>
           </button>
         </h1>
-        <div id="collapseSupport" class="accordion-collapse collapse"
+        <div id="collapseSupport" class="accordion-collapse"
              aria-labelledby="heading-support" data-bs-parent="#accordionSupport">
           <div class="accordion-body">
             The following expressions were used in order to prove the given problem. Keep in mind that the reasoner proves by disproving the opposite of the sentence to be proven.
