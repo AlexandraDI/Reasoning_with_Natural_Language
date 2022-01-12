@@ -118,7 +118,6 @@ export default {
     toggle_tooltip(element, enter) {
       const rule_object = this.appliedRules[element[0].id]['rule_desc_obj']
 
-      console.log(rule_object);
       this.tooltip_header = rule_object['name']
       this.in_expressions = rule_object['in_expression']
       this.out_expressions = rule_object['out_expression']
