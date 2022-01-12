@@ -101,7 +101,8 @@ export default {
           .catch(error => {
             const data = error.response.data;
             this.$emit("set-error", data);
-            this.$emit("display-tree", null);
+            this.graphData = null;
+            this.response = null;
           });
 
     }

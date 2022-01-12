@@ -86,8 +86,10 @@ export default {
   },
   methods: {
     display_tree(dot_graph) {
-      if(dot_graph === null)
+      if(dot_graph === null) {
         $("#graph").hide();
+        return;
+      }
       else
         $("#graph").show();
 
