@@ -10,11 +10,14 @@ class DefeasibleTableauxSolver:
     expressions and calls the solver
     """
 
-    def __init__(self, clauses, to_be_shown):
+
+    def __init__(self, clauses, to_be_shown, reason_by_cases=False):
         Expression.id_counter = 0
         self.all_expressions = [
             create_expression(clause) for clause in clauses if len(clause) != 0
         ]
+        self.solvers = []
+        self.reason_by_cases = reason_by_cases
         # self.defeasible_expressions = [x for x in self.all_expressions if
         # ( isinstance(x, WhenExpression) and x.defeasible)]
         self.defeasible_expressions = [x for x in self.all_expressions if x.defeasible]
@@ -62,6 +65,9 @@ class DefeasibleTableauxSolver:
 
             if proved:
                 # print(solver.solve_tree.create_file())
+
+                self.solvers.append(solver)
+
                 self.i += 1
                 defeasibleCopy = defeasible.copy()
                 defeasibleCopy.is_support = True
@@ -78,15 +84,32 @@ class DefeasibleTableauxSolver:
 
     def solve(self):
         # TODO expand the def. exps one by one
-        self.expand_defeasible_rules()
-        self.solver = TableauxSolver(self.expressions, self.to_be_shown)
-        return self.solver.proof()
+
+        if not self.reason_by_cases:
+            self.expand_defeasible_rules()
+            self.solver = TableauxSolver(self.expressions, self.to_be_shown)
+        else:
+            self.solver = TableauxSolver(self.all_expressions, self.to_be_shown)
+
+        proofed = self.solver.proof()
+        self.solvers.append(self.solver)
+        return proofed
 
     def get_applied_rules(self):
-        return self.solver.applied_rules
+        return [solver.applied_rules for solver in self.solvers]
 
     def tableaux_is_closed(self):
         return self.solver.all_branches_closed
 
     def get_dot_graph(self):
-        return self.solver.solve_tree.create_file()
+
+        return [solver.solve_tree.create_file() for solver in self.solvers]
+
+    def get_support(self):
+        return self.solver.closing_arguments
+
+    def get_all_supports(self):
+        return [solver.closing_arguments for solver in self.solvers]
+
+    def get_all_tableaus(self):
+        return self.solvers
