@@ -100,7 +100,7 @@ def get_solve_request(request: Request):
         solver = DefeasibleTableauxSolver(expressions, to_be_shown, reason_by_cases=True if reasoning_method == "reasoningbycases" else False)
         solver.solve()
 
-        supports = [[exp.get_string_rep() for exp in items] for items in solver.get_all_supports()]
+        supports = [[exp.get_string_rep(True) for exp in items] for items in solver.get_all_supports()]
 
         response_data = json.dumps(dict(
             applied_rules=[{i: applied_rule.get_dict() for i, applied_rule in item.items()} for item in solver.get_applied_rules()],
