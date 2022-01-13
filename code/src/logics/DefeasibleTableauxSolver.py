@@ -45,7 +45,7 @@ class DefeasibleTableauxSolver:
                 solver = TableauxSolver(self.expressions, defeasible.premise.copy())
                 solver.proof()
                 proved = solver.all_branches_closed
-                solver.solve_tree.save_pdf(f"image_{self.i}.pdf", "pdf")
+                # solver.solve_tree.save_pdf(f"image_{self.i}.pdf", "pdf")
                 expression = defeasible.conclusion.copy()
                 # expression.support = set(
                 #     [x for x in solver.closing_arguments if not x.test]
@@ -56,7 +56,7 @@ class DefeasibleTableauxSolver:
                     self.expressions, defeasible.reverse_expression()
                 )
                 proved = not solver.proof()
-                solver.solve_tree.save_pdf(f"image_{self.i}.pdf", "pdf")
+                # solver.solve_tree.save_pdf(f"image_{self.i}.pdf", "pdf")
                 expression = defeasible.copy()
 
             expression.support = set(
