@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="graph" class="graph" :class="{border: graph_rendered}"></div>
+    <div :id="graphId" class="graph" :class="{border: graph_rendered}"></div>
     <div id="tooltip" class="card"
          :style="{'display': tooltip_visible ? 'block' : 'none', 'top': topOffset, 'left': leftOffset}"
          style="position: fixed">
@@ -75,6 +75,7 @@ export default {
     };
   },
   mounted() {
+    this.display_tree(this.graphData);
     window.onmousemove = (e) => {
       if (this.tooltip_visible) {
         let x = e.clientX,
@@ -84,20 +85,26 @@ export default {
       }
     };
   },
+  computed: {
+    graphId: function() {
+      console.log("graph" + this.id);
+      return "graph" + this.id;
+    }
+  },
   methods: {
     display_tree(dot_graph) {
       if(dot_graph === null) {
-        $("#graph").hide();
+        $("#" + this.graphId).hide();
         return;
       }
       else
-        $("#graph").show();
+        $("#" + this.graphId).show();
 
       if (this.graph_rendered)
           // eslint-disable-next-line no-undef
-        d3.select("#graph").graphviz({useWorker: false}).resetZoom();
+        d3.select("#" + this.graphId).graphviz({useWorker: false}).resetZoom();
       // eslint-disable-next-line no-undef
-      d3.select("#graph")
+      d3.select("#" + this.graphId)
           .graphviz({useWorker: false})
           .on("renderEnd", () => {
             this.graph_rendered = true
@@ -130,7 +137,7 @@ export default {
       this.tooltip_visible = enter
     },
   },
-  props: ["graphData", "appliedRules"],
+  props: ["graphData", "appliedRules", "id"],
   watch: {
     graphData: function (newVal, oldVal) {
         if(newVal !== oldVal)
@@ -149,6 +156,7 @@ export default {
   .graph {
     text-align: center;
     width: 100%;
+    height: 700px;
     margin-left: auto;
     margin-right: auto;
   }

@@ -1,23 +1,38 @@
 <template>
   <fieldset name="form" class="list-group p-4 border-end border-bottom border-start tab-content">
+
     <div v-for="(item, index) in expressions" :key="index" class="expression_input pb-1">
       <label class="form-label">{{index + 1}}. input:</label>
       <input type="text" :value="item.value" placeholder="Next Expression"
              class="form-control" v-on:input="propagate_modification($event, index)"/>
-      <button v-on:click="remove_field($event, index)"  type="button" class="btn btn-danger"
-              :class="{disabled: expressions.length === 1}">-
-      </button>
-      <button v-if="index === expressions.length-1" v-on:click="add_field" type="button"
-              class="btn btn-success">+
-      </button>
+      <i role="button" class="icon-button mx-1 bi bi-dash-circle" v-on:click="remove_field($event, index)" :class="{disabled: expressions.length === 1}"></i>
+      <i role="button" class="icon-button mx-1 bi bi-plus-circle" v-on:click="add_field" :class="{disabled: expressions.length === 1}" v-if="index === expressions.length-1"></i>
       <br>
     </div>
 
-    <div class="expression_input">
-      <label>To be shown:</label>
+    <div class="expression_input mt-3">
+      <label class="form-label">To be shown:</label>
       <input type="text" :value="to_be_shown" v-on:input="propagate_modification($event, -1)" class="form-control"/>
       <br>
     </div>
+
+    <div class="expression_input mt-3">
+      <label class="form-label">Reasoning method:</label>
+      <select class="form-select" :value="reasoning_method" v-on:input="propagate_modification($event, 'reasoning_method')">
+        <option value="complete">Multiple Tableaus ("complete way")</option>
+        <option value="reasoningbycases">Reasoning by Cases</option>
+      </select>
+    </div>
+
+    <div class="card my-3">
+      <div class="card-body">
+        <i class="bi bi-question-circle" style="font-size: 30px; position: absolute; top: 10px; right:20px"></i>
+        <h5 class="card-title">Proof-Algorithm</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{reasoning_method_title}}</h6>
+        {{reasoning_method_description}}
+      </div>
+    </div>
+
     <button v-on:click="submit" type="button" class="btn btn-primary"
             style="margin-top: 8px;">Solve
     </button>
@@ -25,11 +40,39 @@
 </template>
 
 <script>
+import * as assert from "assert";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 export default {
   name: "ExpressionsForm",
   props: {
     expressions: Array,
-    to_be_shown: String
+    to_be_shown: String,
+    reasoning_method: String
+  },
+  computed: {
+    reasoning_method_title: function() {
+      switch (this.reasoning_method) {
+        case "complete":
+          return "Multiple Tableaus (Complete Way)";
+        case "reasoningbycases":
+          return "Reasoning by Cases";
+        default:
+          assert(false);
+          return "";
+      }
+    },
+    reasoning_method_description: function() {
+      switch (this.reasoning_method) {
+        case "complete":
+          return "This method solves proves by solving multiple tableaus.";
+        case "reasoningbycases":
+          return "This method solves by doing a reasoning by cases.";
+        default:
+          assert(false);
+          return "";
+      }
+    }
   },
   methods: {
     submit() {
@@ -51,12 +94,16 @@ export default {
 <style scoped>
   .expression_input > label {
     display: inline-block;
-    width: 100px;
+    width: 150px;
   }
 
-  .expression_input > input {
+  .expression_input > input, select {
     display: inline-block;
-    width: 500px;
+    width: 450px;
     transform: translateY(2px);
+  }
+
+  .icon-button {
+    font-size: 25px;
   }
 </style>
