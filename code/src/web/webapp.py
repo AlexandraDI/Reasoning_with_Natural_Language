@@ -13,7 +13,7 @@ from pyramid.config import Configurator
 from pyramid.request import Request
 from pyramid.response import Response, FileResponse
 
-from logics.NaturalTableauxSolver import NaturalTableauxSolver
+from logics.DefeasibleTableauxSolver import DefeasibleTableauxSolver
 from logics.senteces.Helper import create_expression, create_expression_representation
 from logics.senteces.ParseExceptions import ParseException
 
@@ -94,19 +94,19 @@ def get_solve_request(request: Request):
     request_data = json.loads(request.body.decode("utf-8"))
     expressions = [data['value'] for data in request_data['expressions']]
     to_be_shown = request_data['to_be_shown']
+    reasoning_method = request_data['reasoning_method']
 
     try:
-        nts = NaturalTableauxSolver(expressions, to_be_shown)
-        nts.solve()
+        solver = DefeasibleTableauxSolver(expressions, to_be_shown, reason_by_cases=True if reasoning_method == "reasoningbycases" else False)
+        solver.solve()
 
-        sup = [exp.get_string_rep() for exp in nts.get_support()]
-        sup.sort()
+        supports = [[exp.get_string_rep() for exp in items] for items in solver.get_all_supports()]
 
         response_data = json.dumps(dict(
-            applied_rules={i: applied_rule.get_dict() for i, applied_rule in nts.get_applied_rules().items()},
-            all_branches_closed=nts.tableaux_is_closed(),
-            dot_graph=nts.get_dot_graph(),
-            support=sup
+            applied_rules=[{i: applied_rule.get_dict() for i, applied_rule in item.items()} for item in solver.get_applied_rules()],
+            all_branches_closed=solver.tableaux_is_closed(),
+            dot_graphs=solver.get_dot_graph(),
+            supports=supports
         ))
         response = Response(response_data)
         enable_cors_external_access(response)

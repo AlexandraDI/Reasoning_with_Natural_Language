@@ -6,33 +6,51 @@
     <ExpressionsForm
         v-bind:expressions="this.expressions"
         v-bind:to_be_shown="this.to_be_shown"
+        v-bind:reasoning_method="this.reasoning_method"
         @submit="send_request"
         @change-expression="this.modify_expression"
         @add-expression="this.add_expression"
         @remove-expression="this.remove_expression"
     />
 
+
+
     <div :style="{'display': response && error == null ? 'block' : 'none'}">
-      <div class="card my-4"
-           :class="{'bg-success': tree_closes, 'bg-danger': !tree_closes}">
-        <h2 v-if="tree_closes" class="display-5 text-center">The statement is valid</h2>
-        <h2 v-if="!tree_closes" class="display-5 text-center">There is a branch that doesn't
-          close</h2>
+
+      <div class="card mt-3 p-2">
+        <div class="card-body">
+
+          <div v-if="numSolutionTrees === 1">
+            <SolutionPane id="singular_solution" :tree_closes="tree_closes" :support="supports[0]" :applied_rules="applied_rules[0]" :graph="graphs[0]"/>
+          </div>
+
+          <div v-if="numSolutionTrees > 1">
+            The proof of these expressions requires {{numSolutionTrees}} tableaus. You can watch these in the tabs below.
+
+            <div class="accordion mt-4" id="accordionTableaus">
+
+              <div class="accordion-item" v-for="index in numSolutionTrees" :id="'multipleTableausItem' + index" :key="index">
+                <h2 class="accordion-header" :id="'multipleTableausItemHeading' + index">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#multipleTableausItemCollapse' + index" :aria-expanded="index !== numSolutionTrees - 1" :aria-controls="'multipleTableausItemCollapse' + index">
+                    Tableau Nr. {{index + 1}}
+                  </button>
+                </h2>
+                <div :id="'multipleTableausItemCollapse' + index" class="accordion-collapse collapse" :class="{show: index === numSolutionTrees - 1}" :aria-labelledby="'multipleTableausItemHeading' + index" data-bs-parent="#accordionTableaus">
+                  <div class="accordion-body">
+                    <!-- Is the tree_closes property correct like this? Don't we need a property like this for every tableau that we have? //-->
+                    <SolutionPane :id="index" :tree_closes="tree_closes" :support="supports[index]" :applied_rules="applied_rules[index]" :graph="graphs[index]"/>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
       </div>
-
-      <SupportPane
-        v-bind:support="support"
-        />
-
-      <AppliedRulesPane
-        v-bind:applied-rules="applied_rules"
-        />
-
-
-      <p v-if="response">*You can hover over each node to receive a more detailed explanation of the
-        applied rule.</p>
     </div>
-    <TreeGraph v-bind:graph-data="this.graphData" v-bind:applied-rules="this.applied_rules"/>
+
   </div>
 </template>
 
@@ -40,23 +58,27 @@
 import ReasoningExamplesMenu from "@/components/reasoner/ReasoningExamplesMenu";
 import axios from "axios";
 import ExpressionsForm from "@/components/ExpressionsForm";
-import TreeGraph from "@/components/reasoner/TreeGraph";
-import AppliedRulesPane from "@/components/reasoner/AppliedRulesPane";
-import SupportPane from "@/components/reasoner/SupportPane";
+import SolutionPane from "@/components/reasoner/SolutionPane";
 export default {
   name: "ReasonerPage",
-  components: {SupportPane, AppliedRulesPane, TreeGraph, ReasoningExamplesMenu, ExpressionsForm},
+  components: {SolutionPane, ReasoningExamplesMenu, ExpressionsForm},
   data() {
     return {
       expressions: [""],
       to_be_shown: "",
+      reasoning_method: "complete",
       response: null,
       error: null,
       tree_closes: true,
       applied_rules: [],
-      graphData: null,
-      support: null
+      graphs: [],
+      supports: []
     };
+  },
+  computed: {
+    numSolutionTrees: function() {
+      return this.applied_rules ? this.applied_rules.length : 0;
+    }
   },
   methods: {
     set_reasoning_expression(expressions, to_be_shown) {
@@ -68,7 +90,9 @@ export default {
         myDropdown.classList.remove("show");*/
     },
     modify_expression(index, value) {
-      if(index < 0)
+      if(index === "reasoning_method")
+        this.reasoning_method = value;
+      else if(index < 0)
         this.to_be_shown = value;
       else
         this.expressions[index]["value"] = value;
@@ -81,7 +105,7 @@ export default {
     },
     send_request() {
       this.error = null
-      let data = {expressions: this.expressions, to_be_shown: this.to_be_shown};
+      let data = {expressions: this.expressions, to_be_shown: this.to_be_shown, reasoning_method: this.reasoning_method};
 
       axios
           .post('/solve-request', data)
@@ -93,15 +117,15 @@ export default {
             this.response = responseData;
             this.applied_rules = responseData['applied_rules']
             this.tree_closes = JSON.parse(responseData['all_branches_closed'])
-            this.support = responseData.support;
+            this.supports = responseData["supports"];
 
             this.$emit("set-error", null);
-            this.graphData = responseData["dot_graph"];
+            this.graphs = responseData["dot_graphs"];
           })
           .catch(error => {
             const data = error.response.data;
             this.$emit("set-error", data);
-            this.graphData = null;
+            this.graphs = [];
             this.response = null;
           });
 
