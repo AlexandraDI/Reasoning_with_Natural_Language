@@ -97,14 +97,17 @@ def get_opposite_of(middle_keyword):
     if middle_keyword in pos_middle_keywords:
         position = pos_middle_keywords.index(middle_keyword)
         return neg_middle_keywords[position]
-
-    if middle_keyword in neg_middle_keywords:
+    elif middle_keyword in neg_middle_keywords:
         position = neg_middle_keywords.index(middle_keyword)
         return pos_middle_keywords[position]
+    else:
+         return "do not "+middle_keyword
 
 
 middle_keywords = pos_middle_keywords + neg_middle_keywords
-syllogism_regex = f"{or_reg(pluralism_keywords)} {WORDS} {or_reg(middle_keywords)} .+"
+to_be_sentences = f"{or_reg(pluralism_keywords)} {WORDS} {or_reg(middle_keywords)} .+"
+verb_sentences = f"{or_reg(pluralism_keywords)} {WORDS}"
+syllogism_regex = f"{to_be_sentences}|{verb_sentences}"
 conclusion_regex = "(Therefore, )?"
 syllogism_regex_complete = f"{conclusion_regex}{base_regex}{syllogism_regex}"
 

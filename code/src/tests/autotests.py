@@ -8,6 +8,7 @@ test_files = [
     "defeasible_tests.json",
     "simple_tests.json",
     "syllogism_tests.json",
+    "syllogisms_with_verbs.json",
     #"todo_tests.json",
     "unless_tests.json",
     "iff_tests.json",

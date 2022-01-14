@@ -47,26 +47,26 @@ class SyllogismRule(Rule):
         """
 
         # Create all the basic rule expressions for
-        basic_in_expression = (["all X are Y", "N is a(n) X"],)
+        basic_in_expression = (["all X [verb] Y", "N is a(n) X"],)
         basic_out_expression = ([["N is a(n) Y"]],)
         if self.which_rule == 2:
-            basic_in_expression = (["some X are (not) Y"],)
+            basic_in_expression = (["some X [verb] (not) Y"],)
             basic_out_expression = ([["O is a(n) X", "O is a(n) Y"]],)
         if self.which_rule == 3:
-            basic_in_expression = (["no X is Y", "N is a(n) X"],)
+            basic_in_expression = (["no X [verb] Y", "N is a(n) X"],)
             basic_out_expression = ([["N is not a(n) Y"]],)
         if self.which_rule == 4:
             if self.neg_case == 1:
-                basic_in_expression = (["it is not the case that all X are Y"],)
+                basic_in_expression = (["it is not the case that all X [verb] Y"],)
                 basic_out_expression = ([["some X are not Y"]],)
             if self.neg_case == 2:
-                basic_in_expression = (["it is not the case that some X are Y"],)
+                basic_in_expression = (["it is not the case that some X [verb] Y"],)
                 basic_out_expression = ([["no X is Y"]],)
             if self.neg_case == 3:
-                basic_in_expression = (["it is not the case that no X is Y"],)
+                basic_in_expression = (["it is not the case that no X [verb] Y"],)
                 basic_out_expression = ([["some X are Y"]],)
             if self.neg_case == 4:
-                basic_in_expression = (["it is not the case that some X are not Y"],)
+                basic_in_expression = (["it is not the case that some X [verb] not Y"],)
                 basic_out_expression = ([["all X are Y"]],)
 
         # Create the rule explanation for the tooltip
@@ -277,12 +277,19 @@ class SyllogismRule(Rule):
             return new_clauses, None
 
         # Get what positive or negative keyword was used
-        pos_list_check = list_eq_check(
-            pos_middle_keywords, clause.syllogism_keywords[1]
-        )
-        neg_list_check = list_eq_check(
-            neg_middle_keywords, clause.syllogism_keywords[1]
-        )
+
+        if(clause.syllogism_keywords[1] not in pos_middle_keywords) and (clause.syllogism_keywords[1] not in neg_middle_keywords):
+            pos_list_check = clause.syllogism_keywords[1]
+            neg_list_check = clause.syllogism_keywords[1]
+        else:
+            pos_list_check = list_eq_check(
+                pos_middle_keywords, clause.syllogism_keywords[1]
+            )
+            neg_list_check = list_eq_check(
+                neg_middle_keywords, clause.syllogism_keywords[1]
+            )
+
+
         # Check each syllogism case
         neg_case = 0
         if clause.syllogism_keywords[0] == "all" and pos_list_check:

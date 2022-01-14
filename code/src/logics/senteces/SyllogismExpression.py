@@ -1,9 +1,11 @@
 import re
+import nltk
 
-from logics.Constants import separator, syllogism_regex
+from logics.Constants import separator, syllogism_regex, pluralism_keywords
 from logics.senteces.Expression import Expression
 from logics.senteces.ParseExceptions import ParseException
 from utils.Utils import tokenize, get_sentences_key_words
+from nltk import word_tokenize, pos_tag
 
 
 class SyllogismExpression(Expression):
@@ -32,7 +34,7 @@ class SyllogismExpression(Expression):
 
             if reg_match is None:
                 raise ParseException(
-                    f"No regex match found for the when expression: \n"
+                    f"No regex match found for the syllogism expression: \n"
                     f"Original sentence: {test_sentence}"
                 )
 
@@ -40,10 +42,19 @@ class SyllogismExpression(Expression):
             sentences, self.syllogism_keywords = get_sentences_key_words(
                 reg_match, test_sentence
             )
+            if(len(self.syllogism_keywords)==1):
+                tokenized = nltk.word_tokenize(test_sentence)
+                is_verb = [word for (word, pos) in nltk.pos_tag(tokenized) if (pos[:2] == 'VB')]
+                tokenized.pop(0)
+                self.syllogism_keywords.append(tokenized[1])
+                tokenized.remove(tokenized[1])
+                self.object = tokenized[0]
+                self.subject= " ".join(tokenized[1:])
 
-            # Get the subject and object
-            self.object = sentences[0]
-            self.subject = sentences[1]
+            else:
+                # Get the subject and object
+                self.object = sentences[0]
+                self.subject = sentences[1]
         else:
             # Copy constructor
             self.count_id()

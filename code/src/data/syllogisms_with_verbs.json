@@ -1,0 +1,50 @@
+[
+    {
+    "premises": [
+      "When it is raining, all flowers need light",
+      "It is raining"
+    ],
+    "conclusion": "All flowers need light",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "Some roses do not need light",
+      "All roses are flowers"
+    ],
+    "conclusion": "Some flowers do not need light",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "all flowers need light",
+      "All roses are flowers"
+    ],
+    "conclusion": "All roses need light",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "No human play every organ that exist",
+      "All kids are humans"
+    ],
+    "conclusion": "No kid play every organ that exist",
+    "result": "valid"
+  },
+  {
+    "premises": [
+      "No man is quiet",
+      "Some people are men"
+    ],
+    "conclusion": "Some men are not quiet",
+    "result": "valid"
+  },
+    {
+    "premises": [
+      "Some snakes do not bite fatally",
+      "All snakes are reptiles"
+    ],
+    "conclusion": "Some reptiles do not bite fatally",
+    "result": "valid"
+  }
+]
