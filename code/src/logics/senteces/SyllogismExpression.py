@@ -44,7 +44,7 @@ class SyllogismExpression(Expression):
             )
             if(len(self.syllogism_keywords)==1):
                 tokenized = nltk.word_tokenize(test_sentence)
-                is_verb = [word for (word, pos) in nltk.pos_tag(tokenized) if (pos[:2] == 'VB')]
+                # is_verb = [word for (word, pos) in nltk.pos_tag(tokenized) if (pos[:2] == 'VB')]
                 tokenized.pop(0)
                 self.syllogism_keywords.append(tokenized[1])
                 tokenized.remove(tokenized[1])
