@@ -19,7 +19,7 @@
     <div class="expression_input mt-3">
       <label class="form-label">Reasoning method:</label>
       <select class="form-select" :value="reasoning_method" v-on:input="propagate_modification($event, 'reasoning_method')">
-        <option value="complete">Multiple Tableaus ("complete way")</option>
+        <option value="complete">Multiple Tableaux ("complete way")</option>
         <option value="reasoningbycases">Reasoning by Cases</option>
       </select>
     </div>
@@ -54,7 +54,7 @@ export default {
     reasoning_method_title: function() {
       switch (this.reasoning_method) {
         case "complete":
-          return "Multiple Tableaus (Complete Way)";
+          return "Multiple Tableaux (Complete Way)";
         case "reasoningbycases":
           return "Reasoning by Cases";
         default:
@@ -65,7 +65,7 @@ export default {
     reasoning_method_description: function() {
       switch (this.reasoning_method) {
         case "complete":
-          return "This method solves proves by solving multiple tableaus.";
+          return "This method solves proves by solving multiple tableaux.";
         case "reasoningbycases":
           return "This method solves by doing a reasoning by cases.";
         default:

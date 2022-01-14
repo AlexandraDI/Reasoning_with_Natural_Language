@@ -25,7 +25,7 @@
           </div>
 
           <div v-if="numSolutionTrees > 1">
-            The proof of these expressions requires {{numSolutionTrees}} tableaus. You can watch these in the tabs below.
+            The proof of these expressions requires {{numSolutionTrees}} tableaux. You can watch these in the tabs below.
 
             <div class="accordion mt-4" id="accordionTableaus">
 
