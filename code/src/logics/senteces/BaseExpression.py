@@ -116,7 +116,7 @@ class BaseExpression(Expression):
             self.object,
             self.copy_support(),
             self.defeasible,
-            self.defeasible_keyword
+            self.defeasible_keyword,
         )
 
     def replace_variable(self, replace, replace_with):
@@ -201,5 +201,8 @@ class BaseExpression(Expression):
             self.object,
             self.copy_support(),
             self.defeasible,
-            self.defeasible_keyword
+            self.defeasible_keyword,
         )
+
+
+EMPTY_BASE_EXPRESSION = BaseExpression("", "", "", "", "", set(), False, "")

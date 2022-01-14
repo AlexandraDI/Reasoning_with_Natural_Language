@@ -2,6 +2,7 @@ from logics.senteces.Expression import Expression
 from logics.TableauxSolver import TableauxSolver
 from logics.senteces.Helper import create_expression
 from logics.senteces.WhenExpression import WhenExpression
+from logics.senteces.BaseExpression import EMPTY_BASE_EXPRESSION
 
 
 class DefeasibleTableauxSolver:
@@ -9,7 +10,6 @@ class DefeasibleTableauxSolver:
     Wrapper class for the tableaux solver that parses the
     expressions and calls the solver
     """
-
 
     def __init__(self, clauses, to_be_shown, reason_by_cases=False):
         Expression.id_counter = 0
@@ -26,7 +26,13 @@ class DefeasibleTableauxSolver:
             for x in self.all_expressions
             if not (isinstance(x, WhenExpression) and x.defeasible)
         ]
+
         self.to_be_shown = create_expression(to_be_shown)
+
+        # If it closes then there is a contradiciton
+        self.contradiction_in_information = TableauxSolver(
+            self.expressions, EMPTY_BASE_EXPRESSION.copy()
+        ).proof()
 
         self.solver = TableauxSolver(self.expressions, self.to_be_shown)
         self.i = 0

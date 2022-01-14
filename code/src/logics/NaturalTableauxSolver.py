@@ -1,4 +1,5 @@
 from logics.senteces.Expression import Expression
+from logics.senteces.BaseExpression import EMPTY_BASE_EXPRESSION
 from logics.TableauxSolver import TableauxSolver
 from logics.senteces.Helper import create_expression
 
@@ -16,8 +17,14 @@ class NaturalTableauxSolver:
         ]
 
         # make the defeasible information sorted after normal information for argumentation by cases
-        self.expressions.sort(key = lambda x: x.defeasible)
+        self.expressions.sort(key=lambda x: x.defeasible)
+
         self.to_be_shown = create_expression(to_be_shown)
+
+        # If it closes then there is a contradiciton
+        self.contradiction_in_information = TableauxSolver(
+            self.expressions, EMPTY_BASE_EXPRESSION.copy()
+        ).proof()
 
         self.solver = TableauxSolver(self.expressions, self.to_be_shown)
 
