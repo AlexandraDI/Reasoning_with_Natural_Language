@@ -183,6 +183,23 @@
           {"value": "I do not study AI"}
         ],
         "to_be_shown": "I am chilling"
+      },
+      {
+        "name": "Syllogisms with arbitrary verbs",
+        "expressions": [
+          {"value": "Some roses do not need light"},
+          {"value": "All roses are flowers"}
+        ],
+        "to_be_shown": "Some flowers do not need light"
+      },
+      {
+        "name": "Defeasible Expressions",
+        "expressions": [
+          {"value": "Usually I go to cinema or park"},
+          {"value": "Usually If i go to cinema then I am happy"},
+          {"value": "Usually If i go to park then I am happy"}
+        ],
+        "to_be_shown": "I am happy"
       }
     ]
   }
