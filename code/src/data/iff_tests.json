@@ -1,7 +1,7 @@
 [
   {
     "premises": [
-      "I study maths iff I study physics",
+      "I study maths only if I study physics",
       "I study maths"
     ],
     "conclusion": "I study physics",

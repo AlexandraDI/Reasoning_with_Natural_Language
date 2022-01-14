@@ -117,7 +117,7 @@ class UnlessExpression(Expression):
             self.key_words,
             self.copy_support(),
             self.defeasible,
-            self.defeasible_keyword
+            self.defeasible_keyword,
         )
 
     def copy(self):
@@ -133,5 +133,5 @@ class UnlessExpression(Expression):
             self.key_words,
             self.copy_support(),
             self.defeasible,
-            self.defeasible_keyword
+            self.defeasible_keyword,
         )
