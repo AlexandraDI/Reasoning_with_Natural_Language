@@ -21,11 +21,7 @@ class DefeasibleTableauxSolver:
         # self.defeasible_expressions = [x for x in self.all_expressions if
         # ( isinstance(x, WhenExpression) and x.defeasible)]
         self.defeasible_expressions = [x for x in self.all_expressions if x.defeasible]
-        self.expressions = [
-            x
-            for x in self.all_expressions
-            if not (isinstance(x, WhenExpression) and x.defeasible)
-        ]
+        self.expressions = [x for x in self.all_expressions if not x.defeasible]
 
         self.to_be_shown = create_expression(to_be_shown)
 
