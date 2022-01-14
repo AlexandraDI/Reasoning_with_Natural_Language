@@ -21,24 +21,24 @@
         <div class="card-body">
 
           <div v-if="numSolutionTrees === 1">
-            <SolutionPane id="singular_solution" :tree_closes="tree_closes" :support="supports[0]" :applied_rules="applied_rules[0]" :graph="graphs[0]"/>
+            <SolutionPane id="singular_solution" :tree_closes="tree_closes[0]" :support="supports[0]" :applied_rules="applied_rules[0]" :graph="graphs[0]"/>
           </div>
 
           <div v-if="numSolutionTrees > 1">
-            The proof of these expressions requires {{numSolutionTrees}} tableaus. You can watch these in the tabs below.
+            The proof of these expressions requires {{numSolutionTrees}} tableaux. You can watch these in the tabs below.
 
             <div class="accordion mt-4" id="accordionTableaus">
 
-              <div class="accordion-item" v-for="index in numSolutionTrees" :id="'multipleTableausItem' + index" :key="index">
-                <h2 class="accordion-header" :id="'multipleTableausItemHeading' + index">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#multipleTableausItemCollapse' + index" :aria-expanded="index !== numSolutionTrees - 1" :aria-controls="'multipleTableausItemCollapse' + index">
-                    Tableau Nr. {{index + 1}}
+              <div class="accordion-item" v-for="index in numSolutionTrees" :id="'multipleTableausItem' + index-1" :key="(index-1)">
+                <h2 class="accordion-header" :id="'multipleTableausItemHeading' + (index-1)">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#multipleTableausItemCollapse' + (index-1)" :aria-expanded="(index-1) !== numSolutionTrees - 1" :aria-controls="'multipleTableausItemCollapse' + (index-1)">
+                    Tableau Nr. {{index}}
                   </button>
                 </h2>
-                <div :id="'multipleTableausItemCollapse' + index" class="accordion-collapse collapse" :class="{show: index === numSolutionTrees - 1}" :aria-labelledby="'multipleTableausItemHeading' + index" data-bs-parent="#accordionTableaus">
+                <div :id="'multipleTableausItemCollapse' + (index-1)" class="accordion-collapse collapse" :class="{show: (index-1) === numSolutionTrees - 1}" :aria-labelledby="'multipleTableausItemHeading' + (index-1)" data-bs-parent="#accordionTableaus">
                   <div class="accordion-body">
                     <!-- Is the tree_closes property correct like this? Don't we need a property like this for every tableau that we have? //-->
-                    <SolutionPane :id="index" :tree_closes="tree_closes" :support="supports[index]" :applied_rules="applied_rules[index]" :graph="graphs[index]"/>
+                    <SolutionPane :id="(index-1)" :tree_closes="tree_closes[(index-1)]" :support="supports[(index-1)]" :applied_rules="applied_rules[(index-1)]" :graph="graphs[(index-1)]"/>
                   </div>
                 </div>
               </div>
@@ -69,7 +69,7 @@ export default {
       reasoning_method: "complete",
       response: null,
       error: null,
-      tree_closes: true,
+      tree_closes: [],
       applied_rules: [],
       graphs: [],
       supports: []
@@ -116,7 +116,7 @@ export default {
             // get body data
             this.response = responseData;
             this.applied_rules = responseData['applied_rules']
-            this.tree_closes = JSON.parse(responseData['all_branches_closed'])
+            this.tree_closes = responseData['all_branches_closed']
             this.supports = responseData["supports"];
 
             this.$emit("set-error", null);

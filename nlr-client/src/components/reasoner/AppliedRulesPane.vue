@@ -50,11 +50,7 @@
                       <tr>
                         <td>{{rule.referenced_line}}</td>
                         <td v-if="rule.created_expressions">
-                          <ul>
-                            <li v-for="(expression_list, index) in rule.created_expressions" :key="index">
-                              {{expression_list}}
-                            </li>
-                          </ul>
+                          {{rule.created_expressions}}
                         </td>
                         <td>{{rule.c_expression}}</td>
                         <td v-if="rule.matched_expression !== 'None'">
@@ -77,7 +73,15 @@
 <script>
 export default {
   name: "AppliedRulesPane",
-  props: ["appliedRules"]
+  props: ["appliedRules"],
+  mounted() {
+    console.log(this.appliedRules);
+  },
+  watch: {
+    appliedRules: function(newVal) {
+      console.log(newVal);
+    }
+  }
 }
 </script>
 
