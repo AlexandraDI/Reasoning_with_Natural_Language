@@ -5,8 +5,8 @@
       <label class="form-label">{{index + 1}}. input:</label>
       <input type="text" :value="item.value" placeholder="Next Expression"
              class="form-control" v-on:input="propagate_modification($event, index)"/>
-      <i role="button" class="icon-button mx-1 bi bi-dash-circle" v-on:click="remove_field($event, index)" :class="{disabled: expressions.length === 1}"></i>
-      <i role="button" class="icon-button mx-1 bi bi-plus-circle" v-on:click="add_field" :class="{disabled: expressions.length === 1}" v-if="index === expressions.length-1"></i>
+      <i role="button" class="icon-button mx-1 bi bi-dash-circle" v-on:click="remove_field($event, index)" v-if="expressions.length !== 1"></i>
+      <i role="button" class="icon-button mx-1 bi bi-plus-circle" v-on:click="add_field" v-if="index === expressions.length-1"></i>
       <br>
     </div>
 
