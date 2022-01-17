@@ -22,16 +22,43 @@ class DefeasibleTableauxSolver:
         # ( isinstance(x, WhenExpression) and x.defeasible)]
         self.defeasible_expressions = [x for x in self.all_expressions if x.defeasible]
         self.expressions = [x for x in self.all_expressions if not x.defeasible]
-
+        self.defeated_defeasible_expressions = []
+        self.contradiction_in_information = False
         self.to_be_shown = create_expression(to_be_shown)
+        self.contradicting_information = []
 
         # If it closes then there is a contradiciton
-        self.contradiction_in_information = TableauxSolver(
-            self.expressions, EMPTY_BASE_EXPRESSION.copy()
-        ).proof()
+        if not self.reason_by_cases:
+            self.tableau_for_checking_contradiction = TableauxSolver(
+                self.expressions, EMPTY_BASE_EXPRESSION.copy()
+            )
+            self.contradiction_in_information = self.tableau_for_checking_contradiction.proof()
+            self.contradicting_information = self.tableau_for_checking_contradiction.closing_arguments
+        else:
+            self.remove_defeated_contradictions()
 
         self.solver = TableauxSolver(self.expressions, self.to_be_shown)
         self.i = 0
+
+    def remove_defeated_contradictions(self):
+        self.tableau_for_checking_contradiction = TableauxSolver(
+            self.expressions + self.defeasible_expressions, EMPTY_BASE_EXPRESSION.copy()
+        )
+        self.contradiction_in_information = self.tableau_for_checking_contradiction.proof() or self.contradiction_in_information
+
+        if self.contradiction_in_information:
+            if len(self.defeasible_expressions) != 0:
+                supports = self.tableau_for_checking_contradiction.closing_arguments
+                for support in supports:
+                    if support.defeasible:
+                        self.defeasible_expressions.remove(support)
+                        defeated = support.copy()
+                        defeated.support = supports.copy()
+                        self.defeated_defeasible_expressions.append(defeated)
+                        self.remove_defeated_contradictions()
+                        return
+            else:
+                self.contradicting_information = self.tableau_for_checking_contradiction.closing_arguments
 
     def expand_defeasible_rules(self):
 
@@ -91,7 +118,7 @@ class DefeasibleTableauxSolver:
             self.expand_defeasible_rules()
             self.solver = TableauxSolver(self.expressions, self.to_be_shown)
         else:
-            self.solver = TableauxSolver(self.all_expressions, self.to_be_shown)
+            self.solver = TableauxSolver(self.expressions + self.defeasible_expressions, self.to_be_shown)
 
         proofed = self.solver.proof()
         self.solvers.append(self.solver)
