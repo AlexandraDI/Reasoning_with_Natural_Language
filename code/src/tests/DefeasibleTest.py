@@ -19,6 +19,8 @@ print(nts.contradiction_in_information)
 
 print(proof)
 print(nts.defeated_defeasible_expressions)
+# print(nts.defeated_defeasible_expressions[0].support)
+
 print([ str(i) for i in nts.expressions])
 
 print([ str(i) for i in nts.solver.closing_arguments])

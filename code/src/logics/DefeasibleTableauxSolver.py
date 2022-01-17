@@ -142,3 +142,15 @@ class DefeasibleTableauxSolver:
 
     def get_all_tableaus(self):
         return self.solvers
+
+    def get_defeated_defeasible_expressions(self):
+        return self.defeated_defeasible_expressions
+
+    def get_contradiction_information(self):
+        return self.contradicting_information
+
+    def contradicting_graph(self):
+        return self.tableau_for_checking_contradiction.solve_tree.create_file()
+
+    def is_contradiction_in_information(self):
+        return self.contradiction_in_information
