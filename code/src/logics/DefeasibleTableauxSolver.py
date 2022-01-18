@@ -174,7 +174,7 @@ class DefeasibleTableauxSolver:
         if self.reason_by_cases:
             if self.contradiction_resolved:
                 return self.defeated_defeasible_trees
-            return self.defeated_defeasible_trees + self.tableau_for_checking_contradiction.solve_tree.create_file()
+            return self.defeated_defeasible_trees + [self.tableau_for_checking_contradiction.solve_tree.create_file()]
         return [self.tableau_for_checking_contradiction.solve_tree.create_file()]
 
     def is_contradiction_in_information(self):

@@ -10,10 +10,13 @@ premises = [
     # "Normally if I study statistics then I enjoy myself",  # R -_-_> S
     "Usually it is not raining",
     "when it is cloudy then it is raining",
-    "it is cloudy"
+    "it is cloudy",
+    "it is not cloudy",
+    "usually it is sunny",
+    "when it is cloudy then it is not sunny"
 ]
 
-conclusion = "it is raining"
+conclusion = "it is raining and it is not sunny"
 
 nts = DefeasibleTableauxSolver(premises, conclusion, True)
 
@@ -22,6 +25,8 @@ print(nts.contradiction_in_information)
 print(proof)
 print(nts.defeated_defeasible_expressions)
 print(nts.is_contradiction_resolved())
+print(nts.get_contradiction_information())
+print(nts.contradicting_graph())
 # print(nts.defeated_defeasible_expressions[0].support)
 
 print([ str(i) for i in nts.expressions])
