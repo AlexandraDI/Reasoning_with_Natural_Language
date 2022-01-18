@@ -48,7 +48,7 @@ def create_expression(hypothesis, support=None):
         if expression_regex is not None:
             regex_match = re.match(expression_regex, lower, re.IGNORECASE)
         if expression_regex is None or (
-            regex_match and regex_match.end() == len(lower)
+                regex_match and regex_match.end() == len(lower)
         ):
             try:
                 expression = constructor(lower, support)
@@ -81,7 +81,7 @@ def create_expression_representation(expression, ret_dict=None):
         ret_dict["type"] = 1
         ret_dict["name"] = "Syllogism"
         ret_dict["list"].append(
-            dict(type=-1, name="1. Keyword", tokens=expression.syllogism_keywords[0],)
+            dict(type=-1, name="1. Keyword", tokens=expression.syllogism_keywords[0], )
         )
         ret_dict["list"].append(dict(type=-1, name="Object", tokens=expression.object))
         ret_dict["list"].append(
@@ -148,7 +148,7 @@ def create_expression_representation(expression, ret_dict=None):
             "For all Expression" if expression.for_all else "It Exists Expression"
         )
         ret_dict["list"].append(
-            dict(type=-4, tokens=expression.quantification_sentence,)
+            dict(type=-4, tokens=expression.quantification_sentence, )
         )
         ret_dict["list"].append(
             dict(type=-4, name="Variable", tokens=expression.quantified_variable)
@@ -162,7 +162,7 @@ def create_expression_representation(expression, ret_dict=None):
         ret_dict["type"] = 5
         ret_dict["name"] = "Basis Information"
         ret_dict["list"].append(
-            dict(type=-5, name="Subject", tokens=expression.subject,)
+            dict(type=-5, name="Subject", tokens=expression.subject, )
         )
         ret_dict["list"].append(dict(type=-5, name="Verb", tokens=expression.verb))
         ret_dict["list"].append(dict(type=-5, name="Object", tokens=expression.object))
@@ -171,7 +171,7 @@ def create_expression_representation(expression, ret_dict=None):
         ret_dict["type"] = 5
         ret_dict["name"] = "Basis Information"
         ret_dict["list"].append(
-            dict(type=-5, name="Subject", tokens=expression.subject,)
+            dict(type=-5, name="Subject", tokens=expression.subject, )
         )
         ret_dict["list"].append(dict(type=-5, name="Verb", tokens=expression.verb))
         ret_dict["list"].append(
@@ -217,14 +217,15 @@ def check_if_in(keywords, hypothesis):
     return False
 
 
-def expressions_to_strings(expressions) -> list[str]:
+def expressions_to_strings(expressions):
     res = []
     for exp in expressions:
         res.append(exp.get_string_rep(True))
     return res
 
-def expressions_to_strings_depth_2(expressions) -> list[list[str]]:
-    if expressions == None:
+
+def expressions_to_strings_depth_2(expressions):
+    if expressions is None:
         return [[]]
     res = []
     for col2 in expressions:
