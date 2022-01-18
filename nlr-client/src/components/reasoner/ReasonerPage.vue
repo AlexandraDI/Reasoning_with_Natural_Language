@@ -17,7 +17,7 @@
 
       <ContradictionCard :contradiction-information="this.contradictionInformation"/>
 
-      <div class="card mt-3 p-2">
+      <div class="card mt-3 p-2" v-if="this.contradictionInformation.is_contradiction_resolved">
         <div class="card-body">
 
           <div v-if="numSolutionTrees === 1">
@@ -96,7 +96,8 @@ export default {
         is_contradiction_in_information: this.response.is_contradiction_in_information,
         contradiction_information: this.response.contradiction_information,
         defeated_defeasible_expressions: this.response.defeated_defeasible_expressions,
-        contradicting_graph: this.response.contradicting_graph
+        contradicting_graph: this.response.contradicting_graph,
+        is_contradiction_resolved: this.response.is_contradiction_resolved
       };
     }
   },

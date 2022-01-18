@@ -117,7 +117,8 @@ def get_solve_request(request: Request):
             defeated_defeasible_expressions=defeated_defeasible_expressions,
             contradiction_information=contradiction_information,
             contradicting_graph=contradicting_graph,
-            is_contradiction_in_information=is_contradiction_in_information
+            is_contradiction_in_information=is_contradiction_in_information,
+            is_contradiction_resolved = solver.is_contradiction_resolved()
         ))
         response = Response(response_data)
         enable_cors_external_access(response)
