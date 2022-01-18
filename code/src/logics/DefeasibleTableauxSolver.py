@@ -23,6 +23,7 @@ class DefeasibleTableauxSolver:
         self.defeasible_expressions = [x for x in self.all_expressions if x.defeasible]
         self.expressions = [x for x in self.all_expressions if not x.defeasible]
         self.defeated_defeasible_expressions = []
+        self.defeated_defeasible_trees = []
         self.contradiction_in_information = False
         self.to_be_shown = create_expression(to_be_shown)
         self.contradicting_information = []
@@ -33,7 +34,7 @@ class DefeasibleTableauxSolver:
                 self.expressions, EMPTY_BASE_EXPRESSION.copy()
             )
             self.contradiction_in_information = self.tableau_for_checking_contradiction.proof()
-            self.contradicting_information = self.tableau_for_checking_contradiction.closing_arguments
+            self.contradicting_information = [self.tableau_for_checking_contradiction.closing_arguments]
         else:
             self.remove_defeated_contradictions()
 
@@ -55,10 +56,12 @@ class DefeasibleTableauxSolver:
                         defeated = support.copy()
                         defeated.support = supports.copy()
                         self.defeated_defeasible_expressions.append(defeated)
+                        self.defeated_defeasible_trees.append(self.tableau_for_checking_contradiction.solve_tree.create_file())
+                        self.contradicting_information.append(list(supports))
                         self.remove_defeated_contradictions()
                         return
             else:
-                self.contradicting_information = self.tableau_for_checking_contradiction.closing_arguments
+                self.contradicting_information = [self.tableau_for_checking_contradiction.closing_arguments]
 
     def expand_defeasible_rules(self):
 
@@ -150,7 +153,9 @@ class DefeasibleTableauxSolver:
         return self.contradicting_information
 
     def contradicting_graph(self):
-        return self.tableau_for_checking_contradiction.solve_tree.create_file()
+        if self.reason_by_cases:
+            return self.defeated_defeasible_trees
+        return [self.tableau_for_checking_contradiction.solve_tree.create_file()]
 
     def is_contradiction_in_information(self):
         return self.contradiction_in_information
