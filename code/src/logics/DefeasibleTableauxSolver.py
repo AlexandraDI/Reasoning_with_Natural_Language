@@ -27,6 +27,7 @@ class DefeasibleTableauxSolver:
         self.contradiction_in_information = False
         self.to_be_shown = create_expression(to_be_shown)
         self.contradicting_information = []
+        self.contradiction_resolved = True
 
         # If it closes then there is a contradiciton
         if not self.reason_by_cases:
@@ -35,6 +36,7 @@ class DefeasibleTableauxSolver:
             )
             self.contradiction_in_information = self.tableau_for_checking_contradiction.proof()
             self.contradicting_information = [self.tableau_for_checking_contradiction.closing_arguments]
+            self.contradiction_resolved = False
         else:
             self.remove_defeated_contradictions()
 
@@ -45,9 +47,13 @@ class DefeasibleTableauxSolver:
         self.tableau_for_checking_contradiction = TableauxSolver(
             self.expressions + self.defeasible_expressions, EMPTY_BASE_EXPRESSION.copy()
         )
-        self.contradiction_in_information = self.tableau_for_checking_contradiction.proof() or self.contradiction_in_information
+        contradicted_now = self.tableau_for_checking_contradiction.proof()
+        self.contradiction_in_information = contradicted_now or self.contradiction_in_information
 
-        if self.contradiction_in_information:
+        if not contradicted_now:
+            self.contradiction_resolved = True
+
+        if contradicted_now:
             if len(self.defeasible_expressions) != 0:
                 supports = self.tableau_for_checking_contradiction.closing_arguments
                 for support in supports:
@@ -56,12 +62,21 @@ class DefeasibleTableauxSolver:
                         defeated = support.copy()
                         defeated.support = supports.copy()
                         self.defeated_defeasible_expressions.append(defeated)
-                        self.defeated_defeasible_trees.append(self.tableau_for_checking_contradiction.solve_tree.create_file())
+                        self.defeated_defeasible_trees.append(
+                            self.tableau_for_checking_contradiction.solve_tree.create_file())
                         self.contradicting_information.append(list(supports))
                         self.remove_defeated_contradictions()
                         return
+
+                self.contradiction_resolved = False
+                self.contradicting_information = self.contradicting_information.append(
+                    self.tableau_for_checking_contradiction.closing_arguments)
             else:
-                self.contradicting_information = [self.tableau_for_checking_contradiction.closing_arguments]
+                self.contradicting_information = self.contradicting_information.append(
+                    self.tableau_for_checking_contradiction.closing_arguments)
+                self.contradiction_resolved = False
+
+
 
     def expand_defeasible_rules(self):
 
@@ -152,9 +167,14 @@ class DefeasibleTableauxSolver:
     def get_contradiction_information(self):
         return self.contradicting_information
 
+    def is_contradiction_resolved(self):
+        return self.contradiction_resolved
+
     def contradicting_graph(self):
         if self.reason_by_cases:
-            return self.defeated_defeasible_trees
+            if self.contradiction_resolved:
+                return self.defeated_defeasible_trees
+            return self.defeated_defeasible_trees + self.tableau_for_checking_contradiction.solve_tree.create_file()
         return [self.tableau_for_checking_contradiction.solve_tree.create_file()]
 
     def is_contradiction_in_information(self):
