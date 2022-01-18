@@ -54,7 +54,7 @@ export default {
     reasoning_method_title: function() {
       switch (this.reasoning_method) {
         case "complete":
-          return "Multiple Tableaux (Complete Way)";
+          return "Defeasible Logic with Multiple Proofs";
         case "reasoningbycases":
           return "Reasoning by Cases";
         default:
@@ -65,9 +65,9 @@ export default {
     reasoning_method_description: function() {
       switch (this.reasoning_method) {
         case "complete":
-          return "This method solves proves by solving multiple tableaux.";
+          return "In this approach, we first eliminate uncertainly from defeasible information with multiple proofs.";
         case "reasoningbycases":
-          return "This method solves by doing a reasoning by cases.";
+          return "In reasoning by cases, conditional defeasible rules are handled inside the tableau as an additional tableau rule.";
         default:
           assert(false);
           return "";
