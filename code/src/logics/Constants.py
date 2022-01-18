@@ -146,7 +146,7 @@ true_connected_regex = f"{WORDS} (or|and|;|,) {WORDS}"
 connected_regex = f"{base_regex}({demoregen_regex}|{true_connected_regex})"
 
 # If-and-only-if keywords
-iff_keywords = ["if and only if", "only if"]
+iff_keywords = ["if and only if", "iff"]
 iff_regex = f"{WORDS} ({or_join(iff_keywords)}) {WORDS}"
 
 # Unless keywords
