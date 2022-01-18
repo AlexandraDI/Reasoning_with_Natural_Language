@@ -19,7 +19,7 @@
     <div class="expression_input mt-3">
       <label class="form-label">Reasoning method:</label>
       <select class="form-select" :value="reasoning_method" v-on:input="propagate_modification($event, 'reasoning_method')">
-        <option value="complete">Multiple Tableaux ("complete way")</option>
+        <option value="complete">Defeasible Logic with Multiple Proofs</option>
         <option value="reasoningbycases">Reasoning by Cases</option>
       </select>
     </div>
