@@ -193,13 +193,22 @@
         "to_be_shown": "Some flowers do not need light"
       },
       {
-        "name": "Defeasible Expressions",
+        "name": "Defeasible Expressions (non-contradicting)",
         "expressions": [
           {"value": "Usually I go to cinema or park"},
           {"value": "Usually If i go to cinema then I am happy"},
           {"value": "Usually If i go to park then I am happy"}
         ],
         "to_be_shown": "I am happy"
+      },
+      {
+        "name": "Contradicting Defeasible Expressions",
+        "expressions": [
+          {"value": "Usually it is not raining"},
+          {"value": "When it is cloudy then it is raining"},
+          {"value": "It is cloudy"}
+        ],
+        "to_be_shown": "It is raining"
       }
     ]
   }

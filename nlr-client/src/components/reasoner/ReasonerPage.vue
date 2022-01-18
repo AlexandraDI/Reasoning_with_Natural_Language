@@ -13,15 +13,21 @@
         @remove-expression="this.remove_expression"
     />
 
+    <div v-if="response && error == null" :style="{'display': response && error == null ? 'block' : 'none'}">
 
-
-    <div :style="{'display': response && error == null ? 'block' : 'none'}">
+      <ContradictionCard :contradiction-information="this.contradictionInformation"/>
 
       <div class="card mt-3 p-2">
         <div class="card-body">
 
           <div v-if="numSolutionTrees === 1">
-            <SolutionPane id="singular_solution" :tree_closes="tree_closes[0]" :support="supports[0]" :applied_rules="applied_rules[0]" :graph="graphs[0]"/>
+            <SolutionPane
+                id="singular_solution"
+                :tree_closes="tree_closes[0]"
+                :support="supports[0]"
+                :applied_rules="applied_rules[0]"
+                :graph="graphs[0]"
+            />
           </div>
 
           <div v-if="numSolutionTrees > 1">
@@ -38,7 +44,12 @@
                 <div :id="'multipleTableausItemCollapse' + (index-1)" class="accordion-collapse collapse" :class="{show: (index-1) === numSolutionTrees - 1}" :aria-labelledby="'multipleTableausItemHeading' + (index-1)" data-bs-parent="#accordionTableaus">
                   <div class="accordion-body">
                     <!-- Is the tree_closes property correct like this? Don't we need a property like this for every tableau that we have? //-->
-                    <SolutionPane :id="(index-1)" :tree_closes="tree_closes[(index-1)]" :support="supports[(index-1)]" :applied_rules="applied_rules[(index-1)]" :graph="graphs[(index-1)]"/>
+                    <SolutionPane
+                        :id="(index-1)"
+                        :tree_closes="tree_closes[(index-1)]"
+                        :support="supports[(index-1)]"
+                        :applied_rules="applied_rules[(index-1)]"
+                        :graph="graphs[(index-1)]"/>
                   </div>
                 </div>
               </div>
@@ -59,9 +70,10 @@ import ReasoningExamplesMenu from "@/components/reasoner/ReasoningExamplesMenu";
 import axios from "axios";
 import ExpressionsForm from "@/components/ExpressionsForm";
 import SolutionPane from "@/components/reasoner/SolutionPane";
+import ContradictionCard from "@/components/reasoner/ContradictionCard";
 export default {
   name: "ReasonerPage",
-  components: {SolutionPane, ReasoningExamplesMenu, ExpressionsForm},
+  components: {ContradictionCard, SolutionPane, ReasoningExamplesMenu, ExpressionsForm},
   data() {
     return {
       expressions: [""],
@@ -78,6 +90,14 @@ export default {
   computed: {
     numSolutionTrees: function() {
       return this.applied_rules ? this.applied_rules.length : 0;
+    },
+    contradictionInformation: function () {
+      return {
+        is_contradiction_in_information: this.response.is_contradiction_in_information,
+        contradiction_information: this.response.contradiction_information,
+        defeated_defeasible_expressions: this.response.defeated_defeasible_expressions,
+        contradicting_graph: this.response.contradicting_graph
+      };
     }
   },
   methods: {

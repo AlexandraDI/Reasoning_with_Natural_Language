@@ -14,7 +14,8 @@ from pyramid.request import Request
 from pyramid.response import Response, FileResponse
 
 from logics.DefeasibleTableauxSolver import DefeasibleTableauxSolver
-from logics.senteces.Helper import create_expression, create_expression_representation
+from logics.senteces.Helper import create_expression, create_expression_representation, expressions_to_strings, \
+    expressions_to_strings_depth_2
 from logics.senteces.ParseExceptions import ParseException
 
 
@@ -103,11 +104,20 @@ def get_solve_request(request: Request):
         supports = [[exp.get_string_rep(True) for exp in items] for items in solver.get_all_supports()]
         tableaux_closed = [tableau.all_branches_closed for tableau in solver.get_all_tableaus()]
 
+        defeated_defeasible_expressions = expressions_to_strings(solver.get_defeated_defeasible_expressions())
+        contradiction_information = expressions_to_strings_depth_2(solver.get_contradiction_information())
+        contradicting_graph = solver.contradicting_graph()
+        is_contradiction_in_information = solver.is_contradiction_in_information()
+
         response_data = json.dumps(dict(
             applied_rules=[{i: applied_rule.get_dict() for i, applied_rule in item.items()} for item in solver.get_applied_rules()],
             all_branches_closed=tableaux_closed,
             dot_graphs=solver.get_dot_graph(),
-            supports=supports
+            supports=supports,
+            defeated_defeasible_expressions=defeated_defeasible_expressions,
+            contradiction_information=contradiction_information,
+            contradicting_graph=contradicting_graph,
+            is_contradiction_in_information=is_contradiction_in_information
         ))
         response = Response(response_data)
         enable_cors_external_access(response)

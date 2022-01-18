@@ -215,3 +215,21 @@ def check_if_in(keywords, hypothesis):
         if keyword in hypothesis:
             return True
     return False
+
+
+def expressions_to_strings(expressions) -> list[str]:
+    res = []
+    for exp in expressions:
+        res.append(exp.get_string_rep(True))
+    return res
+
+def expressions_to_strings_depth_2(expressions) -> list[list[str]]:
+    if expressions == None:
+        return [[]]
+    res = []
+    for col2 in expressions:
+        res2 = []
+        for exp in col2:
+            res2.append(exp.get_string_rep(True))
+        res.append(res2)
+    return res

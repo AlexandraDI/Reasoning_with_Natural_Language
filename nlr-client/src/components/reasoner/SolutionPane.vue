@@ -8,7 +8,7 @@
         close</h2>
     </div>
 
-    <SupportPane v-bind:support="this.support"/>
+    <SupportPane v-if="support.length > 0" v-bind:support="this.support"/>
 
     <AppliedRulesPane v-bind:applied-rules="this.applied_rules"/>
 
