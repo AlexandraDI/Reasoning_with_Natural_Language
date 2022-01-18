@@ -36,7 +36,8 @@ class DefeasibleTableauxSolver:
             )
             self.contradiction_in_information = self.tableau_for_checking_contradiction.proof()
             self.contradicting_information = [self.tableau_for_checking_contradiction.closing_arguments]
-            self.contradiction_resolved = False
+            if self.contradicting_information:
+                self.contradiction_resolved = False
         else:
             self.remove_defeated_contradictions()
 
