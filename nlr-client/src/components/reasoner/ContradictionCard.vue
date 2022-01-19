@@ -6,7 +6,23 @@
       :icon-color="contradictionInformation.is_contradiction_resolved ? 'green' : 'red'"
     >
       <div v-if="!contradictionInformation.is_contradiction_resolved">
-        There is a contradiction which could not be resolved. Please check the input for contradictions and remove or fix them.
+        There is a contradiction which could not be resolved. Please check the input for contradictions and remove or fix them. The following statements contradict each other:
+
+        <ul class="list-group my-3">
+          <li class="list-group-item" v-for="(exp, list_item_index) in contradictionInformation.contradiction_information[0]" :key="list_item_index">{{exp}}</li>
+        </ul>
+
+        <Collapsable
+            class="mt-3"
+            :id="'proofraph'"
+            title="Proof Graph"
+            :default-collapsed="false"
+        >
+          <TreeGraph
+              id="contradiction"
+              :graph-data="contradictionInformation.contradicting_graph[0]"
+          />
+        </Collapsable>
       </div>
 
       <div v-if="contradictionInformation.is_contradiction_resolved">
@@ -26,7 +42,7 @@
                 :default-collapsed="true"
             >
               <TreeGraph
-                  id="contradiction"
+                  :id="'contradiction'+def_exp_index"
                   :graph-data="contradictionInformation.contradicting_graph[def_exp_index-1]"
               />
             </Collapsable>
