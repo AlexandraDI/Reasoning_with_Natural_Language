@@ -125,16 +125,18 @@ export default {
           .renderDot(dot_graph);
     },
     toggle_tooltip(element, enter) {
-      const rule_object = this.appliedRules[element[0].id]['rule_desc_obj']
+      if(this.appliedRules) {
+        const rule_object = this.appliedRules[element[0].id]['rule_desc_obj']
 
-      this.tooltip_header = rule_object['name']
-      this.in_expressions = rule_object['in_expression']
-      this.out_expressions = rule_object['out_expression']
-      this.basic_in_expressions = rule_object['basic_in_expression']
-      this.basic_out_expressions = rule_object['basic_out_expression']
-      this.tooltip_description = rule_object['description']
+        this.tooltip_header = rule_object['name']
+        this.in_expressions = rule_object['in_expression']
+        this.out_expressions = rule_object['out_expression']
+        this.basic_in_expressions = rule_object['basic_in_expression']
+        this.basic_out_expressions = rule_object['basic_out_expression']
+        this.tooltip_description = rule_object['description']
 
-      this.tooltip_visible = enter
+        this.tooltip_visible = enter
+      }
     },
   },
   props: ["graphData", "appliedRules", "id"],
