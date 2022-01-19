@@ -11,7 +11,7 @@ from logics.RuleCreatorUtil import (
 )
 from logics.senteces.Expression import Expression
 from logics.LogicFunctions import rule_set
-from logics.senteces.BaseExpression import BaseExpression
+from logics.senteces.BaseExpression import BaseExpression, EMPTY_BASE_EXPRESSION
 from logics.senteces.BaseExpressionWithPreposition import BaseExpressionWithPreposition
 from logics.senteces.FunctionExpression import FunctionExpression
 from logics.senteces.UnifiableVariable import UnifiableVariable
@@ -53,7 +53,8 @@ class TableauxSolver:
             neg_thesis_support.test = True
             neg_thesis_support.is_support = True
             neg_thesis.support = {neg_thesis_support, }  # change the support
-            clauses.append(neg_thesis)
+            if self.to_be_shown != EMPTY_BASE_EXPRESSION:
+                clauses.append(neg_thesis)
 
             # Create the solve tree and call the recursive proof
             self.solve_tree = TreeGenerator(clauses)
